@@ -30,7 +30,7 @@ On vise du **moderne et stable**. Versions de référence à l'initialisation :
 
 | Lib | Version | Notes |
 | --- | --- | --- |
-| Node.js | **22 LTS** | requis par Next 16 (≥ 20.9), image `node:22-alpine` |
+| Node.js | **24 LTS** | requis par Next 16 (≥ 20.9), image `node:24-alpine` |
 | Next.js | **16.2.x LTS** | App Router, CVE-2025-29927 corrigée |
 | React | **19.2.x** | + React DOM même version |
 | TypeScript | **5.x** | mode strict |
@@ -89,7 +89,7 @@ On vise du **moderne et stable**. Versions de référence à l'initialisation :
 ### Infrastructure
 
 - **Docker** + **Docker Compose** — développement local et déploiement
-- **Multi-stage Dockerfile** — build optimisé pour la production (base `node:22-alpine`)
+- **Multi-stage Dockerfile** — build optimisé pour la production (base `node:24-alpine`)
 
 > Si une alternative est plus pertinente pour un besoin précis, adopte-la et note ton choix ici.
 
@@ -370,7 +370,7 @@ Un fichier `.env.example` documente la variable requise. `.env` est dans le `.gi
 ```text
 Stage 1 : deps        — install des dépendances (node_modules)
 Stage 2 : builder     — prisma generate + next build
-Stage 3 : runner      — image minimale (node:22-alpine), copie du standalone output + static + public
+Stage 3 : runner      — image minimale (node:24-alpine), copie du standalone output + static + public
 ```
 
 Optimisations :

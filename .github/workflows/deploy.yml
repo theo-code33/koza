@@ -1,0 +1,22 @@
+name: Deploy
+
+# Applies committed migrations to the PRODUCTION database when main advances.
+# Vercel deploys the app itself via its Git integration; this workflow only owns
+# the database migration step. It never runs `migrate dev` and never touches dev.
+on:
+  push:
+    branches: [main]
+
+jobs:
+  migrate-prod:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.PROD_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx prisma migrate deploy

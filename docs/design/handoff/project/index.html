@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>kōza · 口座</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+          serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+        },
+        colors: {
+          bg: 'var(--bg)',
+          surface: 'var(--surface)',
+          'surface-alt': 'var(--surface-alt)',
+          ink: 'var(--ink)',
+          secondary: 'var(--secondary)',
+          muted: 'var(--muted)',
+          line: 'var(--line)',
+          essentiels: 'var(--essentiels)',
+          'essentiels-bg': 'var(--essentiels-bg)',
+          loisirs: 'var(--loisirs)',
+          'loisirs-bg': 'var(--loisirs-bg)',
+          epargne: 'var(--epargne)',
+          'epargne-bg': 'var(--epargne-bg)',
+          accent: 'var(--accent)',
+          'accent-soft': 'var(--accent-soft)',
+          warning: 'var(--warning)',
+          'warning-bg': 'var(--warning-bg)',
+          over: 'var(--over)',
+          'over-bg': 'var(--over-bg)',
+        },
+        borderRadius: {
+          card: '16px',
+          btn: '12px',
+          input: '10px',
+        },
+        maxWidth: { content: '720px' },
+      },
+    },
+  };
+</script>
+
+<style>
+  :root {
+    --bg: #F9F8F6;
+    --surface: #FFFFFF;
+    --surface-alt: #F3F2EF;
+    --ink: #1C1C1E;
+    --secondary: #6E6E73;
+    --muted: #AEAEB2;
+    --line: rgba(0,0,0,0.06);
+    --essentiels: #7D9E8C;  --essentiels-bg: #EEF3F0;
+    --loisirs:    #9B8EAD;  --loisirs-bg:    #F2EFF7;
+    --epargne:    #7A9BB5;  --epargne-bg:    #ECF2F7;
+    --accent: #5A7A6A;      --accent-soft: #E9EFEB;
+    --warning: #C4956A;     --warning-bg: #FBF3EA;
+    --over: #B07070;        --over-bg: #F7EDEC;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+    --shadow-md: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);
+  }
+  html.dark {
+    --bg: #1A1A1C;
+    --surface: #242426;
+    --surface-alt: #2C2C2E;
+    --ink: #E5E5E7;
+    --secondary: #98989D;
+    --muted: #6E6E73;
+    --line: rgba(255,255,255,0.06);
+    --essentiels: #8FB09E;  --essentiels-bg: #232a26;
+    --loisirs:    #ADA0BF;  --loisirs-bg:    #2a2630;
+    --epargne:    #8AADC7;  --epargne-bg:    #222b32;
+    --accent: #7A9E8A;      --accent-soft: #25302a;
+    --warning: #D2A77E;     --warning-bg: #2e281f;
+    --over: #C18A8A;        --over-bg: #2e2323;
+    --shadow-sm: none;
+    --shadow-md: none;
+  }
+
+  * { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 400;
+    transition: background-color .4s ease, color .4s ease;
+  }
+  #root { min-height: 100%; }
+
+  /* Card: soft shadow in light, hairline border in dark (no shadow) */
+  .card {
+    background: var(--surface);
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+  }
+  html.dark .card { border: 1px solid var(--line); }
+
+  .card-sm { box-shadow: var(--shadow-sm); }
+  html.dark .card-sm { box-shadow: none; border: 1px solid var(--line); }
+
+  .num { font-feature-settings: "tnum" 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  /* gentle entrance — translate only, never hides content if unplayed */
+  @keyframes kozaFade {
+    from { transform: translateY(10px); }
+    to   { transform: translateY(0); }
+  }
+  .screen-enter { animation: kozaFade .5s cubic-bezier(.22,.61,.36,1) both; }
+  @media (prefers-reduced-motion: reduce) { .screen-enter { animation: none; } }
+
+  @keyframes kozaSheetUp {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+  @keyframes kozaPanelIn {
+    from { transform: translateX(100%); }
+    to   { transform: translateX(0); }
+  }
+  @keyframes kozaScrim {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  .sheet-enter { animation: kozaSheetUp .42s cubic-bezier(.22,.61,.36,1) both; }
+  .panel-enter { animation: kozaPanelIn .42s cubic-bezier(.22,.61,.36,1) both; }
+  .scrim-enter { animation: kozaScrim .3s ease both; }
+
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
+
+  input, button, select { font-family: inherit; }
+  input:focus { outline: none; }
+  .tap { transition: transform .12s ease, background-color .2s ease, color .2s ease, opacity .2s ease; }
+  .tap:active { transform: scale(.97); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.js" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="js/data.jsx"></script>
+<script type="text/babel" src="js/ui.jsx"></script>
+<script type="text/babel" src="js/charts.jsx"></script>
+<script type="text/babel" src="js/screens-dashboard.jsx"></script>
+<script type="text/babel" src="js/screens-expenses.jsx"></script>
+<script type="text/babel" src="js/screens-manage.jsx"></script>
+<script type="text/babel" src="js/onboarding.jsx"></script>
+<script type="text/babel" src="js/app.jsx"></script>
+</body>
+</html>

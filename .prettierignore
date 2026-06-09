@@ -1,0 +1,12 @@
+.next
+node_modules
+out
+build
+coverage
+playwright-report
+test-results
+src/generated
+package-lock.json
+public
+docs
+*.md

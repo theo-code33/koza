@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { CatSelect } from "@/components/ui/cat-select";
 import { SubcatChips } from "@/components/expenses/subcat-chips";
-import { SUBCATEGORIES } from "@/lib/subcategories";
+import { defaultSubcategory } from "@/lib/subcategories";
 
 const formSchema = z.object({
   amount: z
@@ -98,7 +98,7 @@ export function ExpenseQuickForm({ expense, onSuccess, onCancel }: ExpenseQuickF
             value={field.value}
             onChange={(next) => {
               field.onChange(next);
-              setValue("subcategory", SUBCATEGORIES[next][0].key);
+              setValue("subcategory", defaultSubcategory(next));
             }}
           />
         )}

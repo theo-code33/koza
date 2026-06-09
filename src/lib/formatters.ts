@@ -16,7 +16,9 @@ export function formatEUR(
 // Parse "YYYY-MM-DD" en date locale (évite le décalage de fuseau d'un parse UTC).
 function toLocalDate(date: string | Date): Date {
   if (typeof date !== "string") return date;
-  const [year, month, day] = date.split("-").map(Number);
+  const year = Number(date.slice(0, 4));
+  const month = Number(date.slice(5, 7));
+  const day = Number(date.slice(8, 10));
   return new Date(year, month - 1, day);
 }
 

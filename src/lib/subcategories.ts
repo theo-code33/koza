@@ -46,3 +46,9 @@ export function isValidSubcategory(category: CategoryKey, key: string): boolean 
 export function subcategoryLabel(key: string): string {
   return ALL_SUBCATEGORIES.find((sub) => sub.key === key)?.label ?? key;
 }
+
+// Clé de la première sous-catégorie d'une catégorie (chaque catégorie en a au moins une).
+export function defaultSubcategory(category: CategoryKey): string {
+  const [first] = SUBCATEGORIES[category];
+  return first?.key ?? "";
+}

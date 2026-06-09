@@ -6,6 +6,7 @@ export function currentMonth(): string {
 
 // Bornes [start, end) d'un mois "YYYY-MM" (premier jour du mois → premier jour du mois suivant).
 export function monthRange(month: string): { start: Date; end: Date } {
-  const [year, m] = month.split("-").map(Number);
+  const year = Number(month.slice(0, 4));
+  const m = Number(month.slice(5, 7));
   return { start: new Date(year, m - 1, 1), end: new Date(year, m, 1) };
 }

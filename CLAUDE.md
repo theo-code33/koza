@@ -355,7 +355,7 @@ Règles :
 Deux services :
 
 1. **`db`** — PostgreSQL 16 Alpine
-   - Port : `5432`
+   - Port : **hôte `5433` → conteneur `5432`** (évite le conflit avec un Postgres local déjà sur 5432 ; sur le réseau compose l'app joint `db:5432`)
    - Volume persistant pour les données
    - Variables : `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` via `.env`
 2. **`app`** — Next.js en mode dev

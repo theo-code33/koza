@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Instrument_Serif } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
 const inter = Inter({
@@ -24,8 +25,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${inter.variable} ${instrumentSerif.variable} h-full`}>
-      <body className="min-h-full">{children}</body>
+    <html
+      lang="fr"
+      suppressHydrationWarning
+      className={`${inter.variable} ${instrumentSerif.variable} h-full`}
+    >
+      <body className="min-h-full">
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

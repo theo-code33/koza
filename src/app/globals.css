@@ -40,6 +40,7 @@
 
   /* Shadows */
   --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.04);
   --shadow-hover: 0 2px 8px rgba(0, 0, 0, 0.06), 0 8px 32px rgba(0, 0, 0, 0.06);
 }
 
@@ -81,4 +82,85 @@ body {
   transition:
     background-color 0.4s ease,
     color 0.4s ease;
+}
+
+@layer components {
+  .card {
+    background-color: var(--color-surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+  }
+  .dark .card {
+    box-shadow: none;
+    border: 1px solid var(--color-line);
+  }
+}
+
+@utility num {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+@utility tap {
+  transition:
+    transform 0.12s ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+.tap:active {
+  transform: scale(0.97);
+}
+
+@keyframes kozaFade {
+  from {
+    transform: translateY(10px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes kozaSheetUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes kozaPanelIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes kozaScrim {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.screen-enter {
+  animation: kozaFade 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.sheet-enter {
+  animation: kozaSheetUp 0.42s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.panel-enter {
+  animation: kozaPanelIn 0.42s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.scrim-enter {
+  animation: kozaScrim 0.3s ease both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .screen-enter,
+  .sheet-enter,
+  .panel-enter,
+  .scrim-enter {
+    animation: none;
+  }
 }

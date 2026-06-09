@@ -5,6 +5,13 @@ on:
   pull_request:
     branches: [main]
 
+# Provides DATABASE_URL to jobs that only run `prisma generate` (lint, build,
+# test-unit) — generate resolves the env but never connects. The integration
+# and e2e jobs override this at job level with their ephemeral Postgres service,
+# so tests never touch the hosted database.
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
 jobs:
   lint:
     runs-on: ubuntu-latest

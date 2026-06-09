@@ -12,3 +12,4 @@ export { IconButton } from "./icon-button";
 export { MonthNav } from "./month-nav";
 export { SoftBanner } from "./soft-banner";
 export { Overlay } from "./overlay";
+export { ConfirmDialog } from "./confirm-dialog";

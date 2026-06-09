@@ -1,17 +1,13 @@
 import { Prisma } from "@/generated/prisma/client";
 import { StepIndicator } from "@/components/onboarding/step-indicator";
 import { ConfirmActions } from "@/components/onboarding/confirm-actions";
-import { Card } from "@/components/ui/card";
-import { CatDot } from "@/components/ui/cat-dot";
+import { EnvelopesSummary } from "@/components/budget/envelopes-summary";
 import { prisma } from "@/lib/prisma";
 import { computeEnvelopes } from "@/lib/budget";
 import { formatEUR } from "@/lib/formatters";
-import { CATEGORIES, CATEGORY_ORDER } from "@/lib/categories";
+import { currentMonth } from "@/lib/month";
 
-function currentMonth(): string {
-  const now = new Date();
-  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
-}
+export const dynamic = "force-dynamic";
 
 export default async function ConfirmPage() {
   const incomes = await prisma.income.findMany({ where: { month: currentMonth() } });
@@ -27,20 +23,8 @@ export default async function ConfirmPage() {
           ? `Sur ${formatEUR(total)} de revenus, voici ta répartition 50 / 30 / 20.`
           : "Tu pourras ajouter tes revenus quand tu veux. Voici comment kōza les répartira."}
       </p>
-      <div className="mt-8 flex flex-col gap-3">
-        {CATEGORY_ORDER.map((key) => (
-          <Card key={key} className={CATEGORIES[key].bgClass} pad="p-5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <CatDot category={key} />
-                <span className="text-[14px] font-medium text-text">{CATEGORIES[key].label}</span>
-              </div>
-              <span className="num text-[20px] font-light text-text">
-                {formatEUR(envelopes[key])}
-              </span>
-            </div>
-          </Card>
-        ))}
+      <div className="mt-8">
+        <EnvelopesSummary envelopes={envelopes} />
       </div>
       <div className="mt-10">
         <ConfirmActions />

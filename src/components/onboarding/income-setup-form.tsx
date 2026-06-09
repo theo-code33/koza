@@ -9,6 +9,7 @@ import { Plus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { IconButton } from "@/components/ui/icon-button";
+import { currentMonth } from "@/lib/month";
 
 const formSchema = z.object({
   incomes: z
@@ -25,11 +26,6 @@ const formSchema = z.object({
 });
 
 type FormValues = z.infer<typeof formSchema>;
-
-function currentMonth(): string {
-  const now = new Date();
-  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
-}
 
 export function IncomeSetupForm() {
   const router = useRouter();

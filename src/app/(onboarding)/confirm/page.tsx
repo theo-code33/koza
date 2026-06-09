@@ -7,11 +7,7 @@ import { prisma } from "@/lib/prisma";
 import { computeEnvelopes } from "@/lib/budget";
 import { formatEUR } from "@/lib/formatters";
 import { CATEGORIES, CATEGORY_ORDER } from "@/lib/categories";
-
-function currentMonth(): string {
-  const now = new Date();
-  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
-}
+import { currentMonth } from "@/lib/month";
 
 export default async function ConfirmPage() {
   const incomes = await prisma.income.findMany({ where: { month: currentMonth() } });

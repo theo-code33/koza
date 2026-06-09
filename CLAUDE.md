@@ -55,9 +55,11 @@ On vise du **moderne et stable**. Versions de référence à l'initialisation :
 
 ### Base de données
 
-- **PostgreSQL 16** — en production ET en local (via Docker)
+- **Prisma Postgres** (PostgreSQL 16 hébergé) — base de **dev ET de prod**, via la connection string `DATABASE_URL`
 - **Prisma 7** — ORM, migrations, génération de types
   - Générateur **`prisma-client`** (sortie ESM dans `src/generated/prisma`), pas l'ancien `prisma-client-js`
+  - Connexion via le **driver adapter `@prisma/adapter-pg`** (`pg`) + **`prisma.config.ts`** (Prisma 7 retire `url` du schéma)
+  - `DATABASE_URL` obtenu via `npx prisma postgres link` — jamais commité (`.env` gitignoré, secret GitHub pour la CI)
   - Montants en **`Decimal`** (→ Postgres `NUMERIC`) — jamais `Float`, pour une précision exacte sur les sommes et ratios 50/30/20
   - Manipulation des montants via les `Decimal` Prisma / `decimal.js` côté logique métier — jamais d'arithmétique sur des `number` flottants
 - Pas de SQLite, pas de localStorage comme source de vérité
@@ -352,19 +354,16 @@ Règles :
 
 ### Développement local — `docker-compose.yml`
 
-Deux services :
+La base de dev est **Prisma Postgres (hébergé)**, pas un Postgres local — **pas de service `db`** dans le compose. Un seul service :
 
-1. **`db`** — PostgreSQL 16 Alpine
-   - Port : **hôte `5433` → conteneur `5432`** (évite le conflit avec un Postgres local déjà sur 5432 ; sur le réseau compose l'app joint `db:5432`)
-   - Volume persistant pour les données
-   - Variables : `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` via `.env`
-2. **`app`** — Next.js en mode dev
+1. **`app`** — Next.js en mode dev
    - Port : `3000`
    - Volume bind-mount du code source (hot reload)
-   - Dépend de `db`
-   - `DATABASE_URL` pointe vers le service `db`
+   - `env_file: .env` → se connecte à Prisma Postgres via `DATABASE_URL`
 
-Un fichier `.env.example` est fourni avec toutes les variables requises. `.env` est dans le `.gitignore`.
+> Récupère ta connection string avec `npx prisma postgres link --database <id>` (écrit `DATABASE_URL` dans `.env`). Lancer l'app sans Docker fonctionne aussi : `npm run dev`.
+
+Un fichier `.env.example` documente la variable requise. `.env` est dans le `.gitignore`.
 
 ### Production — `Dockerfile` (multi-stage)
 

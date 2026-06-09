@@ -406,6 +406,40 @@ Retourne `200 OK` avec un check de connexion Prisma. Utilisé par le `HEALTHCHEC
 
 ---
 
+## Déploiement — Vercel + Prisma Postgres
+
+Déploiement sur **Vercel** ; base de données **Prisma Postgres** en deux instances isolées :
+
+| Base | Usage | `migrate` |
+|---|---|---|
+| `koza-dev` | dev local quotidien | `migrate dev` (+ `db seed`) |
+| `koza-prod` | production (vraies données) | **`migrate deploy` uniquement** |
+
+> Tests CI = Postgres **éphémère** (service GitHub Actions), jamais dev ni prod.
+
+### Où vit `DATABASE_URL` (jamais la prod dans le repo)
+
+- **`.env` local** (gitignoré) → URL **dev** (via `npx prisma postgres link`).
+- **Vercel → Production** → URL **prod** (`koza-prod`).
+- **Vercel → Preview** (option) → URL dev ou base de preview dédiée.
+- **Secret GitHub `DATABASE_URL`** → CI, pour `prisma generate` (ne se connecte pas).
+- **Secret GitHub `PROD_DATABASE_URL`** → workflow `deploy.yml`, pour `migrate deploy`.
+
+### Flux
+
+```
+dev   : edit schema → npm run db:migrate          (migrate dev → koza-dev) → commit
+prod  : push sur main →
+          • .github/workflows/deploy.yml → npm run db:migrate:deploy  (→ koza-prod)
+          • Vercel (intégration Git) build & déploie l'app
+```
+
+- Build Vercel : `npm install` déclenche `postinstall: prisma generate`, puis `next build`.
+- Runtime : l'app se connecte à `koza-prod` via l'adapter `@prisma/adapter-pg`.
+- **Jamais `migrate dev` ni `db seed` contre la prod.**
+
+---
+
 ## Conventions Git
 
 ### Branche principale

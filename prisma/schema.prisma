@@ -1,0 +1,15 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model UserSettings {
+  id                  String  @id @default("default")
+  theme               String  @default("light")
+  locale              String  @default("fr")
+  onboardingCompleted Boolean @default(false)
+}

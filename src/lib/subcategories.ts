@@ -41,3 +41,8 @@ export const SUBCATEGORY_KEYS: Set<string> = new Set(ALL_SUBCATEGORIES.map((sub)
 export function isValidSubcategory(category: CategoryKey, key: string): boolean {
   return SUBCATEGORIES[category].some((sub) => sub.key === key);
 }
+
+// Label FR d'une sous-catégorie (repli sur la clé si inconnue).
+export function subcategoryLabel(key: string): string {
+  return ALL_SUBCATEGORIES.find((sub) => sub.key === key)?.label ?? key;
+}

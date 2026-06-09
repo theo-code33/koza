@@ -1,26 +1,84 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Fonts (wired via next/font in layout.tsx) */
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-serif: var(--font-instrument), Georgia, serif;
+
+  /* Surfaces & text (light) */
+  --color-bg: #f9f8f6;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f3f2ef;
+  --color-text: #1c1c1e;
+  --color-text-secondary: #6e6e73;
+  --color-muted: #aeaeb2;
+
+  /* Categories */
+  --color-essential: #7d9e8c;
+  --color-essential-bg: #eef3f0;
+  --color-leisure: #9b8ead;
+  --color-leisure-bg: #f2eff7;
+  --color-savings: #7a9bb5;
+  --color-savings-bg: #ecf2f7;
+
+  /* Signals */
+  --color-warning: #c4956a;
+  --color-warning-bg: #fbf3ea;
+  --color-over: #b07070;
+  --color-over-bg: #f7edec;
+  --color-accent: #5a7a6a;
+  --color-accent-soft: #e9efeb;
+  --color-line: rgba(0, 0, 0, 0.06);
+
+  /* Radii */
+  --radius-card: 16px;
+  --radius-button: 12px;
+  --radius-input: 10px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 2px 8px rgba(0, 0, 0, 0.06), 0 8px 32px rgba(0, 0, 0, 0.06);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Dark mode token overrides — aligned with the Claude Design handoff */
+.dark {
+  --color-bg: #1a1a1c;
+  --color-surface: #242426;
+  --color-surface-alt: #2c2c2e;
+  --color-text: #e5e5e7;
+  --color-text-secondary: #98989d;
+  --color-muted: #6e6e73;
+
+  --color-essential: #8fb09e;
+  --color-essential-bg: #232a26;
+  --color-leisure: #ada0bf;
+  --color-leisure-bg: #2a2630;
+  --color-savings: #8aadc7;
+  --color-savings-bg: #222b32;
+
+  --color-warning: #d2a77e;
+  --color-warning-bg: #2e281f;
+  --color-over: #c18a8a;
+  --color-over-bg: #2e2323;
+  --color-accent: #7a9e8a;
+  --color-accent-soft: #25302a;
+  --color-line: rgba(255, 255, 255, 0.06);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
 }

@@ -15,6 +15,9 @@ export default async function Home() {
       <Link href="/incomes" className="text-[14px] font-medium text-accent">
         Gérer mes revenus
       </Link>
+      <Link href="/expenses" className="text-[14px] font-medium text-accent">
+        Suivre mes dépenses
+      </Link>
     </main>
   );
 }

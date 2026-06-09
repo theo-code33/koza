@@ -12,3 +12,15 @@ export function formatEUR(
     currency: "EUR",
   }).format(value);
 }
+
+// Parse "YYYY-MM-DD" en date locale (évite le décalage de fuseau d'un parse UTC).
+function toLocalDate(date: string | Date): Date {
+  if (typeof date !== "string") return date;
+  const [year, month, day] = date.split("-").map(Number);
+  return new Date(year, month - 1, day);
+}
+
+// Formate une date selon la locale (JJ/MM/AAAA en FR).
+export function formatDate(date: string | Date, locale: "fr" | "en" = "fr"): string {
+  return new Intl.DateTimeFormat(locale === "fr" ? "fr-FR" : "en-US").format(toLocalDate(date));
+}

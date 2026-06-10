@@ -2,5 +2,15 @@
   "common": {
     "appName": "kōza",
     "appTagline": "Personal budget tracker — 50 / 30 / 20"
+  },
+  "settings": {
+    "title": "Settings",
+    "appearance": "Appearance",
+    "darkTheme": "Dark theme",
+    "language": "Language",
+    "incomes": "Income",
+    "manageIncomes": "Manage my income",
+    "data": "Data",
+    "exportData": "Export my data (JSON)"
   }
 }

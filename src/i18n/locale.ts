@@ -1,15 +1,11 @@
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
+import { DEFAULT_LOCALE, isLocale, LOCALE_COOKIE, type Locale } from "@/i18n/config";
 
-export const LOCALES = ["fr", "en"] as const;
-export type Locale = (typeof LOCALES)[number];
-export const DEFAULT_LOCALE: Locale = "fr";
-export const LOCALE_COOKIE = "NEXT_LOCALE";
 const SETTINGS_ID = "default";
 
-export function isLocale(value: unknown): value is Locale {
-  return typeof value === "string" && (LOCALES as readonly string[]).includes(value);
-}
+// Ré-export pour les consommateurs serveur (les Client Components importent depuis @/i18n/config).
+export { LOCALES, DEFAULT_LOCALE, LOCALE_COOKIE, isLocale, type Locale } from "@/i18n/config";
 
 // Locale active : cookie NEXT_LOCALE (rapide), sinon préférence DB, sinon défaut.
 export async function resolveLocale(): Promise<Locale> {

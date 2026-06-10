@@ -2,5 +2,15 @@
   "common": {
     "appName": "kōza",
     "appTagline": "Suivi de budget personnel — 50 / 30 / 20"
+  },
+  "settings": {
+    "title": "Réglages",
+    "appearance": "Apparence",
+    "darkTheme": "Thème sombre",
+    "language": "Langue",
+    "incomes": "Revenus",
+    "manageIncomes": "Gérer mes revenus",
+    "data": "Données",
+    "exportData": "Exporter mes données (JSON)"
   }
 }

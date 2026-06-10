@@ -1,15 +1,13 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi } from "vitest";
+import { render } from "@testing-library/react";
 
-vi.mock("next/navigation", () => ({ redirect: vi.fn() }));
+vi.mock("next/navigation", () => ({ redirect: vi.fn(), useRouter: () => ({ push: vi.fn() }) }));
 
 import Home from "@/app/page";
-import { redirect } from "next/navigation";
 
 describe("Home", () => {
-  beforeEach(() => vi.clearAllMocks());
-
-  it("redirects to the dashboard", () => {
-    Home();
-    expect(redirect).toHaveBeenCalledWith("/dashboard");
+  it("renders the landing page", () => {
+    const { container } = render(<Home />);
+    expect(container).not.toBeEmptyDOMElement();
   });
 });

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function HeroEnhanced() {
   return (
@@ -13,7 +13,8 @@ export default function HeroEnhanced() {
         </h1>
 
         <p className="text-xl text-[var(--color-text-secondary)] mb-10 leading-relaxed max-w-2xl mx-auto">
-          Suivez vos revenus et dépenses sans stress. La règle 50/30/20 vous guide automatiquement vers une gestion sereine et durable de votre argent.
+          Suivez vos revenus et dépenses sans stress. La règle 50/30/20 vous guide automatiquement
+          vers une gestion sereine et durable de votre argent.
         </p>
 
         <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
@@ -33,7 +34,9 @@ export default function HeroEnhanced() {
 
         {/* Trust indicators */}
         <div className="pt-8 border-t border-[var(--color-line)]">
-          <p className="text-sm text-[var(--color-text-secondary)] mb-6">Rejoignez ceux qui ont retrouvé la sérénité financière</p>
+          <p className="text-sm text-[var(--color-text-secondary)] mb-6">
+            Rejoignez ceux qui ont retrouvé la sérénité financière
+          </p>
           <div className="grid grid-cols-3 gap-6 text-center">
             <div>
               <p className="text-2xl font-semibold text-[var(--color-essential)]">100%</p>
@@ -41,11 +44,15 @@ export default function HeroEnhanced() {
             </div>
             <div>
               <p className="text-2xl font-semibold text-[var(--color-leisure)]">3 min</p>
-              <p className="text-xs text-[var(--color-text-secondary)] mt-2">Mise en place rapide</p>
+              <p className="text-xs text-[var(--color-text-secondary)] mt-2">
+                Mise en place rapide
+              </p>
             </div>
             <div>
               <p className="text-2xl font-semibold text-[var(--color-savings)]">0 tracas</p>
-              <p className="text-xs text-[var(--color-text-secondary)] mt-2">Pas d'intégration bancaire</p>
+              <p className="text-xs text-[var(--color-text-secondary)] mt-2">
+                Pas d&apos;intégration bancaire
+              </p>
             </div>
           </div>
         </div>

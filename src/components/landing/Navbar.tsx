@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useState } from 'react';
-import JoselineEasterEgg from './JoselineEasterEgg';
-import { redirect } from 'next/navigation';
+import Link from "next/link";
+import { useState } from "react";
+import JoselineEasterEgg from "./JoselineEasterEgg";
+import { redirect } from "next/navigation";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -19,7 +19,7 @@ export default function Navbar() {
       setShowJoseline(true);
       setLogoClicks(0);
     } else {
-      redirect("/")
+      redirect("/");
     }
 
     // Reset après 2 secondes d'inactivité
@@ -44,13 +44,22 @@ export default function Navbar() {
 
           {/* Desktop menu */}
           <div className="hidden md:flex gap-8 items-center">
-            <a href="#features" className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)]">
+            <a
+              href="#features"
+              className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
+            >
               Fonctionnalités
             </a>
-            <a href="#benefits" className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)]">
+            <a
+              href="#benefits"
+              className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
+            >
               Avantages
             </a>
-            <a href="#faq" className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)]">
+            <a
+              href="#faq"
+              className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
+            >
               FAQ
             </a>
             <Link
@@ -67,12 +76,7 @@ export default function Navbar() {
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Menu"
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -107,10 +111,7 @@ export default function Navbar() {
             >
               FAQ
             </a>
-            <Link
-              href="/dashboard"
-              className="block text-sm text-[var(--color-accent)]"
-            >
+            <Link href="/dashboard" className="block text-sm text-[var(--color-accent)]">
               Tableau de bord
             </Link>
           </div>

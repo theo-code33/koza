@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 interface JoselineEasterEggProps {
   isVisible: boolean;
@@ -15,8 +15,8 @@ export default function JoselineEasterEgg({ isVisible, onClose }: JoselineEaster
 
     const moveJoseline = () => {
       setPosition({
-        x: Math.random() * 80 + 10 - (96 / 2),
-        y: Math.random() * 60 + 10 - (96 / 2),
+        x: Math.random() * 80 + 10 - 96 / 2,
+        y: Math.random() * 60 + 10 - 96 / 2,
       });
     };
 
@@ -29,10 +29,7 @@ export default function JoselineEasterEgg({ isVisible, onClose }: JoselineEaster
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
       {/* Semi-transparent background */}
-      <div
-        className="absolute inset-0 bg-black/20 pointer-events-auto"
-        onClick={onClose}
-      />
+      <div className="absolute inset-0 bg-black/20 pointer-events-auto" onClick={onClose} />
 
       {/* Joseline the unicorn */}
       <div
@@ -40,17 +37,13 @@ export default function JoselineEasterEgg({ isVisible, onClose }: JoselineEaster
         style={{
           left: `${position.x}%`,
           top: `${position.y}%`,
-          transition: 'all 1s ease-in-out',
+          transition: "all 1s ease-in-out",
         }}
         onClick={onClose}
       >
-        <div className="text-8xl cursor-pointer hover:scale-110 transition-transform">
-          🦄
-        </div>
+        <div className="text-8xl cursor-pointer hover:scale-110 transition-transform">🦄</div>
         <div className="text-center mt-2 whitespace-nowrap">
-          <p className="text-2xl font-serif font-semibold text-[var(--color-accent)]">
-            Joseline
-          </p>
+          <p className="text-2xl font-serif font-semibold text-[var(--color-accent)]">Joseline</p>
           <p className="text-sm text-[var(--color-text-secondary)]">
             Licorne d&apos;Aqua Licorne 🌊✨
           </p>

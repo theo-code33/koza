@@ -6,10 +6,10 @@ describe("categories", () => {
     expect(CATEGORY_ORDER).toEqual(["essential", "leisure", "savings"]);
   });
 
-  it("maps each category to a French label and token classes", () => {
-    expect(CATEGORIES.essential.label).toBe("Essentiels");
-    expect(CATEGORIES.leisure.label).toBe("Loisirs");
-    expect(CATEGORIES.savings.label).toBe("Épargne");
+  it("maps each category to its token classes and share", () => {
+    expect(CATEGORIES.essential.share).toBe(0.5);
+    expect(CATEGORIES.leisure.share).toBe(0.3);
+    expect(CATEGORIES.savings.share).toBe(0.2);
     expect(CATEGORIES.essential.dotClass).toBe("bg-essential");
     expect(CATEGORIES.leisure.bgClass).toBe("bg-leisure-bg");
     expect(CATEGORIES.savings.textClass).toBe("text-savings");

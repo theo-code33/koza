@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { SUBCATEGORIES } from "@/lib/subcategories";
 import { CATEGORIES, type CategoryKey } from "@/lib/categories";
 import { cn } from "@/lib/cn";
@@ -9,6 +10,7 @@ interface SubcatChipsProps {
 }
 
 export function SubcatChips({ category, value, onChange }: SubcatChipsProps) {
+  const t = useTranslations("subcategories");
   return (
     <div className="flex flex-wrap gap-2">
       {SUBCATEGORIES[category].map((sub) => {
@@ -26,7 +28,7 @@ export function SubcatChips({ category, value, onChange }: SubcatChipsProps) {
                 : "bg-surface-alt text-text-secondary",
             )}
           >
-            {sub.label}
+            {t(sub.key)}
           </button>
         );
       })}

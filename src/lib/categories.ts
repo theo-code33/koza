@@ -2,7 +2,6 @@ export type CategoryKey = "essential" | "leisure" | "savings";
 
 export interface CategoryConfig {
   key: CategoryKey;
-  label: string;
   share: number;
   dotClass: string;
   textClass: string;
@@ -12,7 +11,6 @@ export interface CategoryConfig {
 export const CATEGORIES: Record<CategoryKey, CategoryConfig> = {
   essential: {
     key: "essential",
-    label: "Essentiels",
     share: 0.5,
     dotClass: "bg-essential",
     textClass: "text-essential",
@@ -20,7 +18,6 @@ export const CATEGORIES: Record<CategoryKey, CategoryConfig> = {
   },
   leisure: {
     key: "leisure",
-    label: "Loisirs",
     share: 0.3,
     dotClass: "bg-leisure",
     textClass: "text-leisure",
@@ -28,7 +25,6 @@ export const CATEGORIES: Record<CategoryKey, CategoryConfig> = {
   },
   savings: {
     key: "savings",
-    label: "Épargne",
     share: 0.2,
     dotClass: "bg-savings",
     textClass: "text-savings",

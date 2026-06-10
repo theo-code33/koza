@@ -1,8 +1,8 @@
+import { useTranslations } from "next-intl";
 import { Pencil, Trash2 } from "lucide-react";
 import { CatDot } from "@/components/ui/cat-dot";
 import { IconButton } from "@/components/ui/icon-button";
 import { formatEUR, formatDate } from "@/lib/formatters";
-import { subcategoryLabel } from "@/lib/subcategories";
 import type { CategoryKey } from "@/lib/categories";
 
 export interface ExpenseRowData {
@@ -22,6 +22,7 @@ interface ExpenseRowProps {
 }
 
 export function ExpenseRow({ expense, onEdit, onDelete }: ExpenseRowProps) {
+  const t = useTranslations("subcategories");
   return (
     <div className="card flex items-center justify-between p-4">
       <div className="flex items-center gap-3">
@@ -29,7 +30,7 @@ export function ExpenseRow({ expense, onEdit, onDelete }: ExpenseRowProps) {
         <div>
           <div className="text-[15px] font-medium text-text">{expense.description}</div>
           <div className="text-[13px] text-text-secondary">
-            {subcategoryLabel(expense.subcategory)} · {formatDate(expense.date)}
+            {t(expense.subcategory)} · {formatDate(expense.date)}
           </div>
         </div>
       </div>

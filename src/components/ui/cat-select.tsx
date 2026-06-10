@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { CATEGORIES, CATEGORY_ORDER, type CategoryKey } from "@/lib/categories";
 import { cn } from "@/lib/cn";
 
@@ -7,6 +8,7 @@ interface CatSelectProps {
 }
 
 export function CatSelect({ value, onChange }: CatSelectProps) {
+  const t = useTranslations("categories");
   return (
     <div className="grid grid-cols-3 gap-2">
       {CATEGORY_ORDER.map((key) => {
@@ -25,7 +27,7 @@ export function CatSelect({ value, onChange }: CatSelectProps) {
                 : "bg-surface-alt text-text-secondary",
             )}
           >
-            {category.label}
+            {t(key)}
           </button>
         );
       })}

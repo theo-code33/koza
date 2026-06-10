@@ -12,5 +12,29 @@
     "manageIncomes": "Manage my income",
     "data": "Data",
     "exportData": "Export my data (JSON)"
+  },
+  "categories": {
+    "essential": "Essentials",
+    "leisure": "Leisure",
+    "savings": "Savings"
+  },
+  "subcategories": {
+    "housing": "Housing",
+    "food": "Food",
+    "transport": "Transport",
+    "health": "Health",
+    "insurance": "Insurance",
+    "bills": "Bills",
+    "restaurants": "Restaurants",
+    "outings": "Outings",
+    "vacations": "Holidays",
+    "sport": "Sport",
+    "games": "Video games",
+    "culture": "Culture",
+    "savings_account": "Savings account",
+    "etf": "ETFs",
+    "stocks": "Stocks",
+    "real_estate": "Real estate",
+    "emergency_fund": "Emergency fund"
   }
 }

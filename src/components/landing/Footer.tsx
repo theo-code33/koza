@@ -37,12 +37,12 @@ export default function Footer() {
             <p className="font-semibold text-sm uppercase mb-4 text-[var(--color-muted)]">Legal</p>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)]">
-                  Conditions d'utilisation
+                <a href="/terms" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)]">
+                  Conditions d&apos;utilisation
                 </a>
               </li>
               <li>
-                <a href="#" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)]">
+                <a href="/privacy" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)]">
                   Politique de confidentialité
                 </a>
               </li>

@@ -11,7 +11,8 @@ describe("AppNav", () => {
     expect(screen.getAllByRole("link", { name: "Tableau de bord" })).toHaveLength(2);
     expect(screen.getAllByRole("link", { name: "Dépenses" })).toHaveLength(2);
     expect(screen.getAllByRole("link", { name: "Budgets" })).toHaveLength(2);
-    expect(screen.getAllByRole("link", { name: "Revenus" })).toHaveLength(2);
+    expect(screen.getAllByRole("link", { name: "Réglages" })).toHaveLength(2);
+    expect(screen.queryByRole("link", { name: "Revenus" })).not.toBeInTheDocument();
   });
 
   it("marks the active destination", () => {

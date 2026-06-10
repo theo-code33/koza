@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Receipt, Target, Wallet, type LucideIcon } from "lucide-react";
+import { LayoutDashboard, Receipt, Target, Settings, type LucideIcon } from "lucide-react";
 
 interface NavItem {
   href: string;
@@ -14,7 +14,7 @@ const ITEMS: NavItem[] = [
   { href: "/dashboard", label: "Tableau de bord", icon: LayoutDashboard },
   { href: "/expenses", label: "Dépenses", icon: Receipt },
   { href: "/budgets", label: "Budgets", icon: Target },
-  { href: "/incomes", label: "Revenus", icon: Wallet },
+  { href: "/settings", label: "Réglages", icon: Settings },
 ];
 
 function isActive(pathname: string, href: string): boolean {

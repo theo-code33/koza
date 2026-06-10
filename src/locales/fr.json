@@ -315,6 +315,13 @@
     "real_estate": "Immobilier",
     "emergency_fund": "Fonds d'urgence"
   },
+  "notifications": {
+    "savingsGoalNear": "Plus que {amount} pour {name} — tu y es presque !",
+    "savingsGoalReached": "Objectif {name} atteint 🎉",
+    "budgetWarning": "Tu approches de ton budget {name} ({percent} %).",
+    "budgetOver": "Budget {name} dépassé — ça arrive, le surplus se reporte.",
+    "categoryOver": "Tes dépenses {category} dépassent l'objectif du mois."
+  },
   "legal": {
     "privacy": {
       "metaTitle": "Politique de confidentialité - kōza",

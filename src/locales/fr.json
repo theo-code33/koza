@@ -367,6 +367,44 @@
       "s10Body": "Nous pouvons mettre à jour cette politique de confidentialité de temps à autre. Les changements importants seront communiqués via l'application. Votre utilisation continue de kōza après une modification constitue votre acceptation.",
       "s11Title": "11. Contact",
       "s11Body": "Si vous avez des questions sur cette politique de confidentialité ou sur la façon dont nous traitons vos données, veuillez nous contacter à :"
+    },
+    "terms": {
+      "metaTitle": "Conditions d'utilisation - kōza",
+      "metaDescription": "Conditions d'utilisation de l'application kōza",
+      "pageTitle": "Conditions d'utilisation",
+      "lastUpdated": "Dernière mise à jour : 10 juin 2026",
+      "s1Title": "1. Acceptation des conditions",
+      "s1Body": "En accédant et en utilisant kōza, vous acceptez de respecter les présentes conditions d'utilisation et toutes les lois et réglementations applicables. Si vous n'acceptez pas ces conditions, veuillez cesser d'utiliser le service immédiatement.",
+      "s2Title": "2. Licence d'utilisation",
+      "s2Body": "kōza vous accorde une licence limitée, non exclusive, révocable et non transférable pour accéder et utiliser l'application à des fins personnelles et non commerciales. Vous ne pouvez pas reproduire, distribuer, transmettre ou exploiter le contenu de kōza sans autorisation préalable écrite.",
+      "s3Title": "3. Droits d'auteur",
+      "s3Body": "Tout le contenu de kōza, y compris les textes, graphiques, logos et images, est protégé par le droit d'auteur. © 2026 kōza. Tous droits réservés. Vous pouvez télécharger votre contenu personnel pour votre usage personnel uniquement.",
+      "s4Title": "4. Disclaimer (Exonération de responsabilité)",
+      "s4Body1": "kōza est fourni « tel quel » sans aucune garantie, expresse ou implicite. Nous ne garantissons pas l'exactitude, la complétude ou l'utilité des informations fournies par l'application. Les conseils financiers ne doivent pas être considérés comme un avis professionnel.",
+      "s4Body2": "Nous déclinons toute responsabilité pour les pertes financières, les dommages indirects ou tout autre préjudice résultant de l'utilisation de kōza.",
+      "s5Title": "5. Limitation de responsabilité",
+      "s5Body": "En aucun cas kōza ne sera responsable des dommages directs, indirects, spéciaux, accidentels ou punitifs découlant de votre utilisation de l'application, même si nous avons été informés de la possibilité de tels dommages.",
+      "s6Title": "6. Modifications du service",
+      "s6Body": "Nous nous réservons le droit de modifier ou d'interrompre le service à tout moment, avec ou sans préavis. Nous ne serons pas responsables envers vous ou un tiers pour toute modification, suspension ou interruption du service.",
+      "s7Title": "7. Données utilisateur",
+      "s7Body": "Vous êtes responsable de toutes les données que vous soumettez à kōza. Vous garantissez que vous avez le droit de soumettre ces données et qu'elles ne violent aucune loi ou droit de tiers. Vous conservez la propriété intégrale de vos données.",
+      "s8Title": "8. Utilisation acceptable",
+      "s8Intro": "Vous ne devez pas utiliser kōza pour :",
+      "s8Items": [
+        "Violer les lois ou réglementations applicables",
+        "Accéder au compte d'un autre utilisateur sans permission",
+        "Introduire des virus ou codes malveillants",
+        "Harceler, menacer ou intimider d'autres utilisateurs",
+        "Envoyer du contenu spam ou publicitaire non sollicité"
+      ],
+      "s9Title": "9. Résiliation",
+      "s9Body": "Nous nous réservons le droit de suspendre ou de résilier votre accès à kōza si nous jugeons, à notre seule discrétion, que vous avez violé ces conditions ou le droit applicable.",
+      "s10Title": "10. Droit applicable",
+      "s10Body": "Ces conditions d'utilisation sont régies par et construites conformément aux lois de France, sans considération pour ses principes de conflits de lois.",
+      "s11Title": "11. Modifications des conditions",
+      "s11Body": "Nous nous réservons le droit de modifier ces conditions d'utilisation à tout moment. Vous êtes responsable de revoir régulièrement ces conditions. Votre utilisation continue de kōza après toute modification constitue votre acceptation des conditions modifiées.",
+      "s12Title": "12. Contact",
+      "s12Body": "Si vous avez des questions concernant ces conditions d'utilisation, veuillez nous contacter à :"
     }
   }
 }

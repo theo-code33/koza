@@ -367,6 +367,44 @@
       "s10Body": "We may update this privacy policy from time to time. Significant changes will be communicated through the application. Your continued use of kōza after a change constitutes your acceptance.",
       "s11Title": "11. Contact",
       "s11Body": "If you have any questions about this privacy policy or how we handle your data, please contact us at:"
+    },
+    "terms": {
+      "metaTitle": "Terms of use - kōza",
+      "metaDescription": "Terms of use of the kōza application",
+      "pageTitle": "Terms of use",
+      "lastUpdated": "Last updated: 10 June 2026",
+      "s1Title": "1. Acceptance of terms",
+      "s1Body": "By accessing and using kōza, you agree to comply with these terms of use and all applicable laws and regulations. If you do not accept these terms, please stop using the service immediately.",
+      "s2Title": "2. Licence of use",
+      "s2Body": "kōza grants you a limited, non-exclusive, revocable and non-transferable licence to access and use the application for personal, non-commercial purposes. You may not reproduce, distribute, transmit or exploit kōza's content without prior written authorisation.",
+      "s3Title": "3. Copyright",
+      "s3Body": "All kōza content, including text, graphics, logos and images, is protected by copyright. © 2026 kōza. All rights reserved. You may download your personal content for your personal use only.",
+      "s4Title": "4. Disclaimer",
+      "s4Body1": "kōza is provided \"as is\" without any warranty, express or implied. We do not guarantee the accuracy, completeness or usefulness of the information provided by the application. Financial guidance should not be considered professional advice.",
+      "s4Body2": "We disclaim all liability for financial losses, indirect damages or any other harm resulting from the use of kōza.",
+      "s5Title": "5. Limitation of liability",
+      "s5Body": "In no event shall kōza be liable for direct, indirect, special, incidental or punitive damages arising from your use of the application, even if we have been advised of the possibility of such damages.",
+      "s6Title": "6. Changes to the service",
+      "s6Body": "We reserve the right to modify or discontinue the service at any time, with or without notice. We shall not be liable to you or any third party for any modification, suspension or discontinuation of the service.",
+      "s7Title": "7. User data",
+      "s7Body": "You are responsible for all data you submit to kōza. You warrant that you have the right to submit this data and that it does not violate any law or third-party right. You retain full ownership of your data.",
+      "s8Title": "8. Acceptable use",
+      "s8Intro": "You must not use kōza to:",
+      "s8Items": [
+        "Violate applicable laws or regulations",
+        "Access another user's account without permission",
+        "Introduce viruses or malicious code",
+        "Harass, threaten or intimidate other users",
+        "Send spam or unsolicited advertising content"
+      ],
+      "s9Title": "9. Termination",
+      "s9Body": "We reserve the right to suspend or terminate your access to kōza if we determine, at our sole discretion, that you have violated these terms or applicable law.",
+      "s10Title": "10. Governing law",
+      "s10Body": "These terms of use are governed by and construed in accordance with the laws of France, without regard to its conflict of law principles.",
+      "s11Title": "11. Changes to the terms",
+      "s11Body": "We reserve the right to modify these terms of use at any time. You are responsible for regularly reviewing these terms. Your continued use of kōza after any change constitutes your acceptance of the modified terms.",
+      "s12Title": "12. Contact",
+      "s12Body": "If you have any questions about these terms of use, please contact us at:"
     }
   }
 }

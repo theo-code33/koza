@@ -46,7 +46,28 @@ export const budgetCreateSchema = z.object({
     .optional(),
 });
 
+const amountString = z
+  .string()
+  .regex(/^\d+(\.\d{1,2})?$/)
+  .refine((value) => Number(value) > 0);
+const monthString = z.string().regex(/^\d{4}-\d{2}$/);
+
+export const recurringCreateSchema = z.object({
+  label: z.string().trim().min(1).max(80),
+  type: z.enum(["FIXED", "VARIABLE"]),
+  amount: amountString,
+  category: z.enum(["essential", "leisure", "savings"]),
+  subcategory: z.string().min(1),
+  frequency: z.enum(["MONTHLY", "QUARTERLY", "YEARLY"]),
+  anchorMonth: monthString,
+  endMonth: monthString.nullable().optional(),
+  active: z.boolean().optional(),
+});
+
+export const occurrenceConfirmSchema = z.object({ amount: amountString });
+
 export type IncomeCreateInput = z.infer<typeof incomeCreateSchema>;
+export type RecurringCreateInput = z.infer<typeof recurringCreateSchema>;
 export type SettingsUpdateInput = z.infer<typeof settingsUpdateSchema>;
 export type ExpenseCreateInput = z.infer<typeof expenseCreateSchema>;
 export type BudgetCreateInput = z.infer<typeof budgetCreateSchema>;

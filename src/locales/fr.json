@@ -4,6 +4,8 @@
     "appTagline": "Suivi de budget personnel — 50 / 30 / 20",
     "source": "Source",
     "amount": "Montant",
+    "description": "Description",
+    "date": "Date",
     "continue": "Continuer",
     "cancel": "Annuler",
     "save": "Enregistrer",
@@ -39,7 +41,9 @@
   "validation": {
     "sourceRequired": "Source requise",
     "amountInvalid": "Montant invalide",
-    "amountPositive": "Montant positif requis"
+    "amountPositive": "Montant positif requis",
+    "descriptionRequired": "Description requise",
+    "dateRequired": "Date requise"
   },
   "dashboard": {
     "closedReadOnly": "Mois clôturé — lecture seule.",
@@ -63,6 +67,23 @@
     "add": "Ajouter un revenu",
     "deleteTitle": "Supprimer ce revenu ?",
     "deleteMessage": "« {source} » sera retiré de ce mois."
+  },
+  "expenses": {
+    "pageTitle": "Tes dépenses",
+    "summary": "{amount} dépensés ce mois-ci.",
+    "summaryEmpty": "Aucune dépense pour l'instant ce mois-ci.",
+    "manageRecurring": "Gérer les dépenses récurrentes",
+    "newTitle": "Nouvelle dépense",
+    "editTitle": "Modifier la dépense",
+    "descriptionPlaceholder": "Courses, restaurant…",
+    "budgetOptional": "Budget (optionnel)",
+    "noBudget": "Aucun",
+    "deleteAria": "Supprimer la dépense",
+    "empty": "Aucune dépense ce mois. Ajoute ta première dépense.",
+    "closedReadOnly": "Mois clôturé — lecture seule.",
+    "add": "Ajouter une dépense",
+    "deleteTitle": "Supprimer cette dépense ?",
+    "deleteMessage": "« {description} » sera retirée de ce mois."
   },
   "settings": {
     "title": "Réglages",

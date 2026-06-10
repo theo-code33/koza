@@ -4,6 +4,8 @@
     "appTagline": "Personal budget tracker — 50 / 30 / 20",
     "source": "Source",
     "amount": "Amount",
+    "description": "Description",
+    "date": "Date",
     "continue": "Continue",
     "cancel": "Cancel",
     "save": "Save",
@@ -39,7 +41,9 @@
   "validation": {
     "sourceRequired": "Source required",
     "amountInvalid": "Invalid amount",
-    "amountPositive": "Amount must be positive"
+    "amountPositive": "Amount must be positive",
+    "descriptionRequired": "Description required",
+    "dateRequired": "Date required"
   },
   "dashboard": {
     "closedReadOnly": "Closed month — read-only.",
@@ -63,6 +67,23 @@
     "add": "Add income",
     "deleteTitle": "Delete this income?",
     "deleteMessage": "“{source}” will be removed from this month."
+  },
+  "expenses": {
+    "pageTitle": "Your expenses",
+    "summary": "{amount} spent this month.",
+    "summaryEmpty": "No expenses yet this month.",
+    "manageRecurring": "Manage recurring expenses",
+    "newTitle": "New expense",
+    "editTitle": "Edit expense",
+    "descriptionPlaceholder": "Groceries, restaurant…",
+    "budgetOptional": "Budget (optional)",
+    "noBudget": "None",
+    "deleteAria": "Delete expense",
+    "empty": "No expenses this month. Add your first expense.",
+    "closedReadOnly": "Closed month — read-only.",
+    "add": "Add expense",
+    "deleteTitle": "Delete this expense?",
+    "deleteMessage": "“{description}” will be removed from this month."
   },
   "settings": {
     "title": "Settings",

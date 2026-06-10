@@ -23,6 +23,7 @@ interface ExpenseRowProps {
 
 export function ExpenseRow({ expense, onEdit, onDelete }: ExpenseRowProps) {
   const t = useTranslations("subcategories");
+  const te = useTranslations("expenses");
   const locale = useLocale() as "fr" | "en";
   return (
     <div className="card flex items-center justify-between p-4">
@@ -37,10 +38,8 @@ export function ExpenseRow({ expense, onEdit, onDelete }: ExpenseRowProps) {
       </div>
       <div className="flex items-center gap-1">
         <span className="num mr-1 text-[15px] text-text">{formatEUR(expense.amount, locale)}</span>
-        {onEdit ? <IconButton icon={Pencil} label="Modifier la dépense" onClick={onEdit} /> : null}
-        {onDelete ? (
-          <IconButton icon={Trash2} label="Supprimer la dépense" onClick={onDelete} />
-        ) : null}
+        {onEdit ? <IconButton icon={Pencil} label={te("editTitle")} onClick={onEdit} /> : null}
+        {onDelete ? <IconButton icon={Trash2} label={te("deleteAria")} onClick={onDelete} /> : null}
       </div>
     </div>
   );

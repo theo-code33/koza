@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -10,19 +11,14 @@ import { CatSelect } from "@/components/ui/cat-select";
 import { SubcatChips } from "@/components/expenses/subcat-chips";
 import { defaultSubcategory } from "@/lib/subcategories";
 
-const formSchema = z.object({
-  amount: z
-    .string()
-    .regex(/^\d+(\.\d{1,2})?$/, "Montant invalide")
-    .refine((value) => Number(value) > 0, "Montant positif requis"),
-  description: z.string().trim().min(1, "Description requise").max(120),
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date requise"),
-  category: z.enum(["essential", "leisure", "savings"]),
-  subcategory: z.string().min(1),
-  budgetId: z.string(),
-});
-
-type FormValues = z.infer<typeof formSchema>;
+interface FormValues {
+  amount: string;
+  description: string;
+  date: string;
+  category: "essential" | "leisure" | "savings";
+  subcategory: string;
+  budgetId: string;
+}
 
 export interface BudgetOption {
   id: string;
@@ -53,7 +49,27 @@ export function ExpenseQuickForm({
   onSuccess,
   onCancel,
 }: ExpenseQuickFormProps) {
+  const t = useTranslations("expenses");
+  const tc = useTranslations("common");
+  const tv = useTranslations("validation");
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const formSchema = useMemo(
+    () =>
+      z.object({
+        amount: z
+          .string()
+          .regex(/^\d+(\.\d{1,2})?$/, tv("amountInvalid"))
+          .refine((value) => Number(value) > 0, tv("amountPositive")),
+        description: z.string().trim().min(1, tv("descriptionRequired")).max(120),
+        date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, tv("dateRequired")),
+        category: z.enum(["essential", "leisure", "savings"]),
+        subcategory: z.string().min(1),
+        budgetId: z.string(),
+      }),
+    [tv],
+  );
+
   const {
     register,
     control,
@@ -93,21 +109,21 @@ export function ExpenseQuickForm({
       if (!res.ok) throw new Error("save_failed");
       onSuccess();
     } catch {
-      setSubmitError("Un souci est survenu. Réessaie dans un instant.");
+      setSubmitError(tc("genericError"));
     }
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 p-6">
       <h2 className="font-serif text-[24px] text-text">
-        {expense ? "Modifier la dépense" : "Nouvelle dépense"}
+        {expense ? t("editTitle") : t("newTitle")}
       </h2>
       <input
         {...register("amount")}
         inputMode="decimal"
         autoFocus
         placeholder="0"
-        aria-label="Montant"
+        aria-label={tc("amount")}
         className="w-full bg-transparent text-center text-[40px] font-light text-text outline-none"
       />
       {errors.amount ? (
@@ -134,27 +150,27 @@ export function ExpenseQuickForm({
           <SubcatChips category={category} value={field.value} onChange={field.onChange} />
         )}
       />
-      <Field label="Description" hint={errors.description?.message}>
+      <Field label={tc("description")} hint={errors.description?.message}>
         <input
           {...register("description")}
-          placeholder="Courses, restaurant…"
+          placeholder={t("descriptionPlaceholder")}
           className="h-12 w-full rounded-input bg-surface-alt px-4 text-[15px] text-text outline-none"
         />
       </Field>
-      <Field label="Date">
+      <Field label={tc("date")}>
         <input
           {...register("date")}
           type="date"
           className="h-12 w-full rounded-input bg-surface-alt px-4 text-[15px] text-text outline-none"
         />
       </Field>
-      <Field label="Budget (optionnel)">
+      <Field label={t("budgetOptional")}>
         <select
           {...register("budgetId")}
-          aria-label="Budget (optionnel)"
+          aria-label={t("budgetOptional")}
           className="h-12 w-full rounded-input bg-surface-alt px-4 text-[15px] text-text outline-none"
         >
-          <option value="">Aucun</option>
+          <option value="">{t("noBudget")}</option>
           {categoryBudgets.map((budget) => (
             <option key={budget.id} value={budget.id}>
               {budget.name}
@@ -165,10 +181,10 @@ export function ExpenseQuickForm({
       {submitError ? <p className="text-[13px] text-warning">{submitError}</p> : null}
       <div className="flex gap-3">
         <Button variant="surface" full onClick={onCancel}>
-          Annuler
+          {tc("cancel")}
         </Button>
         <Button type="submit" full disabled={isSubmitting}>
-          {expense ? "Enregistrer" : "Ajouter"}
+          {expense ? tc("save") : tc("add")}
         </Button>
       </div>
     </form>

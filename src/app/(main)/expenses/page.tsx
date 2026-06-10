@@ -2,6 +2,7 @@ import { Prisma } from "@/generated/prisma/client";
 import { ExpensesManager } from "@/components/expenses/expenses-manager";
 import { listMonthExpenses } from "@/lib/expenses";
 import { prisma } from "@/lib/prisma";
+import { isMonthOpen } from "@/lib/period-guard";
 import { formatEUR } from "@/lib/formatters";
 import { currentMonth } from "@/lib/month";
 import type { CategoryKey } from "@/lib/categories";
@@ -9,9 +10,11 @@ import type { CategoryKey } from "@/lib/categories";
 export const dynamic = "force-dynamic";
 
 export default async function ExpensesPage() {
-  const [expenses, budgets] = await Promise.all([
-    listMonthExpenses(currentMonth()),
+  const month = currentMonth();
+  const [expenses, budgets, open] = await Promise.all([
+    listMonthExpenses(month),
     prisma.budget.findMany({ select: { id: true, name: true, category: true } }),
+    isMonthOpen(month),
   ]);
   const total = expenses.reduce((sum, expense) => sum.plus(expense.amount), new Prisma.Decimal(0));
   const rows = expenses.map((expense) => ({
@@ -38,7 +41,7 @@ export default async function ExpensesPage() {
           : "Aucune dépense pour l'instant ce mois-ci."}
       </p>
       <div className="mt-8">
-        <ExpensesManager expenses={rows} budgets={budgetOptions} />
+        <ExpensesManager expenses={rows} budgets={budgetOptions} readOnly={!open} />
       </div>
     </main>
   );

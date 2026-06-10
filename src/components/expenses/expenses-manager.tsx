@@ -11,11 +11,16 @@ import { ExpenseQuickForm, type BudgetOption } from "@/components/expenses/expen
 interface ExpensesManagerProps {
   expenses: ExpenseRowData[];
   budgets?: BudgetOption[];
+  readOnly?: boolean;
 }
 
 type OverlayState = { mode: "add" } | { mode: "edit"; expense: ExpenseRowData } | null;
 
-export function ExpensesManager({ expenses, budgets = [] }: ExpensesManagerProps) {
+export function ExpensesManager({
+  expenses,
+  budgets = [],
+  readOnly = false,
+}: ExpensesManagerProps) {
   const router = useRouter();
   const [overlay, setOverlay] = useState<OverlayState>(null);
   const [deleting, setDeleting] = useState<ExpenseRowData | null>(null);
@@ -51,21 +56,25 @@ export function ExpensesManager({ expenses, budgets = [] }: ExpensesManagerProps
           <ExpenseRow
             key={expense.id}
             expense={expense}
-            onEdit={() => setOverlay({ mode: "edit", expense })}
-            onDelete={() => setDeleting(expense)}
+            onEdit={readOnly ? undefined : () => setOverlay({ mode: "edit", expense })}
+            onDelete={readOnly ? undefined : () => setDeleting(expense)}
           />
         ))
       )}
 
       {actionError ? <p className="text-[13px] text-warning">{actionError}</p> : null}
 
-      <button
-        type="button"
-        onClick={() => setOverlay({ mode: "add" })}
-        className="tap mt-2 inline-flex items-center gap-1.5 text-[14px] font-medium text-accent"
-      >
-        <Plus size={16} strokeWidth={1.8} /> Ajouter une dépense
-      </button>
+      {readOnly ? (
+        <p className="mt-2 text-[13px] text-muted">Mois clôturé — lecture seule.</p>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setOverlay({ mode: "add" })}
+          className="tap mt-2 inline-flex items-center gap-1.5 text-[14px] font-medium text-accent"
+        >
+          <Plus size={16} strokeWidth={1.8} /> Ajouter une dépense
+        </button>
+      )}
 
       {overlay ? (
         <Overlay mode="sheet" onClose={() => setOverlay(null)}>

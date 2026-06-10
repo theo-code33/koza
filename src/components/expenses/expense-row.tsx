@@ -17,8 +17,8 @@ export interface ExpenseRowData {
 
 interface ExpenseRowProps {
   expense: ExpenseRowData;
-  onEdit: () => void;
-  onDelete: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
 }
 
 export function ExpenseRow({ expense, onEdit, onDelete }: ExpenseRowProps) {
@@ -35,8 +35,10 @@ export function ExpenseRow({ expense, onEdit, onDelete }: ExpenseRowProps) {
       </div>
       <div className="flex items-center gap-1">
         <span className="num mr-1 text-[15px] text-text">{formatEUR(expense.amount)}</span>
-        <IconButton icon={Pencil} label="Modifier la dépense" onClick={onEdit} />
-        <IconButton icon={Trash2} label="Supprimer la dépense" onClick={onDelete} />
+        {onEdit ? <IconButton icon={Pencil} label="Modifier la dépense" onClick={onEdit} /> : null}
+        {onDelete ? (
+          <IconButton icon={Trash2} label="Supprimer la dépense" onClick={onDelete} />
+        ) : null}
       </div>
     </div>
   );

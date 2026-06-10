@@ -48,4 +48,11 @@ describe("ExpensesManager", () => {
     render(<ExpensesManager expenses={[]} />);
     expect(screen.getByText(/Aucune dépense/)).toBeInTheDocument();
   });
+
+  it("hides the add action and row controls when read-only", () => {
+    render(<ExpensesManager expenses={expenses} readOnly />);
+    expect(screen.queryByRole("button", { name: "Ajouter une dépense" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Supprimer la dépense" })).not.toBeInTheDocument();
+    expect(screen.getByText(/lecture seule/i)).toBeInTheDocument();
+  });
 });

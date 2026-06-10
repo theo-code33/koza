@@ -1,4 +1,5 @@
 import { Prisma } from "@/generated/prisma/client";
+import Link from "next/link";
 import { ExpensesManager } from "@/components/expenses/expenses-manager";
 import { listMonthExpenses } from "@/lib/expenses";
 import { prisma } from "@/lib/prisma";
@@ -40,6 +41,9 @@ export default async function ExpensesPage() {
           ? `${formatEUR(total)} dépensés ce mois-ci.`
           : "Aucune dépense pour l'instant ce mois-ci."}
       </p>
+      <Link href="/recurring" className="mt-4 text-[14px] font-medium text-accent">
+        Gérer les dépenses récurrentes
+      </Link>
       <div className="mt-8">
         <ExpensesManager expenses={rows} budgets={budgetOptions} readOnly={!open} />
       </div>

@@ -2,9 +2,12 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { Wallet } from "lucide-react";
 import { getMonthlySummary } from "@/lib/dashboard";
+import { listBudgetsWithSpent } from "@/lib/budgets";
+import { deriveNotifications } from "@/lib/notifications";
 import { prisma } from "@/lib/prisma";
 import { currentMonth } from "@/lib/month";
 import { SoftBanner } from "@/components/ui/soft-banner";
+import { NotificationList } from "@/components/notifications/notification-list";
 import { ReconcileOnMount } from "@/components/dashboard/reconcile-on-mount";
 import { DashboardMonthNav } from "@/components/dashboard/dashboard-month-nav";
 import { CarryLine } from "@/components/dashboard/carry-line";
@@ -26,13 +29,15 @@ export default async function DashboardPage({
   const { month: rawMonth } = await searchParams;
   const month = resolveMonth(rawMonth);
   const t = await getTranslations("dashboard");
-  const [summary, pending] = await Promise.all([
+  const [summary, pending, budgets] = await Promise.all([
     getMonthlySummary(month),
     prisma.recurringOccurrence.findMany({
       where: { month, status: "PENDING" },
       include: { recurring: true },
     }),
+    listBudgetsWithSpent(),
   ]);
+  const notifications = summary.closed ? [] : deriveNotifications(summary, budgets);
   const income = Number(summary.income);
   const slices = summary.categories.map((category) => ({
     category: category.category,
@@ -50,6 +55,8 @@ export default async function DashboardPage({
       <DashboardMonthNav month={month} />
 
       {summary.closed ? <p className="text-[13px] text-muted">{t("closedReadOnly")}</p> : null}
+
+      <NotificationList items={notifications} />
 
       {income === 0 ? (
         <Link href="/incomes">

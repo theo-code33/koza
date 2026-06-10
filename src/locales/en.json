@@ -12,6 +12,8 @@
     "save": "Save",
     "add": "Add",
     "delete": "Delete",
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month",
     "genericError": "Something went wrong. Please try again in a moment.",
     "deleteError": "Couldn't delete. Please try again in a moment."
   },
@@ -134,6 +136,7 @@
     "title": "Settings",
     "appearance": "Appearance",
     "darkTheme": "Dark theme",
+    "darkThemeToggle": "Toggle dark theme",
     "language": "Language",
     "incomes": "Income",
     "manageIncomes": "Manage my income",

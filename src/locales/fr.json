@@ -12,6 +12,8 @@
     "save": "Enregistrer",
     "add": "Ajouter",
     "delete": "Supprimer",
+    "prevMonth": "Mois précédent",
+    "nextMonth": "Mois suivant",
     "genericError": "Un souci est survenu. Réessaie dans un instant.",
     "deleteError": "Suppression impossible. Réessaie dans un instant."
   },
@@ -134,6 +136,7 @@
     "title": "Réglages",
     "appearance": "Apparence",
     "darkTheme": "Thème sombre",
+    "darkThemeToggle": "Activer le thème sombre",
     "language": "Langue",
     "incomes": "Revenus",
     "manageIncomes": "Gérer mes revenus",

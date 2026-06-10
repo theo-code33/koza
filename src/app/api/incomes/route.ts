@@ -17,6 +17,8 @@ export async function POST(request: NextRequest) {
   if (!parsed.success) {
     return NextResponse.json({ error: "invalid_income" }, { status: 400 });
   }
-  const income = await prisma.income.create({ data: parsed.data });
+  const { month } = parsed.data;
+  const date = new Date(Number(month.slice(0, 4)), Number(month.slice(5, 7)) - 1, 1);
+  const income = await prisma.income.create({ data: { ...parsed.data, date } });
   return NextResponse.json(income, { status: 201 });
 }

@@ -30,10 +30,12 @@ function lastDayOfMonth(offset: number): Date {
 
 async function main() {
   // Reset des tables démo (ordre FK-safe). Ne tourne que contre koza-dev.
+  await prisma.recurringOccurrence.deleteMany();
   await prisma.expense.deleteMany();
+  await prisma.recurringExpense.deleteMany();
   await prisma.budget.deleteMany();
   await prisma.income.deleteMany();
-  await prisma.monthlyBalance.deleteMany();
+  await prisma.monthlyPeriod.deleteMany();
 
   // Budgets (créés d'abord pour récupérer leurs ids et y rattacher des dépenses).
   const vacances = await prisma.budget.create({
@@ -53,16 +55,18 @@ async function main() {
   });
 
   // Revenus : salaire sur 3 mois + un extra freelance sur le mois courant.
+  // `date` = 1er du mois (le formulaire revenus ne capture pas de jour).
   await prisma.income.createMany({
     data: [
-      { source: "Salaire", amount: "2500.00", month: monthKey(-2) },
-      { source: "Salaire", amount: "2500.00", month: monthKey(-1) },
-      { source: "Salaire", amount: "2500.00", month: monthKey(0) },
-      { source: "Freelance", amount: "400.00", month: monthKey(0) },
+      { source: "Salaire", amount: "2500.00", date: dayInMonth(-2, 1), month: monthKey(-2) },
+      { source: "Salaire", amount: "2500.00", date: dayInMonth(-1, 1), month: monthKey(-1) },
+      { source: "Salaire", amount: "2500.00", date: dayInMonth(0, 1), month: monthKey(0) },
+      { source: "Freelance", amount: "400.00", date: dayInMonth(0, 1), month: monthKey(0) },
     ],
   });
 
   // 18 dépenses réalistes réparties sur 3 mois. Montants en strings (pas de float).
+  // `month` = mois d'imputation (déduit de la date).
   await prisma.expense.createMany({
     data: [
       // Mois -2
@@ -70,6 +74,7 @@ async function main() {
         amount: "850.00",
         description: "Loyer",
         date: dayInMonth(-2, 3),
+        month: monthKey(-2),
         category: "essential",
         subcategory: "housing",
       },
@@ -77,6 +82,7 @@ async function main() {
         amount: "320.50",
         description: "Courses Carrefour",
         date: dayInMonth(-2, 12),
+        month: monthKey(-2),
         category: "essential",
         subcategory: "food",
       },
@@ -84,6 +90,7 @@ async function main() {
         amount: "75.00",
         description: "Électricité",
         date: dayInMonth(-2, 8),
+        month: monthKey(-2),
         category: "essential",
         subcategory: "bills",
       },
@@ -91,6 +98,7 @@ async function main() {
         amount: "48.90",
         description: "Restaurant italien",
         date: dayInMonth(-2, 15),
+        month: monthKey(-2),
         category: "leisure",
         subcategory: "restaurants",
       },
@@ -98,6 +106,7 @@ async function main() {
         amount: "24.00",
         description: "Cinéma",
         date: dayInMonth(-2, 20),
+        month: monthKey(-2),
         category: "leisure",
         subcategory: "culture",
       },
@@ -105,6 +114,7 @@ async function main() {
         amount: "400.00",
         description: "Virement Livret A",
         date: dayInMonth(-2, 28),
+        month: monthKey(-2),
         category: "savings",
         subcategory: "savings_account",
       },
@@ -113,6 +123,7 @@ async function main() {
         amount: "850.00",
         description: "Loyer",
         date: dayInMonth(-1, 3),
+        month: monthKey(-1),
         category: "essential",
         subcategory: "housing",
       },
@@ -120,6 +131,7 @@ async function main() {
         amount: "295.00",
         description: "Courses",
         date: dayInMonth(-1, 10),
+        month: monthKey(-1),
         category: "essential",
         subcategory: "food",
       },
@@ -127,6 +139,7 @@ async function main() {
         amount: "75.00",
         description: "Abonnement transports",
         date: dayInMonth(-1, 5),
+        month: monthKey(-1),
         category: "essential",
         subcategory: "transport",
       },
@@ -134,6 +147,7 @@ async function main() {
         amount: "65.00",
         description: "Concert",
         date: dayInMonth(-1, 18),
+        month: monthKey(-1),
         category: "leisure",
         subcategory: "outings",
       },
@@ -141,6 +155,7 @@ async function main() {
         amount: "35.00",
         description: "Salle de sport",
         date: dayInMonth(-1, 2),
+        month: monthKey(-1),
         category: "leisure",
         subcategory: "sport",
       },
@@ -148,6 +163,7 @@ async function main() {
         amount: "300.00",
         description: "Achat ETF World",
         date: dayInMonth(-1, 25),
+        month: monthKey(-1),
         category: "savings",
         subcategory: "etf",
       },
@@ -156,6 +172,7 @@ async function main() {
         amount: "850.00",
         description: "Loyer",
         date: dayInMonth(0, 3),
+        month: monthKey(0),
         category: "essential",
         subcategory: "housing",
       },
@@ -163,6 +180,7 @@ async function main() {
         amount: "180.40",
         description: "Courses",
         date: dayInMonth(0, 7),
+        month: monthKey(0),
         category: "essential",
         subcategory: "food",
       },
@@ -170,6 +188,7 @@ async function main() {
         amount: "32.50",
         description: "Pharmacie",
         date: dayInMonth(0, 8),
+        month: monthKey(0),
         category: "essential",
         subcategory: "health",
       },
@@ -177,6 +196,7 @@ async function main() {
         amount: "59.99",
         description: "Jeu vidéo",
         date: dayInMonth(0, 9),
+        month: monthKey(0),
         category: "leisure",
         subcategory: "games",
       },
@@ -184,6 +204,7 @@ async function main() {
         amount: "250.00",
         description: "Acompte hôtel Santorin",
         date: dayInMonth(0, 6),
+        month: monthKey(0),
         category: "leisure",
         subcategory: "vacations",
         budgetId: vacances.id,
@@ -192,6 +213,7 @@ async function main() {
         amount: "200.00",
         description: "Épargne de précaution",
         date: dayInMonth(0, 4),
+        month: monthKey(0),
         category: "savings",
         subcategory: "emergency_fund",
         budgetId: fondsUrgence.id,
@@ -199,26 +221,55 @@ async function main() {
     ],
   });
 
-  // 2 mois précédents clôturés, avec léger surplus/déficit (le mois courant reste ouvert).
-  await prisma.monthlyBalance.createMany({
+  // Périodes mensuelles : 2 mois clôturés avec report propagé, mois courant ouvert.
+  // Mois -2 : base 2500, dépensé 1718,40 → report 781,60.
+  // Mois -1 : base 2500+781,60=3281,60, dépensé 1620 → report 1661,60.
+  // Mois courant : carryIn 1661,60 (ouvert).
+  await prisma.monthlyPeriod.createMany({
     data: [
-      {
-        month: monthKey(-2),
-        carryOver: "30.00",
-        essentialOver: "-40.00",
-        leisureOver: "15.00",
-        savingsOver: "0.00",
-        closedAt: lastDayOfMonth(-2),
-      },
-      {
-        month: monthKey(-1),
-        carryOver: "55.00",
-        essentialOver: "-20.00",
-        leisureOver: "25.00",
-        savingsOver: "-10.00",
-        closedAt: lastDayOfMonth(-1),
-      },
+      { month: monthKey(-2), carryIn: "0.00", carryOut: "781.60", closedAt: lastDayOfMonth(-2) },
+      { month: monthKey(-1), carryIn: "781.60", carryOut: "1661.60", closedAt: lastDayOfMonth(-1) },
+      { month: monthKey(0), carryIn: "1661.60" },
     ],
+  });
+
+  // Modèles récurrents de démo. Loyer/Assurance pour l'écran de gestion ;
+  // Électricité VARIABLE avec une occurrence à confirmer ce mois-ci.
+  await prisma.recurringExpense.create({
+    data: {
+      label: "Loyer",
+      type: "FIXED",
+      amount: "850.00",
+      category: "essential",
+      subcategory: "housing",
+      frequency: "MONTHLY",
+      anchorMonth: monthKey(-2),
+    },
+  });
+  await prisma.recurringExpense.create({
+    data: {
+      label: "Assurance habitation",
+      type: "FIXED",
+      amount: "15.00",
+      category: "essential",
+      subcategory: "bills",
+      frequency: "QUARTERLY",
+      anchorMonth: monthKey(0),
+    },
+  });
+  const electricite = await prisma.recurringExpense.create({
+    data: {
+      label: "Électricité",
+      type: "VARIABLE",
+      amount: "75.00",
+      category: "essential",
+      subcategory: "bills",
+      frequency: "MONTHLY",
+      anchorMonth: monthKey(0),
+    },
+  });
+  await prisma.recurringOccurrence.create({
+    data: { recurringId: electricite.id, month: monthKey(0), status: "PENDING" },
   });
 
   // Profil unique du MVP : onboarding marqué terminé pour la démo.
@@ -228,12 +279,15 @@ async function main() {
     create: { id: "default", theme: "light", locale: "fr", onboardingCompleted: true },
   });
 
-  const [incomes, expenses, budgets] = await Promise.all([
+  const [incomes, expenses, budgets, recurring] = await Promise.all([
     prisma.income.count(),
     prisma.expense.count(),
     prisma.budget.count(),
+    prisma.recurringExpense.count(),
   ]);
-  console.log(`Seed complete · incomes: ${incomes} · expenses: ${expenses} · budgets: ${budgets}`);
+  console.log(
+    `Seed complete · incomes: ${incomes} · expenses: ${expenses} · budgets: ${budgets} · recurring: ${recurring}`,
+  );
 }
 
 main()

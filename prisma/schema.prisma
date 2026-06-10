@@ -7,6 +7,24 @@ datasource db {
   provider = "postgresql"
 }
 
+enum RecurringType {
+  FIXED
+  VARIABLE
+}
+
+enum Frequency {
+  MONTHLY
+  QUARTERLY
+  YEARLY
+}
+
+enum OccurrenceStatus {
+  APPLIED
+  PENDING
+  CONFIRMED
+  DROPPED
+}
+
 model UserSettings {
   id                  String  @id @default("default")
   theme               String  @default("light")
@@ -18,22 +36,30 @@ model Income {
   id        String   @id @default(cuid())
   source    String
   amount    Decimal  @db.Decimal(12, 2)
+  date      DateTime
   month     String // "YYYY-MM"
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([month])
 }
 
 model Expense {
-  id          String   @id @default(cuid())
-  amount      Decimal  @db.Decimal(12, 2)
+  id          String            @id @default(cuid())
+  amount      Decimal           @db.Decimal(12, 2)
   description String
   date        DateTime
+  month       String // "YYYY-MM"
   category    String // 'essential' | 'leisure' | 'savings'
   subcategory String // clé de sous-catégorie (cf. src/lib/subcategories.ts)
   budgetId    String?
-  budget      Budget?  @relation(fields: [budgetId], references: [id], onDelete: SetNull)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  budget      Budget?           @relation(fields: [budgetId], references: [id], onDelete: SetNull)
+  recurringId String?
+  recurring   RecurringExpense? @relation(fields: [recurringId], references: [id], onDelete: SetNull)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@index([month])
 }
 
 model Budget {
@@ -47,12 +73,42 @@ model Budget {
   updatedAt    DateTime  @updatedAt
 }
 
-model MonthlyBalance {
-  id            String    @id @default(cuid())
-  month         String    @unique // "YYYY-MM"
-  carryOver     Decimal   @default(0) @db.Decimal(12, 2)
-  essentialOver Decimal   @default(0) @db.Decimal(12, 2)
-  leisureOver   Decimal   @default(0) @db.Decimal(12, 2)
-  savingsOver   Decimal   @default(0) @db.Decimal(12, 2)
-  closedAt      DateTime?
+model MonthlyPeriod {
+  id        String    @id @default(cuid())
+  month     String    @unique // "YYYY-MM"
+  carryIn   Decimal   @default(0) @db.Decimal(12, 2)
+  carryOut  Decimal?  @db.Decimal(12, 2)
+  closedAt  DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model RecurringExpense {
+  id          String                @id @default(cuid())
+  label       String
+  type        RecurringType
+  amount      Decimal               @db.Decimal(12, 2)
+  category    String
+  subcategory String
+  frequency   Frequency
+  anchorMonth String // "YYYY-MM"
+  endMonth    String?
+  active      Boolean               @default(true)
+  occurrences RecurringOccurrence[]
+  expenses    Expense[]
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+}
+
+model RecurringOccurrence {
+  id          String           @id @default(cuid())
+  recurringId String
+  recurring   RecurringExpense @relation(fields: [recurringId], references: [id], onDelete: Cascade)
+  month       String
+  status      OccurrenceStatus
+  expenseId   String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  @@unique([recurringId, month])
 }

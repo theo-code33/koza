@@ -18,6 +18,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "invalid_expense" }, { status: 400 });
   }
   const { date, ...rest } = parsed.data;
-  const expense = await prisma.expense.create({ data: { ...rest, date: new Date(date) } });
+  const month = date.slice(0, 7);
+  const expense = await prisma.expense.create({
+    data: { ...rest, date: new Date(date), month },
+  });
   return NextResponse.json(expense, { status: 201 });
 }

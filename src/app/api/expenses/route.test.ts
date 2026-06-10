@@ -38,6 +38,7 @@ describe("POST /api/expenses", () => {
         category: "essential",
         subcategory: "food",
         date: new Date("2026-06-10"),
+        month: "2026-06",
       },
     });
   });

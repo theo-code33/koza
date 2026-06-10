@@ -24,7 +24,12 @@ describe("POST /api/incomes", () => {
     const res = await POST(postRequest({ source: "Salaire", amount: "2500.00", month: "2026-06" }));
     expect(res.status).toBe(201);
     expect(prisma.income.create).toHaveBeenCalledWith({
-      data: { source: "Salaire", amount: "2500.00", month: "2026-06" },
+      data: {
+        source: "Salaire",
+        amount: "2500.00",
+        month: "2026-06",
+        date: new Date(2026, 5, 1),
+      },
     });
   });
 

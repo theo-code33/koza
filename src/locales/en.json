@@ -315,6 +315,13 @@
     "real_estate": "Real estate",
     "emergency_fund": "Emergency fund"
   },
+  "notifications": {
+    "savingsGoalNear": "Just {amount} left for {name} — you're almost there!",
+    "savingsGoalReached": "Goal {name} reached 🎉",
+    "budgetWarning": "You're approaching your {name} budget ({percent}%).",
+    "budgetOver": "{name} budget exceeded — it happens, the surplus carries over.",
+    "categoryOver": "Your {category} spending is over this month's target."
+  },
   "legal": {
     "privacy": {
       "metaTitle": "Privacy policy - kōza",

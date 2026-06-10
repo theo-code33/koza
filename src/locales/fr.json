@@ -1,7 +1,40 @@
 {
   "common": {
     "appName": "kōza",
-    "appTagline": "Suivi de budget personnel — 50 / 30 / 20"
+    "appTagline": "Suivi de budget personnel — 50 / 30 / 20",
+    "source": "Source",
+    "amount": "Montant",
+    "continue": "Continuer",
+    "genericError": "Un souci est survenu. Réessaie dans un instant."
+  },
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "expenses": "Dépenses",
+    "budgets": "Budgets",
+    "settings": "Réglages",
+    "ariaMain": "Navigation principale",
+    "ariaMainMobile": "Navigation principale (mobile)"
+  },
+  "onboarding": {
+    "welcomeTitle": "Bienvenue sur kōza",
+    "welcomeBody": "kōza répartit tes revenus selon la règle 50 / 30 / 20 : la moitié pour l'essentiel, 30 % pour les loisirs, 20 % pour l'épargne. Un budget clair, sans pression.",
+    "start": "Commencer",
+    "setupTitle": "Tes revenus",
+    "setupBody": "Ajoute ta principale source de revenu. Tu pourras en ajouter d'autres ou passer cette étape.",
+    "skip": "Passer pour l'instant",
+    "sourcePlaceholder": "Salaire",
+    "removeSource": "Retirer cette source",
+    "addSource": "Ajouter une source",
+    "finish": "Terminer",
+    "step": "Étape {step} sur {total}",
+    "confirmTitle": "Tes enveloppes",
+    "confirmBody": "Sur {amount} de revenus, voici ta répartition 50 / 30 / 20.",
+    "confirmBodyEmpty": "Tu pourras ajouter tes revenus quand tu veux. Voici comment kōza les répartira."
+  },
+  "validation": {
+    "sourceRequired": "Source requise",
+    "amountInvalid": "Montant invalide",
+    "amountPositive": "Montant positif requis"
   },
   "settings": {
     "title": "Réglages",

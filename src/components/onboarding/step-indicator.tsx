@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/cn";
 
 interface StepIndicatorProps {
@@ -6,8 +7,9 @@ interface StepIndicatorProps {
 }
 
 export function StepIndicator({ step, total = 3 }: StepIndicatorProps) {
+  const t = useTranslations("onboarding");
   return (
-    <div className="mb-8 flex items-center gap-1.5" aria-label={`Étape ${step} sur ${total}`}>
+    <div className="mb-8 flex items-center gap-1.5" aria-label={t("step", { step, total })}>
       {Array.from({ length: total }).map((_, index) => (
         <span
           key={index}

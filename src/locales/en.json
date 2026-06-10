@@ -1,7 +1,40 @@
 {
   "common": {
     "appName": "kōza",
-    "appTagline": "Personal budget tracker — 50 / 30 / 20"
+    "appTagline": "Personal budget tracker — 50 / 30 / 20",
+    "source": "Source",
+    "amount": "Amount",
+    "continue": "Continue",
+    "genericError": "Something went wrong. Please try again in a moment."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "expenses": "Expenses",
+    "budgets": "Budgets",
+    "settings": "Settings",
+    "ariaMain": "Main navigation",
+    "ariaMainMobile": "Main navigation (mobile)"
+  },
+  "onboarding": {
+    "welcomeTitle": "Welcome to kōza",
+    "welcomeBody": "kōza splits your income with the 50 / 30 / 20 rule: half for essentials, 30% for leisure, 20% for savings. A clear budget, no pressure.",
+    "start": "Get started",
+    "setupTitle": "Your income",
+    "setupBody": "Add your main income source. You can add others or skip this step.",
+    "skip": "Skip for now",
+    "sourcePlaceholder": "Salary",
+    "removeSource": "Remove this source",
+    "addSource": "Add a source",
+    "finish": "Finish",
+    "step": "Step {step} of {total}",
+    "confirmTitle": "Your envelopes",
+    "confirmBody": "From {amount} of income, here's your 50 / 30 / 20 split.",
+    "confirmBodyEmpty": "You can add your income whenever you like. Here's how kōza will split it."
+  },
+  "validation": {
+    "sourceRequired": "Source required",
+    "amountInvalid": "Invalid amount",
+    "amountPositive": "Amount must be positive"
   },
   "settings": {
     "title": "Settings",

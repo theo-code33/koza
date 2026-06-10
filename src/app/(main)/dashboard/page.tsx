@@ -1,12 +1,15 @@
 import Link from "next/link";
 import { Wallet } from "lucide-react";
 import { getMonthlySummary } from "@/lib/dashboard";
+import { prisma } from "@/lib/prisma";
 import { currentMonth } from "@/lib/month";
 import { SoftBanner } from "@/components/ui/soft-banner";
+import { ReconcileOnMount } from "@/components/dashboard/reconcile-on-mount";
 import { DashboardMonthNav } from "@/components/dashboard/dashboard-month-nav";
-import { PrevMonthDelta } from "@/components/dashboard/prev-month-delta";
+import { CarryLine } from "@/components/dashboard/carry-line";
 import { CategoryDonut } from "@/components/charts/category-donut";
 import { CategoryProgressCard } from "@/components/dashboard/category-progress-card";
+import { PendingConfirmations } from "@/components/recurring/pending-confirmations";
 
 export const dynamic = "force-dynamic";
 
@@ -21,16 +24,32 @@ export default async function DashboardPage({
 }) {
   const { month: rawMonth } = await searchParams;
   const month = resolveMonth(rawMonth);
-  const summary = await getMonthlySummary(month);
+  const [summary, pending] = await Promise.all([
+    getMonthlySummary(month),
+    prisma.recurringOccurrence.findMany({
+      where: { month, status: "PENDING" },
+      include: { recurring: true },
+    }),
+  ]);
   const income = Number(summary.income);
   const slices = summary.categories.map((category) => ({
     category: category.category,
     amount: Number(category.spent),
   }));
+  const pendingItems = pending.map((occurrence) => ({
+    id: occurrence.id,
+    label: occurrence.recurring.label,
+    estimate: occurrence.recurring.amount.toString(),
+  }));
 
   return (
     <main className="mx-auto flex min-h-screen max-w-[720px] flex-col gap-8 px-6 py-12">
+      <ReconcileOnMount />
       <DashboardMonthNav month={month} />
+
+      {summary.closed ? (
+        <p className="text-[13px] text-muted">Mois clôturé — lecture seule.</p>
+      ) : null}
 
       {income === 0 ? (
         <Link href="/incomes">
@@ -39,11 +58,10 @@ export default async function DashboardPage({
           </SoftBanner>
         </Link>
       ) : (
-        <PrevMonthDelta
-          current={summary.totalSpent.toString()}
-          previous={summary.previousTotalSpent.toString()}
-        />
+        <CarryLine carryIn={summary.carryIn.toString()} />
       )}
+
+      <PendingConfirmations items={pendingItems} />
 
       <CategoryDonut slices={slices} balance={Number(summary.balance)} />
 

@@ -26,3 +26,12 @@ export function nextMonth(month: string): string {
   const date = new Date(year, m, 1);
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
 }
+
+// Nombre de mois signés de `a` à `b` ("YYYY-MM").
+export function monthDiff(a: string, b: string): number {
+  const ya = Number(a.slice(0, 4));
+  const ma = Number(a.slice(5, 7));
+  const yb = Number(b.slice(0, 4));
+  const mb = Number(b.slice(5, 7));
+  return (yb - ya) * 12 + (mb - ma);
+}

@@ -26,3 +26,13 @@ function toLocalDate(date: string | Date): Date {
 export function formatDate(date: string | Date, locale: "fr" | "en" = "fr"): string {
   return new Intl.DateTimeFormat(locale === "fr" ? "fr-FR" : "en-US").format(toLocalDate(date));
 }
+
+// Formate "YYYY-MM" en libellé long ("juin 2026" en FR).
+export function formatMonth(month: string, locale: "fr" | "en" = "fr"): string {
+  const year = Number(month.slice(0, 4));
+  const m = Number(month.slice(5, 7));
+  return new Intl.DateTimeFormat(locale === "fr" ? "fr-FR" : "en-US", {
+    month: "long",
+    year: "numeric",
+  }).format(new Date(year, m - 1, 1));
+}

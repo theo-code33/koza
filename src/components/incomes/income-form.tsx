@@ -1,21 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 
-const formSchema = z.object({
-  source: z.string().trim().min(1, "Source requise"),
-  amount: z
-    .string()
-    .regex(/^\d+(\.\d{1,2})?$/, "Montant invalide")
-    .refine((value) => Number(value) > 0, "Montant positif requis"),
-});
-
-type FormValues = z.infer<typeof formSchema>;
+interface FormValues {
+  source: string;
+  amount: string;
+}
 
 interface IncomeFormProps {
   month: string;
@@ -25,7 +21,23 @@ interface IncomeFormProps {
 }
 
 export function IncomeForm({ month, income, onSuccess, onCancel }: IncomeFormProps) {
+  const t = useTranslations("incomes");
+  const tc = useTranslations("common");
+  const tv = useTranslations("validation");
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const formSchema = useMemo(
+    () =>
+      z.object({
+        source: z.string().trim().min(1, tv("sourceRequired")),
+        amount: z
+          .string()
+          .regex(/^\d+(\.\d{1,2})?$/, tv("amountInvalid"))
+          .refine((value) => Number(value) > 0, tv("amountPositive")),
+      }),
+    [tv],
+  );
+
   const {
     register,
     handleSubmit,
@@ -46,23 +58,23 @@ export function IncomeForm({ month, income, onSuccess, onCancel }: IncomeFormPro
       if (!res.ok) throw new Error("save_failed");
       onSuccess();
     } catch {
-      setSubmitError("Un souci est survenu. Réessaie dans un instant.");
+      setSubmitError(tc("genericError"));
     }
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 p-6">
       <h2 className="font-serif text-[24px] text-text">
-        {income ? "Modifier le revenu" : "Nouveau revenu"}
+        {income ? t("editTitle") : t("newTitle")}
       </h2>
-      <Field label="Source" hint={errors.source?.message}>
+      <Field label={tc("source")} hint={errors.source?.message}>
         <input
           {...register("source")}
-          placeholder="Salaire"
+          placeholder={t("sourcePlaceholder")}
           className="h-12 w-full rounded-input bg-surface-alt px-4 text-[15px] text-text outline-none"
         />
       </Field>
-      <Field label="Montant" hint={errors.amount?.message}>
+      <Field label={tc("amount")} hint={errors.amount?.message}>
         <input
           {...register("amount")}
           inputMode="decimal"
@@ -73,10 +85,10 @@ export function IncomeForm({ month, income, onSuccess, onCancel }: IncomeFormPro
       {submitError ? <p className="text-[13px] text-warning">{submitError}</p> : null}
       <div className="flex gap-3">
         <Button variant="surface" full onClick={onCancel}>
-          Annuler
+          {tc("cancel")}
         </Button>
         <Button type="submit" full disabled={isSubmitting}>
-          {income ? "Enregistrer" : "Ajouter"}
+          {income ? tc("save") : tc("add")}
         </Button>
       </div>
     </form>

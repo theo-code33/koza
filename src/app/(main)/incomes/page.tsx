@@ -1,4 +1,4 @@
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Prisma } from "@/generated/prisma/client";
 import { EnvelopesSummary } from "@/components/budget/envelopes-summary";
 import { IncomesManager } from "@/components/incomes/incomes-manager";
@@ -11,6 +11,7 @@ export const dynamic = "force-dynamic";
 
 export default async function IncomesPage() {
   const locale = (await getLocale()) as "fr" | "en";
+  const t = await getTranslations("incomes");
   const month = currentMonth();
   const incomes = await listMonthIncomes(month);
   const total = incomes.reduce((sum, income) => sum.plus(income.amount), new Prisma.Decimal(0));
@@ -24,11 +25,9 @@ export default async function IncomesPage() {
 
   return (
     <main className="mx-auto flex min-h-screen max-w-[720px] flex-col px-6 py-12">
-      <h1 className="font-serif text-[28px] leading-tight text-text">Tes revenus</h1>
+      <h1 className="font-serif text-[28px] leading-tight text-text">{t("pageTitle")}</h1>
       <p className="mt-3 text-[15px] text-text-secondary">
-        {total.gt(0)
-          ? `${formatEUR(total, locale)} ce mois-ci, répartis en 50 / 30 / 20.`
-          : "Ajoute tes sources de revenu pour voir tes enveloppes."}
+        {total.gt(0) ? t("summary", { amount: formatEUR(total, locale) }) : t("summaryEmpty")}
       </p>
       <div className="mt-8">
         <EnvelopesSummary envelopes={envelopes} />

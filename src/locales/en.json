@@ -5,7 +5,12 @@
     "source": "Source",
     "amount": "Amount",
     "continue": "Continue",
-    "genericError": "Something went wrong. Please try again in a moment."
+    "cancel": "Cancel",
+    "save": "Save",
+    "add": "Add",
+    "delete": "Delete",
+    "genericError": "Something went wrong. Please try again in a moment.",
+    "deleteError": "Couldn't delete. Please try again in a moment."
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -45,6 +50,19 @@
     "deltaLess": "{amount} less than last month",
     "deltaMore": "{amount} more than last month",
     "remaining": "left"
+  },
+  "incomes": {
+    "pageTitle": "Your income",
+    "summary": "{amount} this month, split 50 / 30 / 20.",
+    "summaryEmpty": "Add your income sources to see your envelopes.",
+    "newTitle": "New income",
+    "editTitle": "Edit income",
+    "sourcePlaceholder": "Salary",
+    "deleteAria": "Delete income",
+    "empty": "No income for this month. Add your first source to see your envelopes.",
+    "add": "Add income",
+    "deleteTitle": "Delete this income?",
+    "deleteMessage": "“{source}” will be removed from this month."
   },
   "settings": {
     "title": "Settings",

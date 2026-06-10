@@ -5,7 +5,12 @@
     "source": "Source",
     "amount": "Montant",
     "continue": "Continuer",
-    "genericError": "Un souci est survenu. Réessaie dans un instant."
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "add": "Ajouter",
+    "delete": "Supprimer",
+    "genericError": "Un souci est survenu. Réessaie dans un instant.",
+    "deleteError": "Suppression impossible. Réessaie dans un instant."
   },
   "nav": {
     "dashboard": "Tableau de bord",
@@ -45,6 +50,19 @@
     "deltaLess": "{amount} de moins que le mois dernier",
     "deltaMore": "{amount} de plus que le mois dernier",
     "remaining": "restant"
+  },
+  "incomes": {
+    "pageTitle": "Tes revenus",
+    "summary": "{amount} ce mois-ci, répartis en 50 / 30 / 20.",
+    "summaryEmpty": "Ajoute tes sources de revenu pour voir tes enveloppes.",
+    "newTitle": "Nouveau revenu",
+    "editTitle": "Modifier le revenu",
+    "sourcePlaceholder": "Salaire",
+    "deleteAria": "Supprimer le revenu",
+    "empty": "Aucun revenu pour ce mois. Ajoute ta première source pour voir tes enveloppes.",
+    "add": "Ajouter un revenu",
+    "deleteTitle": "Supprimer ce revenu ?",
+    "deleteMessage": "« {source} » sera retiré de ce mois."
   },
   "settings": {
     "title": "Réglages",

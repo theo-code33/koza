@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import JoselineEasterEgg from "./JoselineEasterEgg";
 import { redirect } from "next/navigation";
 
 export default function Navbar() {
+  const t = useTranslations("landing.nav");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [logoClicks, setLogoClicks] = useState(0);
   const [showJoseline, setShowJoseline] = useState(false);
@@ -37,7 +39,7 @@ export default function Navbar() {
           <button
             onClick={handleLogoClick}
             className="text-2xl font-serif font-semibold cursor-pointer hover:text-[var(--color-accent)] transition-colors"
-            title={logoClicks > 0 ? `${3 - logoClicks} clics encore pour Joseline 🦄` : undefined}
+            title={logoClicks > 0 ? t("easterEggHint", { remaining: 3 - logoClicks }) : undefined}
           >
             kōza
           </button>
@@ -48,25 +50,25 @@ export default function Navbar() {
               href="#features"
               className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
             >
-              Fonctionnalités
+              {t("features")}
             </a>
             <a
               href="#benefits"
               className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
             >
-              Avantages
+              {t("benefits")}
             </a>
             <a
               href="#faq"
               className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
             >
-              FAQ
+              {t("faq")}
             </a>
             <Link
               href="/dashboard"
               className="text-sm text-[var(--color-accent)] hover:text-[var(--color-accent)]"
             >
-              Tableau de bord
+              {t("dashboard")}
             </Link>
           </div>
 
@@ -74,7 +76,7 @@ export default function Navbar() {
           <button
             className="md:hidden p-2"
             onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Menu"
+            aria-label={t("menu")}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -95,24 +97,24 @@ export default function Navbar() {
               className="block text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
               onClick={() => setMobileOpen(false)}
             >
-              Fonctionnalités
+              {t("features")}
             </a>
             <a
               href="#benefits"
               className="block text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
               onClick={() => setMobileOpen(false)}
             >
-              Avantages
+              {t("benefits")}
             </a>
             <a
               href="#faq"
               className="block text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
               onClick={() => setMobileOpen(false)}
             >
-              FAQ
+              {t("faq")}
             </a>
             <Link href="/dashboard" className="block text-sm text-[var(--color-accent)]">
-              Tableau de bord
+              {t("dashboard")}
             </Link>
           </div>
         )}

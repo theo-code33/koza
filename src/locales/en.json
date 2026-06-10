@@ -17,6 +17,154 @@
     "genericError": "Something went wrong. Please try again in a moment.",
     "deleteError": "Couldn't delete. Please try again in a moment."
   },
+  "landing": {
+    "nav": {
+      "features": "Features",
+      "benefits": "Benefits",
+      "faq": "FAQ",
+      "dashboard": "Dashboard",
+      "menu": "Menu",
+      "easterEggHint": "{remaining} more clicks for Joseline 🦄"
+    },
+    "hero": {
+      "badge": "✨ Financial peace, at last",
+      "title": "Take back control of your budget",
+      "subtitle": "Track your income and spending without stress. The 50/30/20 rule automatically guides you toward calm, lasting money management.",
+      "ctaStart": "Start for free",
+      "ctaDemo": "See the demo",
+      "trustIntro": "Join those who found financial peace of mind",
+      "stat1Value": "100%",
+      "stat1Label": "Free & ad-free",
+      "stat2Value": "3 min",
+      "stat2Label": "Quick setup",
+      "stat3Value": "0 hassle",
+      "stat3Label": "No bank integration"
+    },
+    "heroSimple": {
+      "title": "Peace in your budget",
+      "subtitle": "Track your income and spending, split automatically with the 50/30/20 rule, and move calmly toward your goals.",
+      "ctaStart": "Get started",
+      "ctaDashboard": "See the dashboard"
+    },
+    "features": {
+      "title": "Everything you need",
+      "subtitle": "A suite of simple, powerful tools, designed for mental clarity.",
+      "items": [
+        {
+          "title": "3-step onboarding",
+          "description": "Enter your income and the 50/30/20 envelopes are calculated automatically. Zero configuration.",
+          "icon": "📋"
+        },
+        {
+          "title": "Quick expense entry",
+          "description": "Log an expense in under 10 seconds. Focus, amount, category, done.",
+          "icon": "⚡"
+        },
+        {
+          "title": "Visual budget tracking",
+          "description": "Calm progress bars that show where you stand, without guilt.",
+          "icon": "📊"
+        },
+        {
+          "title": "Custom budgets",
+          "description": "Create goals (holidays, emergency fund) and track them in real time.",
+          "icon": "🎯"
+        },
+        {
+          "title": "Monthly navigation",
+          "description": "Explore your past months' spending. Full history, always accessible.",
+          "icon": "📅"
+        },
+        {
+          "title": "Light/dark theme",
+          "description": "The app adapts to your preference. Read comfortably anytime.",
+          "icon": "🌙"
+        }
+      ]
+    },
+    "benefits": {
+      "title": "The 50/30/20 rule explained",
+      "subtitle": "A simple, proven framework for a balanced financial life.",
+      "items": [
+        {
+          "title": "50% — Essentials",
+          "desc": "Housing, food, transport, health. The foundation that doesn't change.",
+          "icon": "🏠",
+          "color": "bg-[var(--color-essential-bg)] text-[var(--color-essential)]"
+        },
+        {
+          "title": "30% — Leisure",
+          "desc": "Restaurants, outings, holidays, culture. Joy and experiences.",
+          "icon": "🎉",
+          "color": "bg-[var(--color-leisure-bg)] text-[var(--color-leisure)]"
+        },
+        {
+          "title": "20% — Savings",
+          "desc": "Emergency fund, investments, long-term projects. Your future.",
+          "icon": "💰",
+          "color": "bg-[var(--color-savings-bg)] text-[var(--color-savings)]"
+        }
+      ],
+      "boxTitle": "Why does this rule work?",
+      "list1": "It's <b>easy to remember and set up</b> — no complex math.",
+      "list2": "It <b>balances pleasure and safety</b> — you don't deprive yourself, you invest.",
+      "list3": "It <b>adapts to any income</b> — what matters is the proportion, not the absolute figure."
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "subtitle": "Everything you wanted to know, without fear.",
+      "items": [
+        {
+          "q": "How much does Kōza cost?",
+          "a": "Kōza is 100% free. No subscription, no limit, no ads. It's a gift."
+        },
+        {
+          "q": "Is my data secure?",
+          "a": "Yes. Your data is stored in an encrypted PostgreSQL database. No bank integration, no third parties. Just you and your data."
+        },
+        {
+          "q": "Can I add other income sources?",
+          "a": "Absolutely. You can declare a main salary, freelance income, dividends — whatever you want. The envelopes recalculate automatically."
+        },
+        {
+          "q": "What happens if I go over budget?",
+          "a": "Nothing. No guilt, no red alarm. Kōza notifies you gently and carries the surplus over to the next month. It's help, not judgement."
+        },
+        {
+          "q": "Can I view past months?",
+          "a": "Yes. You can freely browse your history to see your trends, compare months and learn from your habits."
+        },
+        {
+          "q": "Can I export my data?",
+          "a": "Of course. One click and you get a JSON of all your data. It's your data, you keep it."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Ready to take back control?",
+      "subtitle": "Join those who transformed their relationship with money. Onboarding takes 3 minutes.",
+      "ctaNow": "Start now",
+      "ctaDemo": "See the demo",
+      "note": "💳 Free, no commitment, no credit card required."
+    },
+    "footer": {
+      "tagline": "Zen budget management based on the 50/30/20 rule.",
+      "productTitle": "Product",
+      "dashboard": "Dashboard",
+      "features": "Features",
+      "faq": "FAQ",
+      "legalTitle": "Legal",
+      "terms": "Terms of use",
+      "privacy": "Privacy policy",
+      "contactTitle": "Contact",
+      "rights": "© {year} kōza. All rights reserved."
+    },
+    "easterEgg": {
+      "name": "Joseline",
+      "subtitle": "Aqua Unicorn Joseline 🌊✨",
+      "instruction": "Click Joseline or the background to leave"
+    }
+  },
   "nav": {
     "dashboard": "Dashboard",
     "expenses": "Expenses",
@@ -166,5 +314,97 @@
     "stocks": "Stocks",
     "real_estate": "Real estate",
     "emergency_fund": "Emergency fund"
+  },
+  "legal": {
+    "privacy": {
+      "metaTitle": "Privacy policy - kōza",
+      "metaDescription": "Privacy policy of the kōza application",
+      "pageTitle": "Privacy policy",
+      "lastUpdated": "Last updated: 10 June 2026",
+      "s1Title": "1. Introduction",
+      "s1Body": "kōza respects your privacy. This privacy policy explains how we collect, use and protect your personal data when you use our application.",
+      "s2Title": "2. Data we collect",
+      "s2Intro": "We collect the following types of data:",
+      "s2Item1": "<b>Budget data:</b> income, expenses, categories, custom budgets you enter",
+      "s2Item2": "<b>Preference data:</b> theme (light/dark), language, user settings",
+      "s2Item3": "<b>Access data:</b> IP address, browser type, pages visited (via anonymised server logs)",
+      "s2Outro": "We do <b>not</b> collect: email, phone number, direct banking information (we don't integrate with banks).",
+      "s3Title": "3. How we use your data",
+      "s3Intro": "Your data is used to:",
+      "s3Items": [
+        "Provide the service (store and display your budgets and expenses)",
+        "Improve the application (anonymised usage analytics)",
+        "Send you important alert notifications",
+        "Maintain the security and stability of the service"
+      ],
+      "s4Title": "4. Data sharing",
+      "s4Body1": "Your data is <b>never</b> shared, sold or transferred to third parties. No advertising, no data brokers, no profiling. It's simple: your data belongs to you.",
+      "s4Body2": "Exception: we may be required to disclose data if the law requires it (court order, etc.).",
+      "s5Title": "5. Data security",
+      "s5Intro": "We take the security of your data seriously. Your data is:",
+      "s5Items": [
+        "Stored in an encrypted PostgreSQL database (Prisma Postgres)",
+        "Protected by HTTPS (encryption in transit)",
+        "Subject to regular backups",
+        "Accessible only by your browser (no tracking cookies)"
+      ],
+      "s5Outro": "Although we have implemented reasonable security measures, no system is 100% secure. We cannot guarantee absolute security.",
+      "s6Title": "6. Cookies and trackers",
+      "s6Body": "kōza does <b>not</b> use tracking or advertising cookies. We may use minimal technical cookies to remember your preferences (theme, language) — only on your device, never across other sites.",
+      "s7Title": "7. Access and deletion rights",
+      "s7Intro": "You have the right to:",
+      "s7Items": [
+        "View all your data via the JSON export",
+        "Edit or delete your data at any time in the app",
+        "Request the complete deletion of your account"
+      ],
+      "s7ContactPrefix": "To request account deletion, contact:",
+      "s8Title": "8. Data retention",
+      "s8Body": "Your data is kept as long as you use kōza. If you delete your account, all associated data will be erased within 30 days.",
+      "s9Title": "9. GDPR compliance",
+      "s9Body": "kōza complies with the General Data Protection Regulation (GDPR). If you are an EU user, you have the right to access, rectify, delete and port your data.",
+      "s10Title": "10. Changes to this policy",
+      "s10Body": "We may update this privacy policy from time to time. Significant changes will be communicated through the application. Your continued use of kōza after a change constitutes your acceptance.",
+      "s11Title": "11. Contact",
+      "s11Body": "If you have any questions about this privacy policy or how we handle your data, please contact us at:"
+    },
+    "terms": {
+      "metaTitle": "Terms of use - kōza",
+      "metaDescription": "Terms of use of the kōza application",
+      "pageTitle": "Terms of use",
+      "lastUpdated": "Last updated: 10 June 2026",
+      "s1Title": "1. Acceptance of terms",
+      "s1Body": "By accessing and using kōza, you agree to comply with these terms of use and all applicable laws and regulations. If you do not accept these terms, please stop using the service immediately.",
+      "s2Title": "2. Licence of use",
+      "s2Body": "kōza grants you a limited, non-exclusive, revocable and non-transferable licence to access and use the application for personal, non-commercial purposes. You may not reproduce, distribute, transmit or exploit kōza's content without prior written authorisation.",
+      "s3Title": "3. Copyright",
+      "s3Body": "All kōza content, including text, graphics, logos and images, is protected by copyright. © 2026 kōza. All rights reserved. You may download your personal content for your personal use only.",
+      "s4Title": "4. Disclaimer",
+      "s4Body1": "kōza is provided \"as is\" without any warranty, express or implied. We do not guarantee the accuracy, completeness or usefulness of the information provided by the application. Financial guidance should not be considered professional advice.",
+      "s4Body2": "We disclaim all liability for financial losses, indirect damages or any other harm resulting from the use of kōza.",
+      "s5Title": "5. Limitation of liability",
+      "s5Body": "In no event shall kōza be liable for direct, indirect, special, incidental or punitive damages arising from your use of the application, even if we have been advised of the possibility of such damages.",
+      "s6Title": "6. Changes to the service",
+      "s6Body": "We reserve the right to modify or discontinue the service at any time, with or without notice. We shall not be liable to you or any third party for any modification, suspension or discontinuation of the service.",
+      "s7Title": "7. User data",
+      "s7Body": "You are responsible for all data you submit to kōza. You warrant that you have the right to submit this data and that it does not violate any law or third-party right. You retain full ownership of your data.",
+      "s8Title": "8. Acceptable use",
+      "s8Intro": "You must not use kōza to:",
+      "s8Items": [
+        "Violate applicable laws or regulations",
+        "Access another user's account without permission",
+        "Introduce viruses or malicious code",
+        "Harass, threaten or intimidate other users",
+        "Send spam or unsolicited advertising content"
+      ],
+      "s9Title": "9. Termination",
+      "s9Body": "We reserve the right to suspend or terminate your access to kōza if we determine, at our sole discretion, that you have violated these terms or applicable law.",
+      "s10Title": "10. Governing law",
+      "s10Body": "These terms of use are governed by and construed in accordance with the laws of France, without regard to its conflict of law principles.",
+      "s11Title": "11. Changes to the terms",
+      "s11Body": "We reserve the right to modify these terms of use at any time. You are responsible for regularly reviewing these terms. Your continued use of kōza after any change constitutes your acceptance of the modified terms.",
+      "s12Title": "12. Contact",
+      "s12Body": "If you have any questions about these terms of use, please contact us at:"
+    }
   }
 }

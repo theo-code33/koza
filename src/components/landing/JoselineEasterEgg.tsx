@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 interface JoselineEasterEggProps {
   isVisible: boolean;
@@ -8,6 +9,7 @@ interface JoselineEasterEggProps {
 }
 
 export default function JoselineEasterEgg({ isVisible, onClose }: JoselineEasterEggProps) {
+  const t = useTranslations("landing.easterEgg");
   const [position, setPosition] = useState({ x: 50, y: 50 });
 
   useEffect(() => {
@@ -43,18 +45,16 @@ export default function JoselineEasterEgg({ isVisible, onClose }: JoselineEaster
       >
         <div className="text-8xl cursor-pointer hover:scale-110 transition-transform">🦄</div>
         <div className="text-center mt-2 whitespace-nowrap">
-          <p className="text-2xl font-serif font-semibold text-[var(--color-accent)]">Joseline</p>
-          <p className="text-sm text-[var(--color-text-secondary)]">
-            Licorne d&apos;Aqua Licorne 🌊✨
+          <p className="text-2xl font-serif font-semibold text-[var(--color-accent)]">
+            {t("name")}
           </p>
+          <p className="text-sm text-[var(--color-text-secondary)]">{t("subtitle")}</p>
         </div>
       </div>
 
       {/* Instructions */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center z-10 pointer-events-auto">
-        <p className="text-sm text-[var(--color-text-secondary)]">
-          Clique sur Joseline ou le fond pour partir
-        </p>
+        <p className="text-sm text-[var(--color-text-secondary)]">{t("instruction")}</p>
       </div>
     </div>
   );

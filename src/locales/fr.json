@@ -17,6 +17,154 @@
     "genericError": "Un souci est survenu. Réessaie dans un instant.",
     "deleteError": "Suppression impossible. Réessaie dans un instant."
   },
+  "landing": {
+    "nav": {
+      "features": "Fonctionnalités",
+      "benefits": "Avantages",
+      "faq": "FAQ",
+      "dashboard": "Tableau de bord",
+      "menu": "Menu",
+      "easterEggHint": "{remaining} clics encore pour Joseline 🦄"
+    },
+    "hero": {
+      "badge": "✨ La paix fiscale, enfin",
+      "title": "Reprendre le contrôle de votre budget",
+      "subtitle": "Suivez vos revenus et dépenses sans stress. La règle 50/30/20 vous guide automatiquement vers une gestion sereine et durable de votre argent.",
+      "ctaStart": "Commencer gratuitement",
+      "ctaDemo": "Voir la démo",
+      "trustIntro": "Rejoignez ceux qui ont retrouvé la sérénité financière",
+      "stat1Value": "100%",
+      "stat1Label": "Gratuit & sans pub",
+      "stat2Value": "3 min",
+      "stat2Label": "Mise en place rapide",
+      "stat3Value": "0 tracas",
+      "stat3Label": "Pas d'intégration bancaire"
+    },
+    "heroSimple": {
+      "title": "La paix dans votre budget",
+      "subtitle": "Suivez vos revenus et dépenses, répartissez automatiquement selon la règle 50/30/20 et progressez sereinement vers vos objectifs.",
+      "ctaStart": "Commencer",
+      "ctaDashboard": "Voir le tableau de bord"
+    },
+    "features": {
+      "title": "Tout ce dont vous avez besoin",
+      "subtitle": "Une suite d'outils simples et puissants, pensée pour la clarté mentale.",
+      "items": [
+        {
+          "title": "Onboarding en 3 étapes",
+          "description": "Rentrez votre revenu et les enveloppes 50/30/20 se calculent automatiquement. Zéro configuration.",
+          "icon": "📋"
+        },
+        {
+          "title": "Ajout rapide de dépenses",
+          "description": "Enregistrez une dépense en moins de 10 secondes. Focus, montant, catégorie, c'est tout.",
+          "icon": "⚡"
+        },
+        {
+          "title": "Suivi visuel des budgets",
+          "description": "Des barres de progression zen qui vous montrent où vous en êtes, sans culpabilité.",
+          "icon": "📊"
+        },
+        {
+          "title": "Budgets personnalisés",
+          "description": "Créez des objectifs (vacances, épargne d'urgence) et suivez-les en temps réel.",
+          "icon": "🎯"
+        },
+        {
+          "title": "Navigation mensuelle",
+          "description": "Explorez vos dépenses des mois passés. Historique complet, toujours accessible.",
+          "icon": "📅"
+        },
+        {
+          "title": "Thème clair/sombre",
+          "description": "L'app s'adapte à votre préférence. Lisez confortablement à tout moment.",
+          "icon": "🌙"
+        }
+      ]
+    },
+    "benefits": {
+      "title": "La règle 50/30/20 expliquée",
+      "subtitle": "Un cadre simple et prouvé pour une vie financière équilibrée.",
+      "items": [
+        {
+          "title": "50% — Essentiels",
+          "desc": "Logement, alimentation, transports, santé. La fondation qui ne change pas.",
+          "icon": "🏠",
+          "color": "bg-[var(--color-essential-bg)] text-[var(--color-essential)]"
+        },
+        {
+          "title": "30% — Loisirs",
+          "desc": "Restaurants, sorties, vacances, culture. La joie et les expériences.",
+          "icon": "🎉",
+          "color": "bg-[var(--color-leisure-bg)] text-[var(--color-leisure)]"
+        },
+        {
+          "title": "20% — Épargne",
+          "desc": "Fonds d'urgence, investissements, projets à long terme. Votre futur.",
+          "icon": "💰",
+          "color": "bg-[var(--color-savings-bg)] text-[var(--color-savings)]"
+        }
+      ],
+      "boxTitle": "Pourquoi cette règle marche ?",
+      "list1": "Elle est <b>facile à mémoriser et à mettre en place</b> — pas de calcul complexe.",
+      "list2": "Elle <b>équilibre plaisir et sécurité</b> — vous ne vous privez pas, vous investissez.",
+      "list3": "Elle <b>s'adapte à tous les revenus</b> — l'important c'est la proportion, pas le chiffre absolu."
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "subtitle": "Tout ce que vous vouliez savoir sans crainte.",
+      "items": [
+        {
+          "q": "Kōza coûte combien ?",
+          "a": "Kōza est 100% gratuit. Pas d'abonnement, pas de limite, pas de publicité. C'est cadeau."
+        },
+        {
+          "q": "Mes données sont-elles sécurisées ?",
+          "a": "Oui. Vos données sont stockées dans une base PostgreSQL chiffrée. Pas d'intégration bancaire, pas de tiers. Juste vous et vos données."
+        },
+        {
+          "q": "Puis-je ajouter d'autres sources de revenu ?",
+          "a": "Absolument. Vous pouvez déclarer un salaire principal, un freelance, des dividendes — tout ce que vous voulez. Les enveloppes se recalculent automatiquement."
+        },
+        {
+          "q": "Que se passe-t-il si je dépasse mon budget ?",
+          "a": "Rien. Pas de culpabilité, pas d'alarme rouge. Kōza vous notifie gentiment et reporte le surplus sur le mois suivant. C'est une aide, pas un jugement."
+        },
+        {
+          "q": "Puis-je consulter les mois passés ?",
+          "a": "Oui. Vous pouvez naviguer librement dans votre historique pour voir vos tendances, comparer les mois et apprendre de vos habitudes."
+        },
+        {
+          "q": "Puis-je exporter mes données ?",
+          "a": "Bien sûr. Un clic et vous avez un JSON de toutes vos données. C'est vos données, vous les gardez."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Prêt à reprendre le contrôle ?",
+      "subtitle": "Rejoignez ceux qui ont transformé leur relation à l'argent. L'onboarding dure 3 minutes.",
+      "ctaNow": "Commencer maintenant",
+      "ctaDemo": "Voir la démo",
+      "note": "💳 Gratuit, sans engagement, pas de carte bancaire requise."
+    },
+    "footer": {
+      "tagline": "Gestion de budget zen basée sur la règle 50/30/20.",
+      "productTitle": "Produit",
+      "dashboard": "Tableau de bord",
+      "features": "Fonctionnalités",
+      "faq": "FAQ",
+      "legalTitle": "Légal",
+      "terms": "Conditions d'utilisation",
+      "privacy": "Politique de confidentialité",
+      "contactTitle": "Contact",
+      "rights": "© {year} kōza. Tous droits réservés."
+    },
+    "easterEgg": {
+      "name": "Joseline",
+      "subtitle": "Licorne d'Aqua Licorne 🌊✨",
+      "instruction": "Clique sur Joseline ou le fond pour partir"
+    }
+  },
   "nav": {
     "dashboard": "Tableau de bord",
     "expenses": "Dépenses",
@@ -166,5 +314,97 @@
     "stocks": "Actions",
     "real_estate": "Immobilier",
     "emergency_fund": "Fonds d'urgence"
+  },
+  "legal": {
+    "privacy": {
+      "metaTitle": "Politique de confidentialité - kōza",
+      "metaDescription": "Politique de confidentialité de l'application kōza",
+      "pageTitle": "Politique de confidentialité",
+      "lastUpdated": "Dernière mise à jour : 10 juin 2026",
+      "s1Title": "1. Introduction",
+      "s1Body": "kōza respecte votre vie privée. Cette politique de confidentialité explique comment nous collectons, utilisons et protégeons vos données personnelles lorsque vous utilisez notre application.",
+      "s2Title": "2. Données que nous collectons",
+      "s2Intro": "Nous collectons les types de données suivants :",
+      "s2Item1": "<b>Données de budget :</b> revenus, dépenses, catégories, budgets personnalisés que vous entrez",
+      "s2Item2": "<b>Données de préférence :</b> thème (clair/sombre), langue, paramètres utilisateur",
+      "s2Item3": "<b>Données d'accès :</b> adresse IP, type de navigateur, pages visitées (via logs serveur anonymisés)",
+      "s2Outro": "Nous ne collectons <b>pas</b> : email, numéro de téléphone, informations bancaires directes (nous ne nous intégrons pas aux banques).",
+      "s3Title": "3. Comment nous utilisons vos données",
+      "s3Intro": "Vos données sont utilisées pour :",
+      "s3Items": [
+        "Fournir le service (stocker et afficher vos budgets et dépenses)",
+        "Améliorer l'application (analyse d'utilisation anonymisée)",
+        "Vous envoyer des notifications d'alerte importantes",
+        "Maintenir la sécurité et la stabilité du service"
+      ],
+      "s4Title": "4. Partage de données",
+      "s4Body1": "Vos données ne sont <b>jamais</b> partagées, vendues ou transférées à des tiers. Aucune publicité, aucun courtier de données, aucun profiling. C'est simple : vos données vous appartiennent.",
+      "s4Body2": "Exception : nous pouvons être obligés de divulguer des données si la loi l'exige (ordonnance judiciaire, etc.).",
+      "s5Title": "5. Sécurité des données",
+      "s5Intro": "Nous prenons la sécurité de vos données au sérieux. Vos données sont :",
+      "s5Items": [
+        "Stockées dans une base PostgreSQL chiffrée (Prisma Postgres)",
+        "Protégées par HTTPS (chiffrement en transit)",
+        "Soumises à une sauvegarde régulière",
+        "Accessibles uniquement par votre navigateur (pas de cookies de tracking)"
+      ],
+      "s5Outro": "Bien que nous ayons mis en place des mesures de sécurité raisonnables, aucun système n'est 100% sûr. Nous ne pouvons pas garantir la sécurité absolue.",
+      "s6Title": "6. Cookies et traceurs",
+      "s6Body": "kōza n'utilise <b>pas</b> de cookies de tracking ou de publicité. Nous pouvons utiliser des cookies techniques minimaux pour mémoriser vos préférences (thème, langue) — uniquement sur votre appareil, jamais à travers d'autres sites.",
+      "s7Title": "7. Droits d'accès et suppression",
+      "s7Intro": "Vous avez le droit de :",
+      "s7Items": [
+        "Consulter toutes vos données via l'export JSON",
+        "Modifier ou supprimer vos données à tout moment dans l'app",
+        "Demander la suppression complète de votre compte"
+      ],
+      "s7ContactPrefix": "Pour demander une suppression de compte, contactez :",
+      "s8Title": "8. Conservation des données",
+      "s8Body": "Vos données sont conservées aussi longtemps que vous utilisez kōza. Si vous supprimez votre compte, toutes les données associées seront effacées dans les 30 jours.",
+      "s9Title": "9. Conformité RGPD",
+      "s9Body": "kōza est conforme au Règlement Général sur la Protection des Données (RGPD). Si vous êtes un utilisateur de l'UE, vous avez le droit d'accès, de rectification, de suppression et de portabilité de vos données.",
+      "s10Title": "10. Modifications de cette politique",
+      "s10Body": "Nous pouvons mettre à jour cette politique de confidentialité de temps à autre. Les changements importants seront communiqués via l'application. Votre utilisation continue de kōza après une modification constitue votre acceptation.",
+      "s11Title": "11. Contact",
+      "s11Body": "Si vous avez des questions sur cette politique de confidentialité ou sur la façon dont nous traitons vos données, veuillez nous contacter à :"
+    },
+    "terms": {
+      "metaTitle": "Conditions d'utilisation - kōza",
+      "metaDescription": "Conditions d'utilisation de l'application kōza",
+      "pageTitle": "Conditions d'utilisation",
+      "lastUpdated": "Dernière mise à jour : 10 juin 2026",
+      "s1Title": "1. Acceptation des conditions",
+      "s1Body": "En accédant et en utilisant kōza, vous acceptez de respecter les présentes conditions d'utilisation et toutes les lois et réglementations applicables. Si vous n'acceptez pas ces conditions, veuillez cesser d'utiliser le service immédiatement.",
+      "s2Title": "2. Licence d'utilisation",
+      "s2Body": "kōza vous accorde une licence limitée, non exclusive, révocable et non transférable pour accéder et utiliser l'application à des fins personnelles et non commerciales. Vous ne pouvez pas reproduire, distribuer, transmettre ou exploiter le contenu de kōza sans autorisation préalable écrite.",
+      "s3Title": "3. Droits d'auteur",
+      "s3Body": "Tout le contenu de kōza, y compris les textes, graphiques, logos et images, est protégé par le droit d'auteur. © 2026 kōza. Tous droits réservés. Vous pouvez télécharger votre contenu personnel pour votre usage personnel uniquement.",
+      "s4Title": "4. Disclaimer (Exonération de responsabilité)",
+      "s4Body1": "kōza est fourni « tel quel » sans aucune garantie, expresse ou implicite. Nous ne garantissons pas l'exactitude, la complétude ou l'utilité des informations fournies par l'application. Les conseils financiers ne doivent pas être considérés comme un avis professionnel.",
+      "s4Body2": "Nous déclinons toute responsabilité pour les pertes financières, les dommages indirects ou tout autre préjudice résultant de l'utilisation de kōza.",
+      "s5Title": "5. Limitation de responsabilité",
+      "s5Body": "En aucun cas kōza ne sera responsable des dommages directs, indirects, spéciaux, accidentels ou punitifs découlant de votre utilisation de l'application, même si nous avons été informés de la possibilité de tels dommages.",
+      "s6Title": "6. Modifications du service",
+      "s6Body": "Nous nous réservons le droit de modifier ou d'interrompre le service à tout moment, avec ou sans préavis. Nous ne serons pas responsables envers vous ou un tiers pour toute modification, suspension ou interruption du service.",
+      "s7Title": "7. Données utilisateur",
+      "s7Body": "Vous êtes responsable de toutes les données que vous soumettez à kōza. Vous garantissez que vous avez le droit de soumettre ces données et qu'elles ne violent aucune loi ou droit de tiers. Vous conservez la propriété intégrale de vos données.",
+      "s8Title": "8. Utilisation acceptable",
+      "s8Intro": "Vous ne devez pas utiliser kōza pour :",
+      "s8Items": [
+        "Violer les lois ou réglementations applicables",
+        "Accéder au compte d'un autre utilisateur sans permission",
+        "Introduire des virus ou codes malveillants",
+        "Harceler, menacer ou intimider d'autres utilisateurs",
+        "Envoyer du contenu spam ou publicitaire non sollicité"
+      ],
+      "s9Title": "9. Résiliation",
+      "s9Body": "Nous nous réservons le droit de suspendre ou de résilier votre accès à kōza si nous jugeons, à notre seule discrétion, que vous avez violé ces conditions ou le droit applicable.",
+      "s10Title": "10. Droit applicable",
+      "s10Body": "Ces conditions d'utilisation sont régies par et construites conformément aux lois de France, sans considération pour ses principes de conflits de lois.",
+      "s11Title": "11. Modifications des conditions",
+      "s11Body": "Nous nous réservons le droit de modifier ces conditions d'utilisation à tout moment. Vous êtes responsable de revoir régulièrement ces conditions. Votre utilisation continue de kōza après toute modification constitue votre acceptation des conditions modifiées.",
+      "s12Title": "12. Contact",
+      "s12Body": "Si vous avez des questions concernant ces conditions d'utilisation, veuillez nous contacter à :"
+    }
   }
 }

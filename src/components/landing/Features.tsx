@@ -1,50 +1,16 @@
+import { useTranslations } from "next-intl";
+
 export default function Features() {
-  const features = [
-    {
-      title: "Onboarding en 3 étapes",
-      description:
-        "Rentrez votre revenu et les enveloppes 50/30/20 se calculent automatiquement. Zéro configuration.",
-      icon: "📋",
-    },
-    {
-      title: "Ajout rapide de dépenses",
-      description:
-        "Enregistrez une dépense en moins de 10 secondes. Focus, montant, catégorie, c'est tout.",
-      icon: "⚡",
-    },
-    {
-      title: "Suivi visuel des budgets",
-      description:
-        "Des barres de progression zen qui vous montrent où vous en êtes, sans culpabilité.",
-      icon: "📊",
-    },
-    {
-      title: "Budgets personnalisés",
-      description: "Créez des objectifs (vacances, épargne d'urgence) et suivez les en temps réel.",
-      icon: "🎯",
-    },
-    {
-      title: "Navigation mensuelle",
-      description:
-        "Explorez vos dépenses des mois passés. Historique complet, toujours accessible.",
-      icon: "📅",
-    },
-    {
-      title: "Thème clair/sombre",
-      description: "L'app s'adapte à votre préférence. Lisez confortablement à tout moment.",
-      icon: "🌙",
-    },
-  ];
+  const t = useTranslations("landing.features");
+  const features = t.raw("items") as { title: string; description: string; icon: string }[];
 
   return (
     <section id="features" className="py-24 bg-[var(--color-bg)]">
       <div className="max-w-5xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-serif font-semibold mb-4">
-            Tout ce dont vous avez besoin
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-serif font-semibold mb-4">{t("title")}</h2>
           <p className="text-lg text-[var(--color-text-secondary)] max-w-2xl mx-auto">
-            Une suite d&apos;outils simples et puissants, pensée pour la clarté mentale.
+            {t("subtitle")}
           </p>
         </div>
 

@@ -6,6 +6,7 @@
     "amount": "Amount",
     "description": "Description",
     "date": "Date",
+    "name": "Name",
     "continue": "Continue",
     "cancel": "Cancel",
     "save": "Save",
@@ -43,7 +44,9 @@
     "amountInvalid": "Invalid amount",
     "amountPositive": "Amount must be positive",
     "descriptionRequired": "Description required",
-    "dateRequired": "Date required"
+    "dateRequired": "Date required",
+    "nameRequired": "Name required",
+    "dateInvalid": "Invalid date"
   },
   "dashboard": {
     "closedReadOnly": "Closed month — read-only.",
@@ -84,6 +87,21 @@
     "add": "Add expense",
     "deleteTitle": "Delete this expense?",
     "deleteMessage": "“{description}” will be removed from this month."
+  },
+  "budgets": {
+    "pageTitle": "Your budgets",
+    "pageSubtitle": "Your saving and spending goals.",
+    "newTitle": "New budget",
+    "editTitle": "Edit budget",
+    "namePlaceholder": "Summer holidays",
+    "targetLabel": "Target amount",
+    "deadlineLabel": "Deadline (optional)",
+    "deadline": "Due {date}",
+    "deleteAria": "Delete budget",
+    "empty": "No budgets yet. Create your first goal.",
+    "add": "Add budget",
+    "deleteTitle": "Delete this budget?",
+    "deleteMessage": "“{name}” will be deleted. Linked expenses will be unlinked, not deleted."
   },
   "settings": {
     "title": "Settings",

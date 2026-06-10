@@ -6,6 +6,7 @@
     "amount": "Montant",
     "description": "Description",
     "date": "Date",
+    "name": "Nom",
     "continue": "Continuer",
     "cancel": "Annuler",
     "save": "Enregistrer",
@@ -43,7 +44,9 @@
     "amountInvalid": "Montant invalide",
     "amountPositive": "Montant positif requis",
     "descriptionRequired": "Description requise",
-    "dateRequired": "Date requise"
+    "dateRequired": "Date requise",
+    "nameRequired": "Nom requis",
+    "dateInvalid": "Date invalide"
   },
   "dashboard": {
     "closedReadOnly": "Mois clôturé — lecture seule.",
@@ -84,6 +87,21 @@
     "add": "Ajouter une dépense",
     "deleteTitle": "Supprimer cette dépense ?",
     "deleteMessage": "« {description} » sera retirée de ce mois."
+  },
+  "budgets": {
+    "pageTitle": "Tes budgets",
+    "pageSubtitle": "Tes objectifs d'épargne et de dépense.",
+    "newTitle": "Nouveau budget",
+    "editTitle": "Modifier le budget",
+    "namePlaceholder": "Vacances d'été",
+    "targetLabel": "Montant cible",
+    "deadlineLabel": "Échéance (optionnel)",
+    "deadline": "Échéance {date}",
+    "deleteAria": "Supprimer le budget",
+    "empty": "Aucun budget pour l'instant. Crée ton premier objectif.",
+    "add": "Ajouter un budget",
+    "deleteTitle": "Supprimer ce budget ?",
+    "deleteMessage": "« {name} » sera supprimé. Les dépenses liées seront déliées, pas supprimées."
   },
   "settings": {
     "title": "Réglages",

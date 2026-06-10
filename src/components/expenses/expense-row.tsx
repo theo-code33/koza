@@ -12,6 +12,7 @@ export interface ExpenseRowData {
   date: string;
   category: CategoryKey;
   subcategory: string;
+  budgetId: string | null;
 }
 
 interface ExpenseRowProps {

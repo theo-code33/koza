@@ -6,15 +6,16 @@ import { Plus } from "lucide-react";
 import { Overlay } from "@/components/ui/overlay";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { ExpenseRow, type ExpenseRowData } from "@/components/expenses/expense-row";
-import { ExpenseQuickForm } from "@/components/expenses/expense-quick-form";
+import { ExpenseQuickForm, type BudgetOption } from "@/components/expenses/expense-quick-form";
 
 interface ExpensesManagerProps {
   expenses: ExpenseRowData[];
+  budgets?: BudgetOption[];
 }
 
 type OverlayState = { mode: "add" } | { mode: "edit"; expense: ExpenseRowData } | null;
 
-export function ExpensesManager({ expenses }: ExpensesManagerProps) {
+export function ExpensesManager({ expenses, budgets = [] }: ExpensesManagerProps) {
   const router = useRouter();
   const [overlay, setOverlay] = useState<OverlayState>(null);
   const [deleting, setDeleting] = useState<ExpenseRowData | null>(null);
@@ -70,6 +71,7 @@ export function ExpensesManager({ expenses }: ExpensesManagerProps) {
         <Overlay mode="sheet" onClose={() => setOverlay(null)}>
           <ExpenseQuickForm
             expense={overlay.mode === "edit" ? overlay.expense : undefined}
+            budgets={budgets}
             onSuccess={refresh}
             onCancel={() => setOverlay(null)}
           />

@@ -177,7 +177,6 @@ Ne pas implémenter pour l'instant :
 
 - Synchronisation bancaire
 - Import automatique de transactions
-- Transactions récurrentes / modèles
 - Prévisions financières
 - Gestion patrimoniale
 - Authentification / comptes multi-utilisateurs
@@ -692,26 +691,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum RecurringType    { FIXED VARIABLE }
+enum Frequency        { MONTHLY QUARTERLY YEARLY }
+enum OccurrenceStatus { APPLIED PENDING CONFIRMED DROPPED }
+
 model Income {
   id        String   @id @default(cuid())
   source    String
   amount    Decimal  @db.Decimal(12, 2)
+  date      DateTime               // date de réception (1er du mois par défaut)
   month     String   // "YYYY-MM"
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  @@index([month])
 }
 
 model Expense {
-  id          String   @id @default(cuid())
-  amount      Decimal  @db.Decimal(12, 2)
+  id          String            @id @default(cuid())
+  amount      Decimal           @db.Decimal(12, 2)
   description String
   date        DateTime
-  category    String   // 'essential' | 'leisure' | 'savings'
+  month       String            // "YYYY-MM" — période d'imputation (dérivée de date)
+  category    String            // 'essential' | 'leisure' | 'savings'
   subcategory String
   budgetId    String?
-  budget      Budget?  @relation(fields: [budgetId], references: [id], onDelete: SetNull)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  budget      Budget?           @relation(fields: [budgetId], references: [id], onDelete: SetNull)
+  recurringId String?           // null si saisie manuelle
+  recurring   RecurringExpense? @relation(fields: [recurringId], references: [id], onDelete: SetNull)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  @@index([month])
 }
 
 model Budget {
@@ -725,14 +734,44 @@ model Budget {
   updatedAt    DateTime  @updatedAt
 }
 
-model MonthlyBalance {
-  id            String    @id @default(cuid())
-  month         String    @unique // "YYYY-MM"
-  carryOver     Decimal   @default(0) @db.Decimal(12, 2)
-  essentialOver Decimal   @default(0) @db.Decimal(12, 2)
-  leisureOver   Decimal   @default(0) @db.Decimal(12, 2)
-  savingsOver   Decimal   @default(0) @db.Decimal(12, 2)
-  closedAt      DateTime?
+// Ancre la chaîne de report et l'état ouvert/clôturé. Base et repères 50/30/20 sont dérivés.
+model MonthlyPeriod {
+  id        String    @id @default(cuid())
+  month     String    @unique // "YYYY-MM"
+  carryIn   Decimal   @default(0) @db.Decimal(12, 2)  // = carryOut du mois précédent
+  carryOut  Decimal?  @db.Decimal(12, 2)              // figé à la clôture ; null tant qu'ouvert
+  closedAt  DateTime?                                  // null = ouvert ; sinon lecture seule
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model RecurringExpense {
+  id          String                @id @default(cuid())
+  label       String
+  type        RecurringType                 // FIXED = auto-créée ; VARIABLE = à confirmer
+  amount      Decimal               @db.Decimal(12, 2)
+  category    String
+  subcategory String
+  frequency   Frequency
+  anchorMonth String                        // "YYYY-MM" : 1ʳᵉ échéance
+  endMonth    String?
+  active      Boolean               @default(true)
+  occurrences RecurringOccurrence[]
+  expenses    Expense[]
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+}
+
+model RecurringOccurrence {
+  id          String           @id @default(cuid())
+  recurringId String
+  recurring   RecurringExpense @relation(fields: [recurringId], references: [id], onDelete: Cascade)
+  month       String
+  status      OccurrenceStatus
+  expenseId   String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  @@unique([recurringId, month])
 }
 
 model UserSettings {
@@ -778,3 +817,142 @@ Le seed doit produire un dashboard visuellement riche et réaliste pour la démo
 5. **Signale les blocages** uniquement si impact significatif sur le scope ou l'architecture
 6. **Garde le CLAUDE.md à jour** si la stack ou les conventions changent
 7. **Le seed de démo est prioritaire** — le dashboard doit être impressionnant pour la présentation de vendredi
+
+<!-- rtk-instructions v2 -->
+# RTK (Rust Token Killer) - Token-Optimized Commands
+
+## Golden Rule
+
+**Always prefix commands with `rtk`**. If RTK has a dedicated filter, it uses it. If not, it passes through unchanged. This means RTK is always safe to use.
+
+**Important**: Even in command chains with `&&`, use `rtk`:
+```bash
+# ❌ Wrong
+git add . && git commit -m "msg" && git push
+
+# ✅ Correct
+rtk git add . && rtk git commit -m "msg" && rtk git push
+```
+
+## RTK Commands by Workflow
+
+### Build & Compile (80-90% savings)
+```bash
+rtk cargo build         # Cargo build output
+rtk cargo check         # Cargo check output
+rtk cargo clippy        # Clippy warnings grouped by file (80%)
+rtk tsc                 # TypeScript errors grouped by file/code (83%)
+rtk lint                # ESLint/Biome violations grouped (84%)
+rtk prettier --check    # Files needing format only (70%)
+rtk next build          # Next.js build with route metrics (87%)
+```
+
+### Test (60-99% savings)
+```bash
+rtk cargo test          # Cargo test failures only (90%)
+rtk go test             # Go test failures only (90%)
+rtk jest                # Jest failures only (99.5%)
+rtk vitest              # Vitest failures only (99.5%)
+rtk playwright test     # Playwright failures only (94%)
+rtk pytest              # Python test failures only (90%)
+rtk rake test           # Ruby test failures only (90%)
+rtk rspec               # RSpec test failures only (60%)
+rtk test <cmd>          # Generic test wrapper - failures only
+```
+
+### Git (59-80% savings)
+```bash
+rtk git status          # Compact status
+rtk git log             # Compact log (works with all git flags)
+rtk git diff            # Compact diff (80%)
+rtk git show            # Compact show (80%)
+rtk git add             # Ultra-compact confirmations (59%)
+rtk git commit          # Ultra-compact confirmations (59%)
+rtk git push            # Ultra-compact confirmations
+rtk git pull            # Ultra-compact confirmations
+rtk git branch          # Compact branch list
+rtk git fetch           # Compact fetch
+rtk git stash           # Compact stash
+rtk git worktree        # Compact worktree
+```
+
+Note: Git passthrough works for ALL subcommands, even those not explicitly listed.
+
+### GitHub (26-87% savings)
+```bash
+rtk gh pr view <num>    # Compact PR view (87%)
+rtk gh pr checks        # Compact PR checks (79%)
+rtk gh run list         # Compact workflow runs (82%)
+rtk gh issue list       # Compact issue list (80%)
+rtk gh api              # Compact API responses (26%)
+```
+
+### JavaScript/TypeScript Tooling (70-90% savings)
+```bash
+rtk pnpm list           # Compact dependency tree (70%)
+rtk pnpm outdated       # Compact outdated packages (80%)
+rtk pnpm install        # Compact install output (90%)
+rtk npm run <script>    # Compact npm script output
+rtk npx <cmd>           # Compact npx command output
+rtk prisma              # Prisma without ASCII art (88%)
+```
+
+### Files & Search (60-75% savings)
+```bash
+rtk ls <path>           # Tree format, compact (65%)
+rtk read <file>         # Code reading with filtering (60%)
+rtk grep <pattern>      # Search grouped by file (75%). Format flags (-c, -l, -L, -o, -Z) run raw.
+rtk find <pattern>      # Find grouped by directory (70%)
+```
+
+### Analysis & Debug (70-90% savings)
+```bash
+rtk err <cmd>           # Filter errors only from any command
+rtk log <file>          # Deduplicated logs with counts
+rtk json <file>         # JSON structure without values
+rtk deps                # Dependency overview
+rtk env                 # Environment variables compact
+rtk summary <cmd>       # Smart summary of command output
+rtk diff                # Ultra-compact diffs
+```
+
+### Infrastructure (85% savings)
+```bash
+rtk docker ps           # Compact container list
+rtk docker images       # Compact image list
+rtk docker logs <c>     # Deduplicated logs
+rtk kubectl get         # Compact resource list
+rtk kubectl logs        # Deduplicated pod logs
+```
+
+### Network (65-70% savings)
+```bash
+rtk curl <url>          # Compact HTTP responses (70%)
+rtk wget <url>          # Compact download output (65%)
+```
+
+### Meta Commands
+```bash
+rtk gain                # View token savings statistics
+rtk gain --history      # View command history with savings
+rtk discover            # Analyze Claude Code sessions for missed RTK usage
+rtk proxy <cmd>         # Run command without filtering (for debugging)
+rtk init                # Add RTK instructions to CLAUDE.md
+rtk init --global       # Add RTK to ~/.claude/CLAUDE.md
+```
+
+## Token Savings Overview
+
+| Category | Commands | Typical Savings |
+|----------|----------|-----------------|
+| Tests | vitest, playwright, cargo test | 90-99% |
+| Build | next, tsc, lint, prettier | 70-87% |
+| Git | status, log, diff, add, commit | 59-80% |
+| GitHub | gh pr, gh run, gh issue | 26-87% |
+| Package Managers | pnpm, npm, npx | 70-90% |
+| Files | ls, read, grep, find | 60-75% |
+| Infrastructure | docker, kubectl | 85% |
+| Network | curl, wget | 65-70% |
+
+Overall average: **60-90% token reduction** on common development operations.
+<!-- /rtk-instructions -->

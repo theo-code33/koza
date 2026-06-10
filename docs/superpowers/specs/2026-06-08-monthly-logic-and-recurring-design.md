@@ -1,6 +1,6 @@
 # Design — Logique mensuelle & dépenses récurrentes
 
-> **Statut :** validé (brainstorming) — non implémenté
+> **Statut :** ⚠️ REMPLACÉ par `2026-06-10-monthly-logic-design.md` (version consolidée calée sur le code actuel). Conservé pour historique.
 > **Date :** 2026-06-08
 > **Périmètre :** cœur métier du suivi mensuel 50/30/20 + dépenses récurrentes
 > **Impact périmètre :** les dépenses récurrentes passent de « Hors scope MVP » à **dans le MVP** (le `CLAUDE.md` sera mis à jour en conséquence)

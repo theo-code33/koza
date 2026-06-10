@@ -17,6 +17,36 @@
     "genericError": "Something went wrong. Please try again in a moment.",
     "deleteError": "Couldn't delete. Please try again in a moment."
   },
+  "landing": {
+    "nav": {
+      "features": "Features",
+      "benefits": "Benefits",
+      "faq": "FAQ",
+      "dashboard": "Dashboard",
+      "menu": "Menu",
+      "easterEggHint": "{remaining} more clicks for Joseline 🦄"
+    },
+    "hero": {
+      "badge": "✨ Financial peace, at last",
+      "title": "Take back control of your budget",
+      "subtitle": "Track your income and spending without stress. The 50/30/20 rule automatically guides you toward calm, lasting money management.",
+      "ctaStart": "Start for free",
+      "ctaDemo": "See the demo",
+      "trustIntro": "Join those who found financial peace of mind",
+      "stat1Value": "100%",
+      "stat1Label": "Free & ad-free",
+      "stat2Value": "3 min",
+      "stat2Label": "Quick setup",
+      "stat3Value": "0 hassle",
+      "stat3Label": "No bank integration"
+    },
+    "heroSimple": {
+      "title": "Peace in your budget",
+      "subtitle": "Track your income and spending, split automatically with the 50/30/20 rule, and move calmly toward your goals.",
+      "ctaStart": "Get started",
+      "ctaDashboard": "See the dashboard"
+    }
+  },
   "nav": {
     "dashboard": "Dashboard",
     "expenses": "Expenses",

@@ -17,6 +17,36 @@
     "genericError": "Un souci est survenu. Réessaie dans un instant.",
     "deleteError": "Suppression impossible. Réessaie dans un instant."
   },
+  "landing": {
+    "nav": {
+      "features": "Fonctionnalités",
+      "benefits": "Avantages",
+      "faq": "FAQ",
+      "dashboard": "Tableau de bord",
+      "menu": "Menu",
+      "easterEggHint": "{remaining} clics encore pour Joseline 🦄"
+    },
+    "hero": {
+      "badge": "✨ La paix fiscale, enfin",
+      "title": "Reprendre le contrôle de votre budget",
+      "subtitle": "Suivez vos revenus et dépenses sans stress. La règle 50/30/20 vous guide automatiquement vers une gestion sereine et durable de votre argent.",
+      "ctaStart": "Commencer gratuitement",
+      "ctaDemo": "Voir la démo",
+      "trustIntro": "Rejoignez ceux qui ont retrouvé la sérénité financière",
+      "stat1Value": "100%",
+      "stat1Label": "Gratuit & sans pub",
+      "stat2Value": "3 min",
+      "stat2Label": "Mise en place rapide",
+      "stat3Value": "0 tracas",
+      "stat3Label": "Pas d'intégration bancaire"
+    },
+    "heroSimple": {
+      "title": "La paix dans votre budget",
+      "subtitle": "Suivez vos revenus et dépenses, répartissez automatiquement selon la règle 50/30/20 et progressez sereinement vers vos objectifs.",
+      "ctaStart": "Commencer",
+      "ctaDashboard": "Voir le tableau de bord"
+    }
+  },
   "nav": {
     "dashboard": "Tableau de bord",
     "expenses": "Dépenses",

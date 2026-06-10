@@ -1,3 +1,4 @@
+import { useLocale, useTranslations } from "next-intl";
 import { CatDot } from "@/components/ui/cat-dot";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { formatEUR } from "@/lib/formatters";
@@ -10,6 +11,8 @@ interface CategoryProgressCardProps {
 }
 
 export function CategoryProgressCard({ category, spent, target }: CategoryProgressCardProps) {
+  const t = useTranslations("categories");
+  const locale = useLocale() as "fr" | "en";
   const config = CATEGORIES[category];
   const over = Number(spent) > Number(target);
 
@@ -18,10 +21,10 @@ export function CategoryProgressCard({ category, spent, target }: CategoryProgre
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <CatDot category={category} />
-          <span className="text-[15px] font-medium text-text">{config.label}</span>
+          <span className="text-[15px] font-medium text-text">{t(category)}</span>
         </div>
         <span className={`num text-[13px] ${over ? "text-over" : "text-text-secondary"}`}>
-          {formatEUR(spent)} / {formatEUR(target)}
+          {formatEUR(spent, locale)} / {formatEUR(target, locale)}
         </span>
       </div>
       <ProgressBar value={Number(spent)} max={Number(target)} fillClass={config.dotClass} />

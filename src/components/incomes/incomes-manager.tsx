@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Plus } from "lucide-react";
 import { Overlay } from "@/components/ui/overlay";
@@ -17,6 +18,8 @@ type OverlayState = { mode: "add" } | { mode: "edit"; income: IncomeRowData } | 
 
 export function IncomesManager({ incomes, month }: IncomesManagerProps) {
   const router = useRouter();
+  const t = useTranslations("incomes");
+  const tc = useTranslations("common");
   const [overlay, setOverlay] = useState<OverlayState>(null);
   const [deleting, setDeleting] = useState<IncomeRowData | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
@@ -35,7 +38,7 @@ export function IncomesManager({ incomes, month }: IncomesManagerProps) {
       if (!res.ok) throw new Error("delete_failed");
       refresh();
     } catch {
-      setActionError("Suppression impossible. Réessaie dans un instant.");
+      setActionError(tc("deleteError"));
       setDeleting(null);
     }
   }
@@ -43,9 +46,7 @@ export function IncomesManager({ incomes, month }: IncomesManagerProps) {
   return (
     <div className="flex flex-col gap-3">
       {incomes.length === 0 ? (
-        <p className="text-[15px] text-text-secondary">
-          Aucun revenu pour ce mois. Ajoute ta première source pour voir tes enveloppes.
-        </p>
+        <p className="text-[15px] text-text-secondary">{t("empty")}</p>
       ) : (
         incomes.map((income) => (
           <IncomeRow
@@ -64,7 +65,7 @@ export function IncomesManager({ incomes, month }: IncomesManagerProps) {
         onClick={() => setOverlay({ mode: "add" })}
         className="tap mt-2 inline-flex items-center gap-1.5 text-[14px] font-medium text-accent"
       >
-        <Plus size={16} strokeWidth={1.8} /> Ajouter un revenu
+        <Plus size={16} strokeWidth={1.8} /> {t("add")}
       </button>
 
       {overlay ? (
@@ -80,9 +81,9 @@ export function IncomesManager({ incomes, month }: IncomesManagerProps) {
 
       {deleting ? (
         <ConfirmDialog
-          title="Supprimer ce revenu ?"
-          message={`« ${deleting.source} » sera retiré de ce mois.`}
-          confirmLabel="Supprimer"
+          title={t("deleteTitle")}
+          message={t("deleteMessage", { source: deleting.source })}
+          confirmLabel={tc("delete")}
           onConfirm={confirmDelete}
           onCancel={() => setDeleting(null)}
         />

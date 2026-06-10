@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -12,25 +13,17 @@ import { CatSelect } from "@/components/ui/cat-select";
 import { SubcatChips } from "@/components/expenses/subcat-chips";
 import { defaultSubcategory } from "@/lib/subcategories";
 
-const formSchema = z.object({
-  label: z.string().trim().min(1, "Nom requis").max(80),
-  type: z.enum(["FIXED", "VARIABLE"]),
-  amount: z
-    .string()
-    .regex(/^\d+(\.\d{1,2})?$/, "Montant invalide")
-    .refine((value) => Number(value) > 0, "Montant positif requis"),
-  category: z.enum(["essential", "leisure", "savings"]),
-  subcategory: z.string().min(1),
-  frequency: z.enum(["MONTHLY", "QUARTERLY", "YEARLY"]),
-  anchorMonth: z.string().regex(/^\d{4}-\d{2}$/, "Mois requis"),
-  endMonth: z
-    .string()
-    .regex(/^\d{4}-\d{2}$/)
-    .or(z.literal("")),
-  active: z.boolean(),
-});
-
-type FormValues = z.infer<typeof formSchema>;
+interface FormValues {
+  label: string;
+  type: "FIXED" | "VARIABLE";
+  amount: string;
+  category: "essential" | "leisure" | "savings";
+  subcategory: string;
+  frequency: "MONTHLY" | "QUARTERLY" | "YEARLY";
+  anchorMonth: string;
+  endMonth: string;
+  active: boolean;
+}
 
 export interface RecurringModel {
   id: string;
@@ -54,7 +47,33 @@ interface RecurringFormProps {
 const currentMonthValue = () => new Date().toISOString().slice(0, 7);
 
 export function RecurringForm({ model, onSuccess, onCancel }: RecurringFormProps) {
+  const t = useTranslations("recurring");
+  const tc = useTranslations("common");
+  const tv = useTranslations("validation");
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const formSchema = useMemo(
+    () =>
+      z.object({
+        label: z.string().trim().min(1, tv("nameRequired")).max(80),
+        type: z.enum(["FIXED", "VARIABLE"]),
+        amount: z
+          .string()
+          .regex(/^\d+(\.\d{1,2})?$/, tv("amountInvalid"))
+          .refine((value) => Number(value) > 0, tv("amountPositive")),
+        category: z.enum(["essential", "leisure", "savings"]),
+        subcategory: z.string().min(1),
+        frequency: z.enum(["MONTHLY", "QUARTERLY", "YEARLY"]),
+        anchorMonth: z.string().regex(/^\d{4}-\d{2}$/, tv("monthRequired")),
+        endMonth: z
+          .string()
+          .regex(/^\d{4}-\d{2}$/)
+          .or(z.literal("")),
+        active: z.boolean(),
+      }),
+    [tv],
+  );
+
   const {
     register,
     control,
@@ -99,19 +118,17 @@ export function RecurringForm({ model, onSuccess, onCancel }: RecurringFormProps
       if (!res.ok) throw new Error("save_failed");
       onSuccess();
     } catch {
-      setSubmitError("Un souci est survenu. Réessaie dans un instant.");
+      setSubmitError(tc("genericError"));
     }
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 p-6">
-      <h2 className="font-serif text-[24px] text-text">
-        {model ? "Modifier la récurrente" : "Nouvelle récurrente"}
-      </h2>
-      <Field label="Nom" hint={errors.label?.message}>
+      <h2 className="font-serif text-[24px] text-text">{model ? t("editTitle") : t("newTitle")}</h2>
+      <Field label={tc("name")} hint={errors.label?.message}>
         <input
           {...register("label")}
-          placeholder="Loyer, assurance…"
+          placeholder={t("namePlaceholder")}
           className="h-12 w-full rounded-input bg-surface-alt px-4 text-[15px] text-text outline-none"
         />
       </Field>
@@ -121,15 +138,15 @@ export function RecurringForm({ model, onSuccess, onCancel }: RecurringFormProps
         render={({ field }) => (
           <Segmented
             options={[
-              { value: "FIXED", label: "Montant fixe" },
-              { value: "VARIABLE", label: "Variable" },
+              { value: "FIXED", label: t("typeFixed") },
+              { value: "VARIABLE", label: t("typeVariable") },
             ]}
             value={field.value}
             onChange={field.onChange}
           />
         )}
       />
-      <Field label="Montant" hint={errors.amount?.message}>
+      <Field label={tc("amount")} hint={errors.amount?.message}>
         <input
           {...register("amount")}
           inputMode="decimal"
@@ -163,23 +180,23 @@ export function RecurringForm({ model, onSuccess, onCancel }: RecurringFormProps
         render={({ field }) => (
           <Segmented
             options={[
-              { value: "MONTHLY", label: "Mensuel" },
-              { value: "QUARTERLY", label: "Trimestriel" },
-              { value: "YEARLY", label: "Annuel" },
+              { value: "MONTHLY", label: t("freqMonthly") },
+              { value: "QUARTERLY", label: t("freqQuarterly") },
+              { value: "YEARLY", label: t("freqYearly") },
             ]}
             value={field.value}
             onChange={field.onChange}
           />
         )}
       />
-      <Field label="Première échéance" hint={errors.anchorMonth?.message}>
+      <Field label={t("anchorLabel")} hint={errors.anchorMonth?.message}>
         <input
           {...register("anchorMonth")}
           type="month"
           className="h-12 w-full rounded-input bg-surface-alt px-4 text-[15px] text-text outline-none"
         />
       </Field>
-      <Field label="Fin (optionnel)">
+      <Field label={t("endLabel")}>
         <input
           {...register("endMonth")}
           type="month"
@@ -187,22 +204,22 @@ export function RecurringForm({ model, onSuccess, onCancel }: RecurringFormProps
         />
       </Field>
       <div className="flex items-center justify-between">
-        <span className="text-[15px] text-text">Active</span>
+        <span className="text-[15px] text-text">{t("activeLabel")}</span>
         <Controller
           control={control}
           name="active"
           render={({ field }) => (
-            <Toggle on={field.value} onChange={field.onChange} label="Activer la récurrente" />
+            <Toggle on={field.value} onChange={field.onChange} label={t("activeToggleAria")} />
           )}
         />
       </div>
       {submitError ? <p className="text-[13px] text-warning">{submitError}</p> : null}
       <div className="flex gap-3">
         <Button variant="surface" full onClick={onCancel}>
-          Annuler
+          {tc("cancel")}
         </Button>
         <Button type="submit" full disabled={isSubmitting}>
-          {model ? "Enregistrer" : "Ajouter"}
+          {model ? tc("save") : tc("add")}
         </Button>
       </div>
     </form>

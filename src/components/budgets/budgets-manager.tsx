@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Plus } from "lucide-react";
 import { Overlay } from "@/components/ui/overlay";
@@ -15,6 +16,8 @@ interface BudgetsManagerProps {
 type OverlayState = { mode: "add" } | { mode: "edit"; budget: BudgetCardData } | null;
 
 export function BudgetsManager({ budgets }: BudgetsManagerProps) {
+  const t = useTranslations("budgets");
+  const tc = useTranslations("common");
   const router = useRouter();
   const [overlay, setOverlay] = useState<OverlayState>(null);
   const [deleting, setDeleting] = useState<BudgetCardData | null>(null);
@@ -34,7 +37,7 @@ export function BudgetsManager({ budgets }: BudgetsManagerProps) {
       if (!res.ok) throw new Error("delete_failed");
       refresh();
     } catch {
-      setActionError("Suppression impossible. Réessaie dans un instant.");
+      setActionError(tc("deleteError"));
       setDeleting(null);
     }
   }
@@ -42,9 +45,7 @@ export function BudgetsManager({ budgets }: BudgetsManagerProps) {
   return (
     <div className="flex flex-col gap-3">
       {budgets.length === 0 ? (
-        <p className="text-[15px] text-text-secondary">
-          Aucun budget pour l&apos;instant. Crée ton premier objectif.
-        </p>
+        <p className="text-[15px] text-text-secondary">{t("empty")}</p>
       ) : (
         budgets.map((budget) => (
           <BudgetCard
@@ -63,7 +64,7 @@ export function BudgetsManager({ budgets }: BudgetsManagerProps) {
         onClick={() => setOverlay({ mode: "add" })}
         className="tap mt-2 inline-flex items-center gap-1.5 text-[14px] font-medium text-accent"
       >
-        <Plus size={16} strokeWidth={1.8} /> Ajouter un budget
+        <Plus size={16} strokeWidth={1.8} /> {t("add")}
       </button>
 
       {overlay ? (
@@ -78,9 +79,9 @@ export function BudgetsManager({ budgets }: BudgetsManagerProps) {
 
       {deleting ? (
         <ConfirmDialog
-          title="Supprimer ce budget ?"
-          message={`« ${deleting.name} » sera supprimé. Les dépenses liées seront déliées, pas supprimées.`}
-          confirmLabel="Supprimer"
+          title={t("deleteTitle")}
+          message={t("deleteMessage", { name: deleting.name })}
+          confirmLabel={tc("delete")}
           onConfirm={confirmDelete}
           onCancel={() => setDeleting(null)}
         />

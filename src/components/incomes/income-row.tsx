@@ -1,3 +1,4 @@
+import { useLocale, useTranslations } from "next-intl";
 import { Pencil, Trash2 } from "lucide-react";
 import { IconButton } from "@/components/ui/icon-button";
 import { formatEUR } from "@/lib/formatters";
@@ -16,15 +17,19 @@ interface IncomeRowProps {
 }
 
 export function IncomeRow({ income, onEdit, onDelete }: IncomeRowProps) {
+  const locale = useLocale() as "fr" | "en";
+  const t = useTranslations("incomes");
   return (
     <div className="card flex items-center justify-between p-4">
       <div>
         <div className="text-[15px] font-medium text-text">{income.source}</div>
-        <div className="num text-[13px] text-text-secondary">{formatEUR(income.amount)}</div>
+        <div className="num text-[13px] text-text-secondary">
+          {formatEUR(income.amount, locale)}
+        </div>
       </div>
       <div className="flex items-center gap-1">
-        <IconButton icon={Pencil} label="Modifier le revenu" onClick={onEdit} />
-        <IconButton icon={Trash2} label="Supprimer le revenu" onClick={onDelete} />
+        <IconButton icon={Pencil} label={t("editTitle")} onClick={onEdit} />
+        <IconButton icon={Trash2} label={t("deleteAria")} onClick={onDelete} />
       </div>
     </div>
   );

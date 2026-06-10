@@ -1,13 +1,21 @@
+// @vitest-environment node
 import { describe, it, expect } from "vitest";
-import { subcategoryLabel } from "@/lib/subcategories";
+import { SUBCATEGORIES, isValidSubcategory, defaultSubcategory } from "@/lib/subcategories";
 
-describe("subcategoryLabel", () => {
-  it("returns the French label of a known subcategory", () => {
-    expect(subcategoryLabel("food")).toBe("Alimentation");
-    expect(subcategoryLabel("etf")).toBe("ETF");
+describe("subcategories", () => {
+  it("validates membership by category", () => {
+    expect(isValidSubcategory("essential", "housing")).toBe(true);
+    expect(isValidSubcategory("leisure", "housing")).toBe(false);
   });
 
-  it("falls back to the key when unknown", () => {
-    expect(subcategoryLabel("does_not_exist")).toBe("does_not_exist");
+  it("returns the first key as default", () => {
+    expect(defaultSubcategory("essential")).toBe("housing");
+    expect(defaultSubcategory("savings")).toBe("savings_account");
+  });
+
+  it("every subcategory carries its parent category", () => {
+    for (const [category, subs] of Object.entries(SUBCATEGORIES)) {
+      for (const sub of subs) expect(sub.category).toBe(category);
+    }
   });
 });

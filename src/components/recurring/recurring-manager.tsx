@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Pencil, Trash2, Plus } from "lucide-react";
 import { CatDot } from "@/components/ui/cat-dot";
@@ -10,10 +11,13 @@ import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { RecurringForm, type RecurringModel } from "@/components/recurring/recurring-form";
 import { formatEUR } from "@/lib/formatters";
 
-const FREQUENCY_LABEL: Record<RecurringModel["frequency"], string> = {
-  MONTHLY: "Mensuel",
-  QUARTERLY: "Trimestriel",
-  YEARLY: "Annuel",
+const FREQUENCY_KEY: Record<
+  RecurringModel["frequency"],
+  "freqMonthly" | "freqQuarterly" | "freqYearly"
+> = {
+  MONTHLY: "freqMonthly",
+  QUARTERLY: "freqQuarterly",
+  YEARLY: "freqYearly",
 };
 
 interface RecurringManagerProps {
@@ -24,6 +28,9 @@ type OverlayState = { mode: "add" } | { mode: "edit"; model: RecurringModel } | 
 
 export function RecurringManager({ models }: RecurringManagerProps) {
   const router = useRouter();
+  const locale = useLocale() as "fr" | "en";
+  const t = useTranslations("recurring");
+  const tc = useTranslations("common");
   const [overlay, setOverlay] = useState<OverlayState>(null);
   const [deleting, setDeleting] = useState<RecurringModel | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
@@ -42,7 +49,7 @@ export function RecurringManager({ models }: RecurringManagerProps) {
       if (!res.ok) throw new Error("delete_failed");
       refresh();
     } catch {
-      setActionError("Suppression impossible. Réessaie dans un instant.");
+      setActionError(tc("deleteError"));
       setDeleting(null);
     }
   }
@@ -50,9 +57,7 @@ export function RecurringManager({ models }: RecurringManagerProps) {
   return (
     <div className="flex flex-col gap-3">
       {models.length === 0 ? (
-        <p className="text-[15px] text-text-secondary">
-          Aucune dépense récurrente. Ajoute tes charges fixes ou variables.
-        </p>
+        <p className="text-[15px] text-text-secondary">{t("empty")}</p>
       ) : (
         models.map((model) => (
           <div key={model.id} className="card flex items-center justify-between p-4">
@@ -61,22 +66,24 @@ export function RecurringManager({ models }: RecurringManagerProps) {
               <div>
                 <div className="text-[15px] font-medium text-text">{model.label}</div>
                 <div className="text-[13px] text-text-secondary">
-                  {FREQUENCY_LABEL[model.frequency]}
-                  {model.type === "VARIABLE" ? " · variable" : ""}
-                  {model.active ? "" : " · en pause"}
+                  {t(FREQUENCY_KEY[model.frequency])}
+                  {model.type === "VARIABLE" ? ` · ${t("variableTag")}` : ""}
+                  {model.active ? "" : ` · ${t("pausedTag")}`}
                 </div>
               </div>
             </div>
             <div className="flex items-center gap-1">
-              <span className="num mr-1 text-[15px] text-text">{formatEUR(model.amount)}</span>
+              <span className="num mr-1 text-[15px] text-text">
+                {formatEUR(model.amount, locale)}
+              </span>
               <IconButton
                 icon={Pencil}
-                label="Modifier la récurrente"
+                label={t("editTitle")}
                 onClick={() => setOverlay({ mode: "edit", model })}
               />
               <IconButton
                 icon={Trash2}
-                label="Supprimer la récurrente"
+                label={t("deleteAria")}
                 onClick={() => setDeleting(model)}
               />
             </div>
@@ -91,7 +98,7 @@ export function RecurringManager({ models }: RecurringManagerProps) {
         onClick={() => setOverlay({ mode: "add" })}
         className="tap mt-2 inline-flex items-center gap-1.5 text-[14px] font-medium text-accent"
       >
-        <Plus size={16} strokeWidth={1.8} /> Ajouter une récurrente
+        <Plus size={16} strokeWidth={1.8} /> {t("add")}
       </button>
 
       {overlay ? (
@@ -106,9 +113,9 @@ export function RecurringManager({ models }: RecurringManagerProps) {
 
       {deleting ? (
         <ConfirmDialog
-          title="Supprimer cette récurrente ?"
-          message={`« ${deleting.label} » ne générera plus de dépenses. Les dépenses passées sont conservées.`}
-          confirmLabel="Supprimer"
+          title={t("deleteTitle")}
+          message={t("deleteMessage", { label: deleting.label })}
+          confirmLabel={tc("delete")}
           onConfirm={confirmDelete}
           onCancel={() => setDeleting(null)}
         />

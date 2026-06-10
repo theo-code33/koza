@@ -2,6 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
+import { useTranslations } from "next-intl";
 import { Toggle } from "@/components/ui/toggle";
 
 const emptySubscribe = () => () => {};
@@ -18,13 +19,14 @@ function useMounted(): boolean {
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
   const mounted = useMounted();
+  const t = useTranslations("settings");
   const isDark = mounted && resolvedTheme === "dark";
 
   return (
     <Toggle
       on={isDark}
       onChange={(next) => setTheme(next ? "dark" : "light")}
-      label="Activer le thème sombre"
+      label={t("darkThemeToggle")}
     />
   );
 }

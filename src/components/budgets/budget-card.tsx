@@ -1,3 +1,4 @@
+import { useLocale, useTranslations } from "next-intl";
 import { Pencil, Trash2 } from "lucide-react";
 import { CatDot } from "@/components/ui/cat-dot";
 import { IconButton } from "@/components/ui/icon-button";
@@ -21,6 +22,8 @@ interface BudgetCardProps {
 }
 
 export function BudgetCard({ budget, onEdit, onDelete }: BudgetCardProps) {
+  const locale = useLocale() as "fr" | "en";
+  const t = useTranslations("budgets");
   return (
     <div className="card flex flex-col gap-3 p-5">
       <div className="flex items-start justify-between">
@@ -29,8 +32,8 @@ export function BudgetCard({ budget, onEdit, onDelete }: BudgetCardProps) {
           <span className="text-[15px] font-medium text-text">{budget.name}</span>
         </div>
         <div className="flex items-center gap-1">
-          <IconButton icon={Pencil} label="Modifier le budget" onClick={onEdit} />
-          <IconButton icon={Trash2} label="Supprimer le budget" onClick={onDelete} />
+          <IconButton icon={Pencil} label={t("editTitle")} onClick={onEdit} />
+          <IconButton icon={Trash2} label={t("deleteAria")} onClick={onDelete} />
         </div>
       </div>
       <ProgressBar
@@ -40,9 +43,11 @@ export function BudgetCard({ budget, onEdit, onDelete }: BudgetCardProps) {
       />
       <div className="flex items-center justify-between text-[13px] text-text-secondary">
         <span className="num">
-          {formatEUR(budget.spent)} sur {formatEUR(budget.targetAmount)}
+          {formatEUR(budget.spent, locale)} sur {formatEUR(budget.targetAmount, locale)}
         </span>
-        {budget.deadline ? <span>Échéance {formatDate(budget.deadline)}</span> : null}
+        {budget.deadline ? (
+          <span>{t("deadline", { date: formatDate(budget.deadline, locale) })}</span>
+        ) : null}
       </div>
     </div>
   );

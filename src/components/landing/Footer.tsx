@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -13,20 +13,31 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="font-semibold text-sm uppercase mb-4 text-[var(--color-muted)]">Produit</p>
+            <p className="font-semibold text-sm uppercase mb-4 text-[var(--color-muted)]">
+              Produit
+            </p>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/dashboard" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)]">
+                <Link
+                  href="/dashboard"
+                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
+                >
                   Tableau de bord
                 </Link>
               </li>
               <li>
-                <a href="#features" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)]">
+                <a
+                  href="#features"
+                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
+                >
                   Fonctionnalités
                 </a>
               </li>
               <li>
-                <a href="#faq" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)]">
+                <a
+                  href="#faq"
+                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
+                >
                   FAQ
                 </a>
               </li>
@@ -37,12 +48,18 @@ export default function Footer() {
             <p className="font-semibold text-sm uppercase mb-4 text-[var(--color-muted)]">Legal</p>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="/terms" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)]">
+                <a
+                  href="/terms"
+                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
+                >
                   Conditions d&apos;utilisation
                 </a>
               </li>
               <li>
-                <a href="/privacy" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)]">
+                <a
+                  href="/privacy"
+                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
+                >
                   Politique de confidentialité
                 </a>
               </li>
@@ -50,10 +67,15 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="font-semibold text-sm uppercase mb-4 text-[var(--color-muted)]">Contact</p>
+            <p className="font-semibold text-sm uppercase mb-4 text-[var(--color-muted)]">
+              Contact
+            </p>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="mailto:hello@koza.app" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)]">
+                <a
+                  href="mailto:hello@koza.app"
+                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
+                >
                   hello@koza.app
                 </a>
               </li>

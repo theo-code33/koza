@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Instrument_Serif } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
@@ -14,26 +16,34 @@ const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "kōza",
-  description: "Suivi de budget personnel — 50 / 30 / 20",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("common");
+  return {
+    title: t("appName"),
+    description: t("appTagline"),
+  };
+}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
     <html
-      lang="fr"
+      lang={locale}
       suppressHydrationWarning
       className={`${inter.variable} ${instrumentSerif.variable} h-full`}
     >
       <body className="min-h-full">
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-          {children}
-        </ThemeProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+            {children}
+          </ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

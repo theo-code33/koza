@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function CTAFinal() {
   return (
@@ -9,7 +9,8 @@ export default function CTAFinal() {
         </h2>
 
         <p className="text-xl text-[var(--color-text-secondary)] mb-10 leading-relaxed">
-          Rejoignez ceux qui ont transformé leur relation à l'argent. L'onboarding dure 3 minutes.
+          Rejoignez ceux qui ont transformé leur relation à l&apos;argent. L&apos;onboarding dure 3
+          minutes.
         </p>
 
         <div className="flex flex-col sm:flex-row justify-center gap-4">

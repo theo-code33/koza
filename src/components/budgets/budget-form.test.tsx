@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
+import { renderWithIntl as render } from "@/test/render-with-intl";
 import userEvent from "@testing-library/user-event";
 import { BudgetForm } from "@/components/budgets/budget-form";
 

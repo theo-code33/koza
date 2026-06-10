@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderWithIntl } from "@/test/render-with-intl";
 import { ExpenseRow } from "@/components/expenses/expense-row";
 
 const expense = {
@@ -14,7 +15,7 @@ const expense = {
 
 describe("ExpenseRow", () => {
   it("shows description, subcategory label, amount and date", () => {
-    render(<ExpenseRow expense={expense} onEdit={() => {}} onDelete={() => {}} />);
+    renderWithIntl(<ExpenseRow expense={expense} onEdit={() => {}} onDelete={() => {}} />);
     expect(screen.getByText("Courses")).toBeInTheDocument();
     expect(screen.getByText(/Alimentation/)).toBeInTheDocument();
     expect(screen.getByText(/54,90/)).toBeInTheDocument();
@@ -24,7 +25,7 @@ describe("ExpenseRow", () => {
   it("fires edit and delete callbacks", async () => {
     const onEdit = vi.fn();
     const onDelete = vi.fn();
-    render(<ExpenseRow expense={expense} onEdit={onEdit} onDelete={onDelete} />);
+    renderWithIntl(<ExpenseRow expense={expense} onEdit={onEdit} onDelete={onDelete} />);
     await userEvent.click(screen.getByRole("button", { name: "Modifier la dépense" }));
     await userEvent.click(screen.getByRole("button", { name: "Supprimer la dépense" }));
     expect(onEdit).toHaveBeenCalledOnce();

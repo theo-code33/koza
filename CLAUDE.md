@@ -193,8 +193,16 @@ Ne pas implémenter pour l'instant :
 - Format des montants : `1 234,56 €` en FR, `€1,234.56` en EN
 - Format des dates : `JJ/MM/AAAA` en FR, `MM/DD/YYYY` en EN
 - Toutes les chaînes de caractères visibles passent par i18n — aucun texte en dur dans les composants
-- Fichiers de traduction dans `src/locales/{fr,en}.json` ou `messages/`
+- Fichiers de traduction dans `src/locales/{fr,en}.json`, namespacés par domaine (`common`, `nav`, `onboarding`, `dashboard`, `incomes`, `expenses`, `budgets`, `recurring`, `settings`, `categories`, `subcategories`, `validation`)
 - La langue est stockée en base (préférence utilisateur) et en cookie comme fallback
+
+### Implémentation (next-intl 4, sans routing i18n)
+
+- **Mode sans routing** : la locale n'est pas dans l'URL. `getRequestConfig` (`src/i18n/request.ts`) la résout **par requête** via `resolveLocale()` (`src/i18n/locale.ts`) : cookie `NEXT_LOCALE` → préférence DB `UserSettings.locale` → défaut `fr`.
+- Constantes/types client-safe (`LOCALES`, `Locale`, `isLocale`, `LOCALE_COOKIE`) dans `src/i18n/config.ts` (sans dépendance server-only) ; `locale.ts` ajoute `resolveLocale` (lit `next/headers` + Prisma) et ré-exporte la config.
+- Le layout racine (Server Component) pose `<html lang>` dynamiquement et fournit `NextIntlClientProvider`. Server Components : `getTranslations`/`getLocale` ; Client Components : `useTranslations`/`useLocale` (isomorphes). Les formatters reçoivent la locale active.
+- Le sélecteur de langue (`LocaleToggle`, Réglages) appelle la server action `setLocaleAction` (écrit DB + cookie) puis `router.refresh()`.
+- Tests composants : helper `renderWithIntl` (`src/test/render-with-intl.tsx`) injecte le catalogue FR réel. Un test de parité (`src/locales/parity.test.ts`) garantit l'égalité des clés `fr`/`en`.
 
 ---
 

@@ -1,22 +1,22 @@
 export default function Benefits() {
   const benefits = [
     {
-      title: '50% — Essentiels',
-      desc: 'Logement, alimentation, transports, santé. La fondation qui ne change pas.',
-      color: 'bg-[var(--color-essential-bg)] text-[var(--color-essential)]',
-      icon: '🏠',
+      title: "50% — Essentiels",
+      desc: "Logement, alimentation, transports, santé. La fondation qui ne change pas.",
+      color: "bg-[var(--color-essential-bg)] text-[var(--color-essential)]",
+      icon: "🏠",
     },
     {
-      title: '30% — Loisirs',
-      desc: 'Restaurants, sorties, vacances, culture. La joie et les expériences.',
-      color: 'bg-[var(--color-leisure-bg)] text-[var(--color-leisure)]',
-      icon: '🎉',
+      title: "30% — Loisirs",
+      desc: "Restaurants, sorties, vacances, culture. La joie et les expériences.",
+      color: "bg-[var(--color-leisure-bg)] text-[var(--color-leisure)]",
+      icon: "🎉",
     },
     {
-      title: '20% — Épargne',
-      desc: 'Fonds d\'urgence, investissements, projets à long terme. Votre futur.',
-      color: 'bg-[var(--color-savings-bg)] text-[var(--color-savings)]',
-      icon: '💰',
+      title: "20% — Épargne",
+      desc: "Fonds d'urgence, investissements, projets à long terme. Votre futur.",
+      color: "bg-[var(--color-savings-bg)] text-[var(--color-savings)]",
+      icon: "💰",
     },
   ];
 
@@ -35,13 +35,13 @@ export default function Benefits() {
         <div className="grid md:grid-cols-3 gap-8 mb-12">
           {benefits.map((benefit, idx) => (
             <div key={idx} className="space-y-4">
-              <div className={`h-16 w-16 rounded-[var(--radius-card)] flex items-center justify-center text-3xl ${benefit.color}`}>
+              <div
+                className={`h-16 w-16 rounded-[var(--radius-card)] flex items-center justify-center text-3xl ${benefit.color}`}
+              >
                 {benefit.icon}
               </div>
               <h3 className="text-2xl font-semibold">{benefit.title}</h3>
-              <p className="text-[var(--color-text-secondary)] leading-relaxed">
-                {benefit.desc}
-              </p>
+              <p className="text-[var(--color-text-secondary)] leading-relaxed">{benefit.desc}</p>
             </div>
           ))}
         </div>
@@ -51,15 +51,24 @@ export default function Benefits() {
           <ul className="space-y-3 text-[var(--color-text-secondary)]">
             <li className="flex gap-3">
               <span className="text-[var(--color-accent)] font-bold">✓</span>
-              <span>Elle est <strong>facile à mémoriser et à mettre en place</strong> — pas de calcul complexe.</span>
+              <span>
+                Elle est <strong>facile à mémoriser et à mettre en place</strong> — pas de calcul
+                complexe.
+              </span>
             </li>
             <li className="flex gap-3">
               <span className="text-[var(--color-accent)] font-bold">✓</span>
-              <span>Elle <strong>équilibre plaisir et sécurité</strong> — vous ne vous privez pas, vous investissez.</span>
+              <span>
+                Elle <strong>équilibre plaisir et sécurité</strong> — vous ne vous privez pas, vous
+                investissez.
+              </span>
             </li>
             <li className="flex gap-3">
               <span className="text-[var(--color-accent)] font-bold">✓</span>
-              <span>Elle <strong>s\'adapte à tous les revenus</strong> — l\'important c\'est la proportion, pas le chiffre absolu.</span>
+              <span>
+                Elle <strong>s&apos;adapte à tous les revenus</strong> — l&apos;important c&apos;est
+                la proportion, pas le chiffre absolu.
+              </span>
             </li>
           </ul>
         </div>

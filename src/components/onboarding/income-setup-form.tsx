@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -11,25 +12,35 @@ import { Field } from "@/components/ui/field";
 import { IconButton } from "@/components/ui/icon-button";
 import { currentMonth } from "@/lib/month";
 
-const formSchema = z.object({
-  incomes: z
-    .array(
-      z.object({
-        source: z.string().trim().min(1, "Source requise"),
-        amount: z
-          .string()
-          .regex(/^\d+(\.\d{1,2})?$/, "Montant invalide")
-          .refine((value) => Number(value) > 0, "Montant positif requis"),
-      }),
-    )
-    .min(1),
-});
-
-type FormValues = z.infer<typeof formSchema>;
+interface FormValues {
+  incomes: { source: string; amount: string }[];
+}
 
 export function IncomeSetupForm() {
   const router = useRouter();
+  const t = useTranslations("onboarding");
+  const tc = useTranslations("common");
+  const tv = useTranslations("validation");
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const formSchema = useMemo(
+    () =>
+      z.object({
+        incomes: z
+          .array(
+            z.object({
+              source: z.string().trim().min(1, tv("sourceRequired")),
+              amount: z
+                .string()
+                .regex(/^\d+(\.\d{1,2})?$/, tv("amountInvalid"))
+                .refine((value) => Number(value) > 0, tv("amountPositive")),
+            }),
+          )
+          .min(1),
+      }),
+    [tv],
+  );
+
   const {
     register,
     control,
@@ -55,7 +66,7 @@ export function IncomeSetupForm() {
       }
       router.push("/confirm");
     } catch {
-      setSubmitError("Un souci est survenu. Réessaie dans un instant.");
+      setSubmitError(tc("genericError"));
     }
   }
 
@@ -64,16 +75,16 @@ export function IncomeSetupForm() {
       {fields.map((field, index) => (
         <div key={field.id} className="flex items-end gap-2">
           <div className="flex-1">
-            <Field label="Source" hint={errors.incomes?.[index]?.source?.message}>
+            <Field label={tc("source")} hint={errors.incomes?.[index]?.source?.message}>
               <input
                 {...register(`incomes.${index}.source`)}
-                placeholder="Salaire"
+                placeholder={t("sourcePlaceholder")}
                 className="h-12 w-full rounded-input bg-surface-alt px-4 text-[15px] text-text outline-none"
               />
             </Field>
           </div>
           <div className="w-32">
-            <Field label="Montant" hint={errors.incomes?.[index]?.amount?.message}>
+            <Field label={tc("amount")} hint={errors.incomes?.[index]?.amount?.message}>
               <input
                 {...register(`incomes.${index}.amount`)}
                 inputMode="decimal"
@@ -83,7 +94,7 @@ export function IncomeSetupForm() {
             </Field>
           </div>
           {fields.length > 1 ? (
-            <IconButton icon={X} label="Retirer cette source" onClick={() => remove(index)} />
+            <IconButton icon={X} label={t("removeSource")} onClick={() => remove(index)} />
           ) : null}
         </div>
       ))}
@@ -93,13 +104,13 @@ export function IncomeSetupForm() {
         onClick={() => append({ source: "", amount: "" })}
         className="tap inline-flex items-center gap-1.5 text-[14px] font-medium text-accent"
       >
-        <Plus size={16} strokeWidth={1.8} /> Ajouter une source
+        <Plus size={16} strokeWidth={1.8} /> {t("addSource")}
       </button>
 
       {submitError ? <p className="text-[13px] text-warning">{submitError}</p> : null}
 
       <Button type="submit" full disabled={isSubmitting}>
-        Continuer
+        {tc("continue")}
       </Button>
     </form>
   );

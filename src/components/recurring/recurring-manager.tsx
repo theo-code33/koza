@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Pencil, Trash2, Plus } from "lucide-react";
 import { CatDot } from "@/components/ui/cat-dot";
@@ -24,6 +25,7 @@ type OverlayState = { mode: "add" } | { mode: "edit"; model: RecurringModel } | 
 
 export function RecurringManager({ models }: RecurringManagerProps) {
   const router = useRouter();
+  const locale = useLocale() as "fr" | "en";
   const [overlay, setOverlay] = useState<OverlayState>(null);
   const [deleting, setDeleting] = useState<RecurringModel | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
@@ -68,7 +70,9 @@ export function RecurringManager({ models }: RecurringManagerProps) {
               </div>
             </div>
             <div className="flex items-center gap-1">
-              <span className="num mr-1 text-[15px] text-text">{formatEUR(model.amount)}</span>
+              <span className="num mr-1 text-[15px] text-text">
+                {formatEUR(model.amount, locale)}
+              </span>
               <IconButton
                 icon={Pencil}
                 label="Modifier la récurrente"

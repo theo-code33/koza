@@ -1,3 +1,4 @@
+import { getLocale } from "next-intl/server";
 import { Prisma } from "@/generated/prisma/client";
 import Link from "next/link";
 import { ExpensesManager } from "@/components/expenses/expenses-manager";
@@ -11,6 +12,7 @@ import type { CategoryKey } from "@/lib/categories";
 export const dynamic = "force-dynamic";
 
 export default async function ExpensesPage() {
+  const locale = (await getLocale()) as "fr" | "en";
   const month = currentMonth();
   const [expenses, budgets, open] = await Promise.all([
     listMonthExpenses(month),
@@ -38,7 +40,7 @@ export default async function ExpensesPage() {
       <h1 className="font-serif text-[28px] leading-tight text-text">Tes dépenses</h1>
       <p className="mt-3 text-[15px] text-text-secondary">
         {total.gt(0)
-          ? `${formatEUR(total)} dépensés ce mois-ci.`
+          ? `${formatEUR(total, locale)} dépensés ce mois-ci.`
           : "Aucune dépense pour l'instant ce mois-ci."}
       </p>
       <Link href="/recurring" className="mt-4 text-[14px] font-medium text-accent">

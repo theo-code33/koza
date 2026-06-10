@@ -1,5 +1,6 @@
 "use client";
 
+import { useLocale } from "next-intl";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { formatEUR } from "@/lib/formatters";
 import type { CategoryKey } from "@/lib/categories";
@@ -15,6 +16,7 @@ interface CategoryDonutProps {
 }
 
 export function CategoryDonut({ slices, balance }: CategoryDonutProps) {
+  const locale = useLocale() as "fr" | "en";
   const total = slices.reduce((acc, slice) => acc + slice.amount, 0);
   const data =
     total > 0
@@ -46,7 +48,7 @@ export function CategoryDonut({ slices, balance }: CategoryDonutProps) {
       </ResponsiveContainer>
       <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
         <span className={`num text-[28px] font-light ${balance < 0 ? "text-over" : "text-text"}`}>
-          {formatEUR(balance)}
+          {formatEUR(balance, locale)}
         </span>
         <span className="text-[12px] text-text-secondary">restant</span>
       </div>

@@ -46,7 +46,8 @@
     "descriptionRequired": "Description required",
     "dateRequired": "Date required",
     "nameRequired": "Name required",
-    "dateInvalid": "Invalid date"
+    "dateInvalid": "Invalid date",
+    "monthRequired": "Month required"
   },
   "dashboard": {
     "closedReadOnly": "Closed month — read-only.",
@@ -102,6 +103,32 @@
     "add": "Add budget",
     "deleteTitle": "Delete this budget?",
     "deleteMessage": "“{name}” will be deleted. Linked expenses will be unlinked, not deleted."
+  },
+  "recurring": {
+    "pageTitle": "Recurring expenses",
+    "pageSubtitle": "Your charges that come back every month, quarter or year.",
+    "newTitle": "New recurring expense",
+    "editTitle": "Edit recurring expense",
+    "namePlaceholder": "Rent, insurance…",
+    "typeFixed": "Fixed amount",
+    "typeVariable": "Variable",
+    "freqMonthly": "Monthly",
+    "freqQuarterly": "Quarterly",
+    "freqYearly": "Yearly",
+    "anchorLabel": "First occurrence",
+    "endLabel": "End (optional)",
+    "activeLabel": "Active",
+    "activeToggleAria": "Toggle recurring expense",
+    "variableTag": "variable",
+    "pausedTag": "paused",
+    "deleteAria": "Delete recurring expense",
+    "empty": "No recurring expenses. Add your fixed or variable charges.",
+    "add": "Add recurring expense",
+    "deleteTitle": "Delete this recurring expense?",
+    "deleteMessage": "“{label}” will no longer generate expenses. Past expenses are kept.",
+    "pendingBanner": "Some variable recurring expenses need confirming.",
+    "realAmountAria": "Actual amount for {label}",
+    "confirmButton": "Confirm {label}"
   },
   "settings": {
     "title": "Settings",

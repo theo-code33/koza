@@ -314,5 +314,59 @@
     "stocks": "Actions",
     "real_estate": "Immobilier",
     "emergency_fund": "Fonds d'urgence"
+  },
+  "legal": {
+    "privacy": {
+      "metaTitle": "Politique de confidentialité - kōza",
+      "metaDescription": "Politique de confidentialité de l'application kōza",
+      "pageTitle": "Politique de confidentialité",
+      "lastUpdated": "Dernière mise à jour : 10 juin 2026",
+      "s1Title": "1. Introduction",
+      "s1Body": "kōza respecte votre vie privée. Cette politique de confidentialité explique comment nous collectons, utilisons et protégeons vos données personnelles lorsque vous utilisez notre application.",
+      "s2Title": "2. Données que nous collectons",
+      "s2Intro": "Nous collectons les types de données suivants :",
+      "s2Item1": "<b>Données de budget :</b> revenus, dépenses, catégories, budgets personnalisés que vous entrez",
+      "s2Item2": "<b>Données de préférence :</b> thème (clair/sombre), langue, paramètres utilisateur",
+      "s2Item3": "<b>Données d'accès :</b> adresse IP, type de navigateur, pages visitées (via logs serveur anonymisés)",
+      "s2Outro": "Nous ne collectons <b>pas</b> : email, numéro de téléphone, informations bancaires directes (nous ne nous intégrons pas aux banques).",
+      "s3Title": "3. Comment nous utilisons vos données",
+      "s3Intro": "Vos données sont utilisées pour :",
+      "s3Items": [
+        "Fournir le service (stocker et afficher vos budgets et dépenses)",
+        "Améliorer l'application (analyse d'utilisation anonymisée)",
+        "Vous envoyer des notifications d'alerte importantes",
+        "Maintenir la sécurité et la stabilité du service"
+      ],
+      "s4Title": "4. Partage de données",
+      "s4Body1": "Vos données ne sont <b>jamais</b> partagées, vendues ou transférées à des tiers. Aucune publicité, aucun courtier de données, aucun profiling. C'est simple : vos données vous appartiennent.",
+      "s4Body2": "Exception : nous pouvons être obligés de divulguer des données si la loi l'exige (ordonnance judiciaire, etc.).",
+      "s5Title": "5. Sécurité des données",
+      "s5Intro": "Nous prenons la sécurité de vos données au sérieux. Vos données sont :",
+      "s5Items": [
+        "Stockées dans une base PostgreSQL chiffrée (Prisma Postgres)",
+        "Protégées par HTTPS (chiffrement en transit)",
+        "Soumises à une sauvegarde régulière",
+        "Accessibles uniquement par votre navigateur (pas de cookies de tracking)"
+      ],
+      "s5Outro": "Bien que nous ayons mis en place des mesures de sécurité raisonnables, aucun système n'est 100% sûr. Nous ne pouvons pas garantir la sécurité absolue.",
+      "s6Title": "6. Cookies et traceurs",
+      "s6Body": "kōza n'utilise <b>pas</b> de cookies de tracking ou de publicité. Nous pouvons utiliser des cookies techniques minimaux pour mémoriser vos préférences (thème, langue) — uniquement sur votre appareil, jamais à travers d'autres sites.",
+      "s7Title": "7. Droits d'accès et suppression",
+      "s7Intro": "Vous avez le droit de :",
+      "s7Items": [
+        "Consulter toutes vos données via l'export JSON",
+        "Modifier ou supprimer vos données à tout moment dans l'app",
+        "Demander la suppression complète de votre compte"
+      ],
+      "s7ContactPrefix": "Pour demander une suppression de compte, contactez :",
+      "s8Title": "8. Conservation des données",
+      "s8Body": "Vos données sont conservées aussi longtemps que vous utilisez kōza. Si vous supprimez votre compte, toutes les données associées seront effacées dans les 30 jours.",
+      "s9Title": "9. Conformité RGPD",
+      "s9Body": "kōza est conforme au Règlement Général sur la Protection des Données (RGPD). Si vous êtes un utilisateur de l'UE, vous avez le droit d'accès, de rectification, de suppression et de portabilité de vos données.",
+      "s10Title": "10. Modifications de cette politique",
+      "s10Body": "Nous pouvons mettre à jour cette politique de confidentialité de temps à autre. Les changements importants seront communiqués via l'application. Votre utilisation continue de kōza après une modification constitue votre acceptation.",
+      "s11Title": "11. Contact",
+      "s11Body": "Si vous avez des questions sur cette politique de confidentialité ou sur la façon dont nous traitons vos données, veuillez nous contacter à :"
+    }
   }
 }

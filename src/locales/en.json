@@ -314,5 +314,59 @@
     "stocks": "Stocks",
     "real_estate": "Real estate",
     "emergency_fund": "Emergency fund"
+  },
+  "legal": {
+    "privacy": {
+      "metaTitle": "Privacy policy - kōza",
+      "metaDescription": "Privacy policy of the kōza application",
+      "pageTitle": "Privacy policy",
+      "lastUpdated": "Last updated: 10 June 2026",
+      "s1Title": "1. Introduction",
+      "s1Body": "kōza respects your privacy. This privacy policy explains how we collect, use and protect your personal data when you use our application.",
+      "s2Title": "2. Data we collect",
+      "s2Intro": "We collect the following types of data:",
+      "s2Item1": "<b>Budget data:</b> income, expenses, categories, custom budgets you enter",
+      "s2Item2": "<b>Preference data:</b> theme (light/dark), language, user settings",
+      "s2Item3": "<b>Access data:</b> IP address, browser type, pages visited (via anonymised server logs)",
+      "s2Outro": "We do <b>not</b> collect: email, phone number, direct banking information (we don't integrate with banks).",
+      "s3Title": "3. How we use your data",
+      "s3Intro": "Your data is used to:",
+      "s3Items": [
+        "Provide the service (store and display your budgets and expenses)",
+        "Improve the application (anonymised usage analytics)",
+        "Send you important alert notifications",
+        "Maintain the security and stability of the service"
+      ],
+      "s4Title": "4. Data sharing",
+      "s4Body1": "Your data is <b>never</b> shared, sold or transferred to third parties. No advertising, no data brokers, no profiling. It's simple: your data belongs to you.",
+      "s4Body2": "Exception: we may be required to disclose data if the law requires it (court order, etc.).",
+      "s5Title": "5. Data security",
+      "s5Intro": "We take the security of your data seriously. Your data is:",
+      "s5Items": [
+        "Stored in an encrypted PostgreSQL database (Prisma Postgres)",
+        "Protected by HTTPS (encryption in transit)",
+        "Subject to regular backups",
+        "Accessible only by your browser (no tracking cookies)"
+      ],
+      "s5Outro": "Although we have implemented reasonable security measures, no system is 100% secure. We cannot guarantee absolute security.",
+      "s6Title": "6. Cookies and trackers",
+      "s6Body": "kōza does <b>not</b> use tracking or advertising cookies. We may use minimal technical cookies to remember your preferences (theme, language) — only on your device, never across other sites.",
+      "s7Title": "7. Access and deletion rights",
+      "s7Intro": "You have the right to:",
+      "s7Items": [
+        "View all your data via the JSON export",
+        "Edit or delete your data at any time in the app",
+        "Request the complete deletion of your account"
+      ],
+      "s7ContactPrefix": "To request account deletion, contact:",
+      "s8Title": "8. Data retention",
+      "s8Body": "Your data is kept as long as you use kōza. If you delete your account, all associated data will be erased within 30 days.",
+      "s9Title": "9. GDPR compliance",
+      "s9Body": "kōza complies with the General Data Protection Regulation (GDPR). If you are an EU user, you have the right to access, rectify, delete and port your data.",
+      "s10Title": "10. Changes to this policy",
+      "s10Body": "We may update this privacy policy from time to time. Significant changes will be communicated through the application. Your continued use of kōza after a change constitutes your acceptance.",
+      "s11Title": "11. Contact",
+      "s11Body": "If you have any questions about this privacy policy or how we handle your data, please contact us at:"
+    }
   }
 }

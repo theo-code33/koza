@@ -109,6 +109,60 @@
       "list1": "It's <b>easy to remember and set up</b> — no complex math.",
       "list2": "It <b>balances pleasure and safety</b> — you don't deprive yourself, you invest.",
       "list3": "It <b>adapts to any income</b> — what matters is the proportion, not the absolute figure."
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "subtitle": "Everything you wanted to know, without fear.",
+      "items": [
+        {
+          "q": "How much does Kōza cost?",
+          "a": "Kōza is 100% free. No subscription, no limit, no ads. It's a gift."
+        },
+        {
+          "q": "Is my data secure?",
+          "a": "Yes. Your data is stored in an encrypted PostgreSQL database. No bank integration, no third parties. Just you and your data."
+        },
+        {
+          "q": "Can I add other income sources?",
+          "a": "Absolutely. You can declare a main salary, freelance income, dividends — whatever you want. The envelopes recalculate automatically."
+        },
+        {
+          "q": "What happens if I go over budget?",
+          "a": "Nothing. No guilt, no red alarm. Kōza notifies you gently and carries the surplus over to the next month. It's help, not judgement."
+        },
+        {
+          "q": "Can I view past months?",
+          "a": "Yes. You can freely browse your history to see your trends, compare months and learn from your habits."
+        },
+        {
+          "q": "Can I export my data?",
+          "a": "Of course. One click and you get a JSON of all your data. It's your data, you keep it."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Ready to take back control?",
+      "subtitle": "Join those who transformed their relationship with money. Onboarding takes 3 minutes.",
+      "ctaNow": "Start now",
+      "ctaDemo": "See the demo",
+      "note": "💳 Free, no commitment, no credit card required."
+    },
+    "footer": {
+      "tagline": "Zen budget management based on the 50/30/20 rule.",
+      "productTitle": "Product",
+      "dashboard": "Dashboard",
+      "features": "Features",
+      "faq": "FAQ",
+      "legalTitle": "Legal",
+      "terms": "Terms of use",
+      "privacy": "Privacy policy",
+      "contactTitle": "Contact",
+      "rights": "© {year} kōza. All rights reserved."
+    },
+    "easterEgg": {
+      "name": "Joseline",
+      "subtitle": "Aqua Unicorn Joseline 🌊✨",
+      "instruction": "Click Joseline or the background to leave"
     }
   },
   "nav": {

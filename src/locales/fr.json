@@ -36,6 +36,16 @@
     "amountInvalid": "Montant invalide",
     "amountPositive": "Montant positif requis"
   },
+  "dashboard": {
+    "closedReadOnly": "Mois clôturé — lecture seule.",
+    "noIncomeBanner": "Ajoute tes revenus pour voir tes objectifs 50/30/20.",
+    "carryPositive": "Report du mois dernier : +{amount}",
+    "carryNegative": "Report du mois dernier : {amount} à absorber",
+    "deltaSame": "Autant que le mois dernier.",
+    "deltaLess": "{amount} de moins que le mois dernier",
+    "deltaMore": "{amount} de plus que le mois dernier",
+    "remaining": "restant"
+  },
   "settings": {
     "title": "Réglages",
     "appearance": "Apparence",

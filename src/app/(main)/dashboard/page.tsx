@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { Wallet } from "lucide-react";
 import { getMonthlySummary } from "@/lib/dashboard";
 import { prisma } from "@/lib/prisma";
@@ -24,6 +25,7 @@ export default async function DashboardPage({
 }) {
   const { month: rawMonth } = await searchParams;
   const month = resolveMonth(rawMonth);
+  const t = await getTranslations("dashboard");
   const [summary, pending] = await Promise.all([
     getMonthlySummary(month),
     prisma.recurringOccurrence.findMany({
@@ -47,14 +49,12 @@ export default async function DashboardPage({
       <ReconcileOnMount />
       <DashboardMonthNav month={month} />
 
-      {summary.closed ? (
-        <p className="text-[13px] text-muted">Mois clôturé — lecture seule.</p>
-      ) : null}
+      {summary.closed ? <p className="text-[13px] text-muted">{t("closedReadOnly")}</p> : null}
 
       {income === 0 ? (
         <Link href="/incomes">
           <SoftBanner icon={Wallet} tone="accent">
-            Ajoute tes revenus pour voir tes objectifs 50/30/20.
+            {t("noIncomeBanner")}
           </SoftBanner>
         </Link>
       ) : (

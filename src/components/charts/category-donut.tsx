@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { formatEUR } from "@/lib/formatters";
 import type { CategoryKey } from "@/lib/categories";
@@ -17,6 +17,7 @@ interface CategoryDonutProps {
 
 export function CategoryDonut({ slices, balance }: CategoryDonutProps) {
   const locale = useLocale() as "fr" | "en";
+  const t = useTranslations("dashboard");
   const total = slices.reduce((acc, slice) => acc + slice.amount, 0);
   const data =
     total > 0
@@ -50,7 +51,7 @@ export function CategoryDonut({ slices, balance }: CategoryDonutProps) {
         <span className={`num text-[28px] font-light ${balance < 0 ? "text-over" : "text-text"}`}>
           {formatEUR(balance, locale)}
         </span>
-        <span className="text-[12px] text-text-secondary">restant</span>
+        <span className="text-[12px] text-text-secondary">{t("remaining")}</span>
       </div>
     </div>
   );

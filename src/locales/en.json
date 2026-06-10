@@ -36,6 +36,16 @@
     "amountInvalid": "Invalid amount",
     "amountPositive": "Amount must be positive"
   },
+  "dashboard": {
+    "closedReadOnly": "Closed month — read-only.",
+    "noIncomeBanner": "Add your income to see your 50/30/20 goals.",
+    "carryPositive": "Carryover from last month: +{amount}",
+    "carryNegative": "Carryover from last month: {amount} to absorb",
+    "deltaSame": "Same as last month.",
+    "deltaLess": "{amount} less than last month",
+    "deltaMore": "{amount} more than last month",
+    "remaining": "left"
+  },
   "settings": {
     "title": "Settings",
     "appearance": "Appearance",

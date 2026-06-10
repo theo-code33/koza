@@ -3,6 +3,7 @@ import { Wallet } from "lucide-react";
 import { getMonthlySummary } from "@/lib/dashboard";
 import { currentMonth } from "@/lib/month";
 import { SoftBanner } from "@/components/ui/soft-banner";
+import { ReconcileOnMount } from "@/components/dashboard/reconcile-on-mount";
 import { DashboardMonthNav } from "@/components/dashboard/dashboard-month-nav";
 import { CarryLine } from "@/components/dashboard/carry-line";
 import { CategoryDonut } from "@/components/charts/category-donut";
@@ -30,6 +31,7 @@ export default async function DashboardPage({
 
   return (
     <main className="mx-auto flex min-h-screen max-w-[720px] flex-col gap-8 px-6 py-12">
+      <ReconcileOnMount />
       <DashboardMonthNav month={month} />
 
       {summary.closed ? (

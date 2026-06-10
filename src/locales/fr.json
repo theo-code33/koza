@@ -45,6 +45,70 @@
       "subtitle": "Suivez vos revenus et dépenses, répartissez automatiquement selon la règle 50/30/20 et progressez sereinement vers vos objectifs.",
       "ctaStart": "Commencer",
       "ctaDashboard": "Voir le tableau de bord"
+    },
+    "features": {
+      "title": "Tout ce dont vous avez besoin",
+      "subtitle": "Une suite d'outils simples et puissants, pensée pour la clarté mentale.",
+      "items": [
+        {
+          "title": "Onboarding en 3 étapes",
+          "description": "Rentrez votre revenu et les enveloppes 50/30/20 se calculent automatiquement. Zéro configuration.",
+          "icon": "📋"
+        },
+        {
+          "title": "Ajout rapide de dépenses",
+          "description": "Enregistrez une dépense en moins de 10 secondes. Focus, montant, catégorie, c'est tout.",
+          "icon": "⚡"
+        },
+        {
+          "title": "Suivi visuel des budgets",
+          "description": "Des barres de progression zen qui vous montrent où vous en êtes, sans culpabilité.",
+          "icon": "📊"
+        },
+        {
+          "title": "Budgets personnalisés",
+          "description": "Créez des objectifs (vacances, épargne d'urgence) et suivez-les en temps réel.",
+          "icon": "🎯"
+        },
+        {
+          "title": "Navigation mensuelle",
+          "description": "Explorez vos dépenses des mois passés. Historique complet, toujours accessible.",
+          "icon": "📅"
+        },
+        {
+          "title": "Thème clair/sombre",
+          "description": "L'app s'adapte à votre préférence. Lisez confortablement à tout moment.",
+          "icon": "🌙"
+        }
+      ]
+    },
+    "benefits": {
+      "title": "La règle 50/30/20 expliquée",
+      "subtitle": "Un cadre simple et prouvé pour une vie financière équilibrée.",
+      "items": [
+        {
+          "title": "50% — Essentiels",
+          "desc": "Logement, alimentation, transports, santé. La fondation qui ne change pas.",
+          "icon": "🏠",
+          "color": "bg-[var(--color-essential-bg)] text-[var(--color-essential)]"
+        },
+        {
+          "title": "30% — Loisirs",
+          "desc": "Restaurants, sorties, vacances, culture. La joie et les expériences.",
+          "icon": "🎉",
+          "color": "bg-[var(--color-leisure-bg)] text-[var(--color-leisure)]"
+        },
+        {
+          "title": "20% — Épargne",
+          "desc": "Fonds d'urgence, investissements, projets à long terme. Votre futur.",
+          "icon": "💰",
+          "color": "bg-[var(--color-savings-bg)] text-[var(--color-savings)]"
+        }
+      ],
+      "boxTitle": "Pourquoi cette règle marche ?",
+      "list1": "Elle est <b>facile à mémoriser et à mettre en place</b> — pas de calcul complexe.",
+      "list2": "Elle <b>équilibre plaisir et sécurité</b> — vous ne vous privez pas, vous investissez.",
+      "list3": "Elle <b>s'adapte à tous les revenus</b> — l'important c'est la proportion, pas le chiffre absolu."
     }
   },
   "nav": {

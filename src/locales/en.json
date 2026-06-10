@@ -45,6 +45,70 @@
       "subtitle": "Track your income and spending, split automatically with the 50/30/20 rule, and move calmly toward your goals.",
       "ctaStart": "Get started",
       "ctaDashboard": "See the dashboard"
+    },
+    "features": {
+      "title": "Everything you need",
+      "subtitle": "A suite of simple, powerful tools, designed for mental clarity.",
+      "items": [
+        {
+          "title": "3-step onboarding",
+          "description": "Enter your income and the 50/30/20 envelopes are calculated automatically. Zero configuration.",
+          "icon": "📋"
+        },
+        {
+          "title": "Quick expense entry",
+          "description": "Log an expense in under 10 seconds. Focus, amount, category, done.",
+          "icon": "⚡"
+        },
+        {
+          "title": "Visual budget tracking",
+          "description": "Calm progress bars that show where you stand, without guilt.",
+          "icon": "📊"
+        },
+        {
+          "title": "Custom budgets",
+          "description": "Create goals (holidays, emergency fund) and track them in real time.",
+          "icon": "🎯"
+        },
+        {
+          "title": "Monthly navigation",
+          "description": "Explore your past months' spending. Full history, always accessible.",
+          "icon": "📅"
+        },
+        {
+          "title": "Light/dark theme",
+          "description": "The app adapts to your preference. Read comfortably anytime.",
+          "icon": "🌙"
+        }
+      ]
+    },
+    "benefits": {
+      "title": "The 50/30/20 rule explained",
+      "subtitle": "A simple, proven framework for a balanced financial life.",
+      "items": [
+        {
+          "title": "50% — Essentials",
+          "desc": "Housing, food, transport, health. The foundation that doesn't change.",
+          "icon": "🏠",
+          "color": "bg-[var(--color-essential-bg)] text-[var(--color-essential)]"
+        },
+        {
+          "title": "30% — Leisure",
+          "desc": "Restaurants, outings, holidays, culture. Joy and experiences.",
+          "icon": "🎉",
+          "color": "bg-[var(--color-leisure-bg)] text-[var(--color-leisure)]"
+        },
+        {
+          "title": "20% — Savings",
+          "desc": "Emergency fund, investments, long-term projects. Your future.",
+          "icon": "💰",
+          "color": "bg-[var(--color-savings-bg)] text-[var(--color-savings)]"
+        }
+      ],
+      "boxTitle": "Why does this rule work?",
+      "list1": "It's <b>easy to remember and set up</b> — no complex math.",
+      "list2": "It <b>balances pleasure and safety</b> — you don't deprive yourself, you invest.",
+      "list3": "It <b>adapts to any income</b> — what matters is the proportion, not the absolute figure."
     }
   },
   "nav": {

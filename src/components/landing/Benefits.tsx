@@ -1,34 +1,18 @@
+import type { ReactNode } from "react";
+import { useTranslations } from "next-intl";
+
 export default function Benefits() {
-  const benefits = [
-    {
-      title: "50% — Essentiels",
-      desc: "Logement, alimentation, transports, santé. La fondation qui ne change pas.",
-      color: "bg-[var(--color-essential-bg)] text-[var(--color-essential)]",
-      icon: "🏠",
-    },
-    {
-      title: "30% — Loisirs",
-      desc: "Restaurants, sorties, vacances, culture. La joie et les expériences.",
-      color: "bg-[var(--color-leisure-bg)] text-[var(--color-leisure)]",
-      icon: "🎉",
-    },
-    {
-      title: "20% — Épargne",
-      desc: "Fonds d'urgence, investissements, projets à long terme. Votre futur.",
-      color: "bg-[var(--color-savings-bg)] text-[var(--color-savings)]",
-      icon: "💰",
-    },
-  ];
+  const t = useTranslations("landing.benefits");
+  const benefits = t.raw("items") as { title: string; desc: string; color: string; icon: string }[];
+  const bold = { b: (chunks: ReactNode) => <strong>{chunks}</strong> };
 
   return (
     <section id="benefits" className="py-24 bg-[var(--color-surface-alt)]">
       <div className="max-w-5xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-serif font-semibold mb-4">
-            La règle 50/30/20 expliquée
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-serif font-semibold mb-4">{t("title")}</h2>
           <p className="text-lg text-[var(--color-text-secondary)] max-w-2xl mx-auto">
-            Un cadre simple et prouvé pour une vie financière équilibrée.
+            {t("subtitle")}
           </p>
         </div>
 
@@ -47,28 +31,19 @@ export default function Benefits() {
         </div>
 
         <div className="bg-[var(--color-surface)] rounded-[var(--radius-card)] p-8 shadow-card">
-          <h3 className="text-xl font-semibold mb-4">Pourquoi cette règle marche ?</h3>
+          <h3 className="text-xl font-semibold mb-4">{t("boxTitle")}</h3>
           <ul className="space-y-3 text-[var(--color-text-secondary)]">
             <li className="flex gap-3">
               <span className="text-[var(--color-accent)] font-bold">✓</span>
-              <span>
-                Elle est <strong>facile à mémoriser et à mettre en place</strong> — pas de calcul
-                complexe.
-              </span>
+              <span>{t.rich("list1", bold)}</span>
             </li>
             <li className="flex gap-3">
               <span className="text-[var(--color-accent)] font-bold">✓</span>
-              <span>
-                Elle <strong>équilibre plaisir et sécurité</strong> — vous ne vous privez pas, vous
-                investissez.
-              </span>
+              <span>{t.rich("list2", bold)}</span>
             </li>
             <li className="flex gap-3">
               <span className="text-[var(--color-accent)] font-bold">✓</span>
-              <span>
-                Elle <strong>s&apos;adapte à tous les revenus</strong> — l&apos;important c&apos;est
-                la proportion, pas le chiffre absolu.
-              </span>
+              <span>{t.rich("list3", bold)}</span>
             </li>
           </ul>
         </div>

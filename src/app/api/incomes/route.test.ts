@@ -2,7 +2,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 vi.mock("@/lib/prisma", () => ({
-  prisma: { income: { create: vi.fn(), findMany: vi.fn() } },
+  prisma: {
+    income: { create: vi.fn(), findMany: vi.fn() },
+    monthlyPeriod: { findUnique: vi.fn() },
+  },
 }));
 
 import { POST, GET } from "@/app/api/incomes/route";
@@ -20,6 +23,7 @@ describe("POST /api/incomes", () => {
   beforeEach(() => vi.clearAllMocks());
 
   it("creates an income and returns 201", async () => {
+    vi.mocked(prisma.monthlyPeriod.findUnique).mockResolvedValue(null as never);
     vi.mocked(prisma.income.create).mockResolvedValue({ id: "abc" } as never);
     const res = await POST(postRequest({ source: "Salaire", amount: "2500.00", month: "2026-06" }));
     expect(res.status).toBe(201);
@@ -36,6 +40,13 @@ describe("POST /api/incomes", () => {
   it("rejects an invalid payload with 400", async () => {
     const res = await POST(postRequest({ source: "", amount: "-5", month: "nope" }));
     expect(res.status).toBe(400);
+    expect(prisma.income.create).not.toHaveBeenCalled();
+  });
+
+  it("rejects a POST on a closed month with 409", async () => {
+    vi.mocked(prisma.monthlyPeriod.findUnique).mockResolvedValue({ closedAt: new Date() } as never);
+    const res = await POST(postRequest({ source: "Salaire", amount: "2500.00", month: "2026-01" }));
+    expect(res.status).toBe(409);
     expect(prisma.income.create).not.toHaveBeenCalled();
   });
 });

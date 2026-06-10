@@ -4,7 +4,7 @@ import { getMonthlySummary } from "@/lib/dashboard";
 import { currentMonth } from "@/lib/month";
 import { SoftBanner } from "@/components/ui/soft-banner";
 import { DashboardMonthNav } from "@/components/dashboard/dashboard-month-nav";
-import { PrevMonthDelta } from "@/components/dashboard/prev-month-delta";
+import { CarryLine } from "@/components/dashboard/carry-line";
 import { CategoryDonut } from "@/components/charts/category-donut";
 import { CategoryProgressCard } from "@/components/dashboard/category-progress-card";
 
@@ -32,6 +32,10 @@ export default async function DashboardPage({
     <main className="mx-auto flex min-h-screen max-w-[720px] flex-col gap-8 px-6 py-12">
       <DashboardMonthNav month={month} />
 
+      {summary.closed ? (
+        <p className="text-[13px] text-muted">Mois clôturé — lecture seule.</p>
+      ) : null}
+
       {income === 0 ? (
         <Link href="/incomes">
           <SoftBanner icon={Wallet} tone="accent">
@@ -39,10 +43,7 @@ export default async function DashboardPage({
           </SoftBanner>
         </Link>
       ) : (
-        <PrevMonthDelta
-          current={summary.totalSpent.toString()}
-          previous={summary.previousTotalSpent.toString()}
-        />
+        <CarryLine carryIn={summary.carryIn.toString()} />
       )}
 
       <CategoryDonut slices={slices} balance={Number(summary.balance)} />

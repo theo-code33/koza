@@ -19,9 +19,16 @@ const formSchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date requise"),
   category: z.enum(["essential", "leisure", "savings"]),
   subcategory: z.string().min(1),
+  budgetId: z.string(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
+
+export interface BudgetOption {
+  id: string;
+  name: string;
+  category: FormValues["category"];
+}
 
 interface ExpenseQuickFormProps {
   expense?: {
@@ -31,14 +38,21 @@ interface ExpenseQuickFormProps {
     date: string;
     category: FormValues["category"];
     subcategory: string;
+    budgetId: string | null;
   };
+  budgets?: BudgetOption[];
   onSuccess: () => void;
   onCancel: () => void;
 }
 
 const today = () => new Date().toISOString().slice(0, 10);
 
-export function ExpenseQuickForm({ expense, onSuccess, onCancel }: ExpenseQuickFormProps) {
+export function ExpenseQuickForm({
+  expense,
+  budgets = [],
+  onSuccess,
+  onCancel,
+}: ExpenseQuickFormProps) {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const {
     register,
@@ -55,9 +69,11 @@ export function ExpenseQuickForm({ expense, onSuccess, onCancel }: ExpenseQuickF
       date: expense?.date ?? today(),
       category: expense?.category ?? "essential",
       subcategory: expense?.subcategory ?? "housing",
+      budgetId: expense?.budgetId ?? "",
     },
   });
   const category = watch("category");
+  const categoryBudgets = budgets.filter((budget) => budget.category === category);
 
   async function onSubmit(values: FormValues) {
     setSubmitError(null);
@@ -65,7 +81,14 @@ export function ExpenseQuickForm({ expense, onSuccess, onCancel }: ExpenseQuickF
       const res = await fetch(expense ? `/api/expenses/${expense.id}` : "/api/expenses", {
         method: expense ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          amount: values.amount,
+          description: values.description,
+          date: values.date,
+          category: values.category,
+          subcategory: values.subcategory,
+          budgetId: values.budgetId === "" ? null : values.budgetId,
+        }),
       });
       if (!res.ok) throw new Error("save_failed");
       onSuccess();
@@ -99,6 +122,7 @@ export function ExpenseQuickForm({ expense, onSuccess, onCancel }: ExpenseQuickF
             onChange={(next) => {
               field.onChange(next);
               setValue("subcategory", defaultSubcategory(next));
+              setValue("budgetId", "");
             }}
           />
         )}
@@ -123,6 +147,20 @@ export function ExpenseQuickForm({ expense, onSuccess, onCancel }: ExpenseQuickF
           type="date"
           className="h-12 w-full rounded-input bg-surface-alt px-4 text-[15px] text-text outline-none"
         />
+      </Field>
+      <Field label="Budget (optionnel)">
+        <select
+          {...register("budgetId")}
+          aria-label="Budget (optionnel)"
+          className="h-12 w-full rounded-input bg-surface-alt px-4 text-[15px] text-text outline-none"
+        >
+          <option value="">Aucun</option>
+          {categoryBudgets.map((budget) => (
+            <option key={budget.id} value={budget.id}>
+              {budget.name}
+            </option>
+          ))}
+        </select>
       </Field>
       {submitError ? <p className="text-[13px] text-warning">{submitError}</p> : null}
       <div className="flex gap-3">

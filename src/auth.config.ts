@@ -24,7 +24,10 @@ export const authConfig = {
         PUBLIC.has(nextUrl.pathname) ||
         nextUrl.pathname.startsWith("/api/auth") ||
         nextUrl.pathname.startsWith("/api/health");
-      return isPublic || Boolean(auth?.user);
+      // Exiger un user.id, pas juste un user : un cookie périmé/partiel (token sans id)
+      // a un `auth.user` truthy mais ferait lever getCurrentUserId côté Server Component.
+      // On le renvoie au login ici, au bord, plutôt que de crasher la page.
+      return isPublic || Boolean(auth?.user?.id);
     },
   },
 } satisfies NextAuthConfig;

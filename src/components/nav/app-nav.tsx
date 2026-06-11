@@ -54,7 +54,7 @@ export function AppNav() {
       </nav>
       <nav
         aria-label={t("ariaMainMobile")}
-        className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-around border-t border-line bg-surface py-3 lg:hidden"
+        className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-around border-t border-line bg-surface pt-3 pb-[calc(0.75rem_+_env(safe-area-inset-bottom))] lg:hidden"
       >
         {ITEMS.map((item) => (
           <NavLink key={item.href} item={item} active={isActive(pathname, item.href)} />

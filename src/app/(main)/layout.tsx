@@ -14,7 +14,7 @@ export default async function MainLayout({ children }: { children: ReactNode }) 
   return (
     <div className="lg:pl-20">
       <AppNav />
-      <div className="pb-24 lg:pb-0">{children}</div>
+      <div className="pb-[calc(6rem_+_env(safe-area-inset-bottom))] lg:pb-0">{children}</div>
     </div>
   );
 }

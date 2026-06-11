@@ -396,6 +396,7 @@ Optimisations :
   "db:migrate": "prisma migrate dev",
   "db:push": "prisma db push",
   "db:seed": "prisma db seed",
+  "db:seed:demo": "tsx prisma/seed-demo-year.ts",
   "db:studio": "prisma studio",
   "lint": "eslint . && prettier --check .",
   "test": "vitest run",
@@ -442,7 +443,8 @@ prod  : push sur main →
 
 - Build Vercel : `npm install` déclenche `postinstall: prisma generate`, puis `next build`.
 - Runtime : l'app se connecte à `koza-prod` via l'adapter `@prisma/adapter-pg`.
-- **Jamais `migrate dev` ni `db seed` contre la prod.**
+- **Jamais `migrate dev` ni le `db seed` destructif contre la prod.**
+- **Exception autorisée — `db:seed:demo`** : le script `prisma/seed-demo-year.ts` est **additif et scopé à un seul utilisateur** (upsert par email, suppressions uniquement `where: { userId }`, jamais de wipe global). Il peut donc tourner contre la prod (`DATABASE_URL='<prod>' npm run db:seed:demo`) sans toucher d'autres comptes — utilisé pour pré-remplir le compte de présentation. Reste interdit en prod : le `db seed` standard (`prisma/seed.ts`), qui fait un `user.deleteMany()` global.
 
 ---
 
@@ -804,6 +806,10 @@ Pour la présentation de vendredi, un script `prisma/seed.ts` doit générer :
 Le seed doit produire un dashboard visuellement riche et réaliste pour la démo. Commande : `npx prisma db seed`.
 
 **Reset démo :** `npm run db:reset` vide la base et la re-seede (le seed fait déjà le wipe). Onboarding marqué terminé → dashboard riche immédiat. `npm run db:reset:fresh` fait la même chose mais laisse `onboardingCompleted=false` (`DEMO_ONBOARDING=fresh`) pour démontrer le flow d'accueil.
+
+> ⚠️ `prisma/seed.ts` (et donc `db:reset` / `db:seed`) commence par un `user.deleteMany()` **global** : strictement réservé à koza-dev.
+
+**Seed d'un compte de présentation — `npm run db:seed:demo` :** script séparé `prisma/seed-demo-year.ts`, **additif et scopé à un seul utilisateur**, qui peut tourner contre la prod (cf. section Déploiement). Il pré-remplit le compte `cedric@agricole.com` avec **un an d'activité depuis janvier 2026** (revenus, dépenses dont récurrentes matérialisées chaque mois, budgets, chaîne de report). Logique de génération pure et testée dans `src/lib/demo-data.ts` (`buildDemoDataset`) ; idempotent (upsert par email + suppressions `where: { userId }`, jamais de wipe global).
 
 ---
 

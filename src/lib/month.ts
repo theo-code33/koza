@@ -35,3 +35,22 @@ export function monthDiff(a: string, b: string): number {
   const mb = Number(b.slice(5, 7));
   return (yb - ya) * 12 + (mb - ma);
 }
+
+// Année courante "YYYY".
+export function currentYear(): string {
+  return String(new Date().getFullYear());
+}
+
+// Année précédente / suivante "YYYY".
+export function previousYear(year: string): string {
+  return String(Number(year) - 1);
+}
+
+export function nextYear(year: string): string {
+  return String(Number(year) + 1);
+}
+
+// Année "YYYY" d'un mois "YYYY-MM".
+export function yearOf(month: string): string {
+  return month.slice(0, 4);
+}

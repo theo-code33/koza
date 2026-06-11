@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Instrument_Serif } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
@@ -15,6 +15,14 @@ const instrumentSerif = Instrument_Serif({
   weight: "400",
   subsets: ["latin"],
 });
+
+// viewport-fit=cover : étend la zone d'affichage sous les barres système iOS et
+// active les variables env(safe-area-inset-*) utilisées par la bottom nav mobile.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("common");

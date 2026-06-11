@@ -179,7 +179,6 @@ Ne pas implémenter pour l'instant :
 - Import automatique de transactions
 - Prévisions financières
 - Gestion patrimoniale
-- Authentification / comptes multi-utilisateurs
 - Accessibilité WCAG (sera traitée dans une itération dédiée)
 - PWA / mode offline
 

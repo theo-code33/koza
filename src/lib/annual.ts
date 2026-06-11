@@ -42,10 +42,7 @@ export async function getAnnualSummary(userId: string, year: string): Promise<An
     where: { userId, month: { startsWith: year } },
   })) as ExpenseRow[];
 
-  const months = Array.from(
-    { length: 12 },
-    (_, i) => `${year}-${String(i + 1).padStart(2, "0")}`,
-  );
+  const months = Array.from({ length: 12 }, (_, i) => `${year}-${String(i + 1).padStart(2, "0")}`);
 
   const byMonth = new Map<string, Record<CategoryKey, Prisma.Decimal>>(
     months.map((m) => [m, { essential: ZERO(), leisure: ZERO(), savings: ZERO() }]),

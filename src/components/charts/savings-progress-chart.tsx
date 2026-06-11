@@ -7,7 +7,7 @@ import {
   XAxis,
   Tooltip,
   ResponsiveContainer,
-  type TooltipProps,
+  type TooltipContentProps,
 } from "recharts";
 import { formatEUR, formatMonthShort } from "@/lib/formatters";
 
@@ -20,7 +20,7 @@ interface SavingsProgressChartProps {
   points: SavingsProgressPoint[];
 }
 
-function SavingsTooltip({ active, payload, label }: TooltipProps<number, string>) {
+function SavingsTooltip({ active, payload, label }: TooltipContentProps) {
   const locale = useLocale() as "fr" | "en";
   if (!active || !payload?.length || typeof label !== "string") return null;
   return (
@@ -45,7 +45,7 @@ export function SavingsProgressChart({ points }: SavingsProgressChartProps) {
             tick={{ fontSize: 11, fill: "var(--color-muted)" }}
             interval="preserveStartEnd"
           />
-          <Tooltip content={<SavingsTooltip />} cursor={{ stroke: "var(--color-line)" }} />
+          <Tooltip content={SavingsTooltip} cursor={{ stroke: "var(--color-line)" }} />
           <Area
             type="monotone"
             dataKey="cumulative"

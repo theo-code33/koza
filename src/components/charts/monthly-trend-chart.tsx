@@ -7,7 +7,7 @@ import {
   XAxis,
   Tooltip,
   ResponsiveContainer,
-  type TooltipProps,
+  type TooltipContentProps,
 } from "recharts";
 import { formatEUR, formatMonthShort } from "@/lib/formatters";
 import { CATEGORY_ORDER } from "@/lib/categories";
@@ -23,14 +23,14 @@ interface MonthlyTrendChartProps {
   points: MonthlyTrendPoint[];
 }
 
-function TrendTooltip({ active, payload, label }: TooltipProps<number, string>) {
+function TrendTooltip({ active, payload, label }: TooltipContentProps) {
   const locale = useLocale() as "fr" | "en";
   if (!active || !payload?.length || typeof label !== "string") return null;
   return (
     <div className="rounded-[10px] border border-line bg-surface/80 px-3 py-2 text-[12px] shadow-card backdrop-blur-sm">
       <div className="mb-1 capitalize text-text-secondary">{formatMonthShort(label, locale)}</div>
-      {payload.map((entry) => (
-        <div key={entry.dataKey} className="num text-text">
+      {payload.map((entry, index) => (
+        <div key={index} className="num text-text">
           {formatEUR(Number(entry.value ?? 0), locale)}
         </div>
       ))}
@@ -52,7 +52,7 @@ export function MonthlyTrendChart({ points }: MonthlyTrendChartProps) {
             tick={{ fontSize: 11, fill: "var(--color-muted)" }}
             interval="preserveStartEnd"
           />
-          <Tooltip content={<TrendTooltip />} cursor={{ stroke: "var(--color-line)" }} />
+          <Tooltip content={TrendTooltip} cursor={{ stroke: "var(--color-line)" }} />
           {CATEGORY_ORDER.map((category) => (
             <Area
               key={category}

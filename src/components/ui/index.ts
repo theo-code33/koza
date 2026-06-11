@@ -1,4 +1,5 @@
 export { Card } from "./card";
+export { Skeleton } from "./skeleton";
 export { ProgressBar } from "./progress-bar";
 export { Pill } from "./pill";
 export { CatDot } from "./cat-dot";

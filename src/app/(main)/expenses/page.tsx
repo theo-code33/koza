@@ -7,6 +7,7 @@ import { prisma } from "@/lib/prisma";
 import { isMonthOpen } from "@/lib/period-guard";
 import { formatEUR } from "@/lib/formatters";
 import { currentMonth } from "@/lib/month";
+import { reconcile } from "@/lib/period";
 import { getCurrentUserId } from "@/lib/current-user";
 import type { CategoryKey } from "@/lib/categories";
 
@@ -16,6 +17,9 @@ export default async function ExpensesPage() {
   const locale = (await getLocale()) as "fr" | "en";
   const t = await getTranslations("expenses");
   const userId = await getCurrentUserId();
+  // Matérialise les récurrentes du mois courant avant de lister, sinon les dépenses
+  // fixes n'apparaissent jamais sur cette page (la réconciliation ne tournait qu'au dashboard).
+  await reconcile(userId, new Date());
   const month = currentMonth();
   const [expenses, budgets, open] = await Promise.all([
     listMonthExpenses(userId, month),

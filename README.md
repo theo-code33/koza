@@ -70,8 +70,9 @@ Le seed crée un **compte de démo** : `demo@koza.app` / `demo1234`.
 | `npm run test:e2e` | Tests end-to-end (Playwright) |
 | `npm run db:migrate` | Migration (`migrate dev`) contre **koza-dev** |
 | `npm run db:migrate:deploy` | Applique les migrations (`migrate deploy`) — utilisé en CD prod |
-| `npm run db:seed` / `npm run db:reset` | (Re)seed de démo (idempotent, wipe + insert) |
+| `npm run db:seed` / `npm run db:reset` | (Re)seed de démo dev (wipe global + insert) — **koza-dev uniquement** |
 | `npm run db:reset:fresh` | Idem mais `onboardingCompleted: false` (pour démontrer l'onboarding) |
+| `npm run db:seed:demo` | Seed **additif et scopé** d'un compte de présentation (sûr contre la prod) |
 | `npm run db:studio` | Prisma Studio (exploration de la base) |
 
 ## Authentification
@@ -123,6 +124,23 @@ En base, `Expense.subcategory` stocke la **clé** de sous-catégorie.
 - `UserSettings` avec `onboardingCompleted: true` (`DEMO_ONBOARDING=fresh` pour le remettre à `false`).
 
 Les mois sont calculés à partir de la date courante, donc le dataset reste cohérent quel que soit le jour d'exécution.
+
+### Compte de présentation — `npm run db:seed:demo`
+
+Script séparé (`prisma/seed-demo-year.ts`), **additif et scopé à un seul utilisateur** : il
+upsert le compte `cedric@agricole.com` par email puis n'efface/réinsère **que** ses données
+(`where: { userId }`, jamais de `user.deleteMany()` global). Il est donc **sûr à exécuter
+contre la prod** sans toucher d'autres comptes :
+
+```bash
+npm run db:seed:demo                       # koza-dev (DATABASE_URL du .env)
+DATABASE_URL='<prod>' npm run db:seed:demo # koza-prod (string fournie hors repo)
+```
+
+Il génère **un an d'activité depuis janvier 2026** : salaire mensuel + extras, dépenses
+variées, récurrentes (loyer, assurance, électricité) **matérialisées chaque mois**, 2
+budgets, et la chaîne de report `carryIn`/`carryOut` clôturée mois par mois. La logique de
+génération est pure et testée (`src/lib/demo-data.ts`, `buildDemoDataset`), idempotente.
 
 ## Structure du projet
 

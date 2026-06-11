@@ -15,7 +15,7 @@
 - **Dépenses** : ajout rapide (montant → catégorie → sous-catégorie → date), CRUD complet.
 - **Dépenses récurrentes** : modèles fixes (auto-matérialisés) ou variables (à confirmer chaque mois).
 - **Budgets** personnalisés avec barre de progression (CRUD).
-- **Tableaux de bord** mensuel et annuel, navigation entre les mois, comparaison.
+- **Tableaux de bord** avec bascule mois / année : vue **mensuelle** (enveloppes 50/30/20, navigation entre les mois, comparaison) et vue **annuelle** (répartition globale, tendances mensuelles empilées, épargne accumulée).
 - **Logique mensuelle** : clôture au passage de mois et report du surplus/déficit (`carryIn`/`carryOut`).
 - **Notifications in-app** contextuelles et encourageantes (seuils de budget, dépassements).
 - **Réglages** : thème clair/sombre, langue FR/EN, reconfiguration des revenus, export JSON.
@@ -29,7 +29,7 @@
 - **Tailwind CSS 4** (config CSS-first via `@theme`) · **next-themes** (clair/sombre)
 - **next-intl 4** (i18n FR/EN, sans routing) · devise toujours **EUR**
 - **React Hook Form 7** + **Zod 4** (`@hookform/resolvers`) — formulaires & validation
-- **Recharts 3** — graphiques (donut 50/30/20, tendances)
+- **Recharts 3** — graphiques (donut 50/30/20, tendances mensuelles, courbe d'épargne)
 - **Vitest** + Testing Library (unitaire/intégration) · **Playwright** (E2E)
 - **Node.js 24 LTS**
 

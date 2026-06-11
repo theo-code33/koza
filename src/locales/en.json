@@ -14,6 +14,8 @@
     "delete": "Delete",
     "prevMonth": "Previous month",
     "nextMonth": "Next month",
+    "prevYear": "Previous year",
+    "nextYear": "Next year",
     "genericError": "Something went wrong. Please try again in a moment.",
     "deleteError": "Couldn't delete. Please try again in a moment."
   },
@@ -207,7 +209,13 @@
     "deltaSame": "Same as last month.",
     "deltaLess": "{amount} less than last month",
     "deltaMore": "{amount} more than last month",
-    "remaining": "left"
+    "remaining": "left",
+    "viewMonth": "Month",
+    "viewYear": "Year",
+    "annualTitle": "Year breakdown",
+    "annualTotalSpent": "spent",
+    "trendTitle": "Monthly trends",
+    "savingsTitle": "Savings accrued"
   },
   "incomes": {
     "pageTitle": "Your income",

@@ -14,7 +14,12 @@ export default async function MainLayout({ children }: { children: ReactNode }) 
   return (
     <div className="lg:pl-20">
       <AppNav />
-      <div className="pb-[calc(6rem_+_env(safe-area-inset-bottom))] lg:pb-0">{children}</div>
+      {/* min-h-dvh (pas 100vh) + border-box : la hauteur épouse le viewport visible iOS
+          et inclut le padding bas, donc plus de scroll vertical parasite. overflow-x-clip :
+          filet anti-débordement horizontal (artefacts de charts, textes longs). */}
+      <div className="min-h-dvh overflow-x-clip pb-[calc(6rem_+_env(safe-area-inset-bottom))] lg:pb-0">
+        {children}
+      </div>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui";
 // Squelette affiché instantanément pendant la résolution du dashboard (rendu dynamique).
 export default function DashboardLoading() {
   return (
-    <main className="mx-auto flex min-h-screen max-w-[720px] flex-col gap-8 px-6 py-12">
+    <main className="mx-auto flex max-w-[720px] flex-col gap-8 px-6 py-12">
       <div className="flex items-center justify-between">
         <Skeleton className="h-6 w-32" />
         <Skeleton className="h-8 w-8 rounded-full" />

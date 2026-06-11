@@ -11,7 +11,7 @@ export default async function SettingsPage() {
   const ta = await getTranslations("auth");
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-[720px] flex-col gap-10 px-6 py-12">
+    <main className="mx-auto flex max-w-[720px] flex-col gap-10 px-6 py-12">
       <h1 className="font-serif text-[28px] leading-tight text-text">{t("title")}</h1>
 
       <section className="flex flex-col gap-4">

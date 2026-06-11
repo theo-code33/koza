@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui";
 // Squelette de la page Dépenses pendant le chargement (liste du mois courant).
 export default function ExpensesLoading() {
   return (
-    <main className="mx-auto flex min-h-screen max-w-[720px] flex-col px-6 py-12">
+    <main className="mx-auto flex max-w-[720px] flex-col px-6 py-12">
       <Skeleton className="h-8 w-48" />
       <Skeleton className="mt-3 h-4 w-64" />
       <Skeleton className="mt-4 h-4 w-40" />

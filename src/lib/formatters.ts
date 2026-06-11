@@ -36,3 +36,12 @@ export function formatMonth(month: string, locale: "fr" | "en" = "fr"): string {
     year: "numeric",
   }).format(new Date(year, m - 1, 1));
 }
+
+// Formate "YYYY-MM" en libellé de mois court localisé ("janv." en FR, "Jan" en EN).
+export function formatMonthShort(month: string, locale: "fr" | "en" = "fr"): string {
+  const year = Number(month.slice(0, 4));
+  const m = Number(month.slice(5, 7));
+  return new Intl.DateTimeFormat(locale === "fr" ? "fr-FR" : "en-US", {
+    month: "short",
+  }).format(new Date(year, m - 1, 1));
+}

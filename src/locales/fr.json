@@ -14,6 +14,8 @@
     "delete": "Supprimer",
     "prevMonth": "Mois précédent",
     "nextMonth": "Mois suivant",
+    "prevYear": "Année précédente",
+    "nextYear": "Année suivante",
     "genericError": "Un souci est survenu. Réessaie dans un instant.",
     "deleteError": "Suppression impossible. Réessaie dans un instant."
   },
@@ -207,7 +209,13 @@
     "deltaSame": "Autant que le mois dernier.",
     "deltaLess": "{amount} de moins que le mois dernier",
     "deltaMore": "{amount} de plus que le mois dernier",
-    "remaining": "restant"
+    "remaining": "restant",
+    "viewMonth": "Mois",
+    "viewYear": "Année",
+    "annualTitle": "Répartition de l'année",
+    "annualTotalSpent": "dépensé",
+    "trendTitle": "Tendances mensuelles",
+    "savingsTitle": "Épargne accumulée"
   },
   "incomes": {
     "pageTitle": "Tes revenus",

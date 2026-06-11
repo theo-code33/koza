@@ -55,7 +55,7 @@ export default async function DashboardPage({
   }));
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-[720px] flex-col gap-8 px-6 py-12">
+    <main className="mx-auto flex max-w-[720px] flex-col gap-8 px-6 py-12">
       <DashboardMonthNav month={month} />
 
       {summary.closed ? <p className="text-[13px] text-muted">{t("closedReadOnly")}</p> : null}

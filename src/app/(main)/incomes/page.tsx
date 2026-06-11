@@ -26,7 +26,7 @@ export default async function IncomesPage() {
   }));
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-[720px] flex-col px-6 py-12">
+    <main className="mx-auto flex max-w-[720px] flex-col px-6 py-12">
       <h1 className="font-serif text-[28px] leading-tight text-text">{t("pageTitle")}</h1>
       <p className="mt-3 text-[15px] text-text-secondary">
         {total.gt(0) ? t("summary", { amount: formatEUR(total, locale) }) : t("summaryEmpty")}

@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { occurrenceConfirmSchema } from "@/lib/validators";
+import { getCurrentUserId } from "@/lib/current-user";
 
 type RouteContext = { params: Promise<{ id: string }> };
 
@@ -9,6 +10,7 @@ function firstOfMonth(month: string): Date {
 }
 
 export async function POST(request: NextRequest, { params }: RouteContext) {
+  const userId = await getCurrentUserId();
   const { id } = await params;
   const body = await request.json().catch(() => null);
   const parsed = occurrenceConfirmSchema.safeParse(body);
@@ -19,7 +21,7 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
     where: { id },
     include: { recurring: true },
   });
-  if (!occurrence) {
+  if (!occurrence || occurrence.userId !== userId) {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
   if (occurrence.status !== "PENDING") {
@@ -27,6 +29,7 @@ export async function POST(request: NextRequest, { params }: RouteContext) {
   }
   const expense = await prisma.expense.create({
     data: {
+      userId,
       amount: parsed.data.amount,
       description: occurrence.recurring.label,
       date: firstOfMonth(occurrence.month),

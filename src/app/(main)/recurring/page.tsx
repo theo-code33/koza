@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { RecurringManager } from "@/components/recurring/recurring-manager";
+import { getCurrentUserId } from "@/lib/current-user";
 import type { RecurringModel } from "@/components/recurring/recurring-form";
 import type { CategoryKey } from "@/lib/categories";
 
@@ -8,7 +9,11 @@ export const dynamic = "force-dynamic";
 
 export default async function RecurringPage() {
   const t = await getTranslations("recurring");
-  const models = await prisma.recurringExpense.findMany({ orderBy: { createdAt: "asc" } });
+  const userId = await getCurrentUserId();
+  const models = await prisma.recurringExpense.findMany({
+    where: { userId },
+    orderBy: { createdAt: "asc" },
+  });
   const rows: RecurringModel[] = models.map((model) => ({
     id: model.id,
     label: model.label,

@@ -2,10 +2,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 vi.mock("@/lib/prisma", () => ({
-  prisma: { budget: { update: vi.fn(), delete: vi.fn() } },
+  prisma: { budget: { findFirst: vi.fn(), update: vi.fn(), delete: vi.fn() } },
 }));
+vi.mock("@/lib/current-user", () => ({ getCurrentUserId: vi.fn().mockResolvedValue("u1") }));
 
-import { Prisma } from "@/generated/prisma/client";
 import { PUT, DELETE } from "@/app/api/budgets/[id]/route";
 import { prisma } from "@/lib/prisma";
 
@@ -20,18 +20,16 @@ function putRequest(body: unknown): Request {
 }
 
 const params = (id: string) => ({ params: Promise.resolve({ id }) });
-const notFound = new Prisma.PrismaClientKnownRequestError("missing", {
-  code: "P2025",
-  clientVersion: "7",
-});
 
 describe("PUT /api/budgets/[id]", () => {
   beforeEach(() => vi.clearAllMocks());
 
   it("updates a budget and returns 200", async () => {
+    vi.mocked(prisma.budget.findFirst).mockResolvedValue({ id: "b1" } as never);
     vi.mocked(prisma.budget.update).mockResolvedValue({ id: "b1" } as never);
     const res = await PUT(putRequest(validBody), params("b1"));
     expect(res.status).toBe(200);
+    expect(prisma.budget.findFirst).toHaveBeenCalledWith({ where: { id: "b1", userId: "u1" } });
     expect(prisma.budget.update).toHaveBeenCalledWith({
       where: { id: "b1" },
       data: { name: "Vacances", targetAmount: "1500.00", category: "leisure", deadline: null },
@@ -44,10 +42,11 @@ describe("PUT /api/budgets/[id]", () => {
     expect(prisma.budget.update).not.toHaveBeenCalled();
   });
 
-  it("returns 404 when the budget does not exist", async () => {
-    vi.mocked(prisma.budget.update).mockRejectedValue(notFound);
+  it("returns 404 when the budget is not owned", async () => {
+    vi.mocked(prisma.budget.findFirst).mockResolvedValue(null as never);
     const res = await PUT(putRequest(validBody), params("nope"));
     expect(res.status).toBe(404);
+    expect(prisma.budget.update).not.toHaveBeenCalled();
   });
 });
 
@@ -55,6 +54,7 @@ describe("DELETE /api/budgets/[id]", () => {
   beforeEach(() => vi.clearAllMocks());
 
   it("deletes a budget and returns 200", async () => {
+    vi.mocked(prisma.budget.findFirst).mockResolvedValue({ id: "b1" } as never);
     vi.mocked(prisma.budget.delete).mockResolvedValue({ id: "b1" } as never);
     const res = await DELETE(
       new Request("http://localhost/api/budgets/b1", { method: "DELETE" }),
@@ -64,12 +64,13 @@ describe("DELETE /api/budgets/[id]", () => {
     expect(prisma.budget.delete).toHaveBeenCalledWith({ where: { id: "b1" } });
   });
 
-  it("returns 404 when the budget does not exist", async () => {
-    vi.mocked(prisma.budget.delete).mockRejectedValue(notFound);
+  it("returns 404 when the budget is not owned", async () => {
+    vi.mocked(prisma.budget.findFirst).mockResolvedValue(null as never);
     const res = await DELETE(
       new Request("http://localhost/api/budgets/nope", { method: "DELETE" }),
       params("nope"),
     );
     expect(res.status).toBe(404);
+    expect(prisma.budget.delete).not.toHaveBeenCalled();
   });
 });

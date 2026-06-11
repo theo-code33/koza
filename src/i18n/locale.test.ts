@@ -6,6 +6,7 @@ vi.mock("next/headers", () => ({ cookies: () => Promise.resolve({ get }) }));
 vi.mock("@/lib/prisma", () => ({
   prisma: { userSettings: { findUnique: vi.fn() } },
 }));
+vi.mock("@/lib/current-user", () => ({ getCurrentUserId: vi.fn().mockResolvedValue("u1") }));
 
 import { resolveLocale, isLocale } from "@/i18n/locale";
 import { prisma } from "@/lib/prisma";

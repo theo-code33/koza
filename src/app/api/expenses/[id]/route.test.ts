@@ -3,12 +3,12 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 
 vi.mock("@/lib/prisma", () => ({
   prisma: {
-    expense: { update: vi.fn(), delete: vi.fn(), findUnique: vi.fn() },
+    expense: { update: vi.fn(), delete: vi.fn(), findFirst: vi.fn() },
     monthlyPeriod: { findUnique: vi.fn() },
   },
 }));
+vi.mock("@/lib/current-user", () => ({ getCurrentUserId: vi.fn().mockResolvedValue("u1") }));
 
-import { Prisma } from "@/generated/prisma/client";
 import { PUT, DELETE } from "@/app/api/expenses/[id]/route";
 import { prisma } from "@/lib/prisma";
 
@@ -29,19 +29,17 @@ function putRequest(body: unknown): Request {
 }
 
 const params = (id: string) => ({ params: Promise.resolve({ id }) });
-const notFound = new Prisma.PrismaClientKnownRequestError("missing", {
-  code: "P2025",
-  clientVersion: "7",
-});
 
 describe("PUT /api/expenses/[id]", () => {
   beforeEach(() => vi.clearAllMocks());
 
   it("updates an expense and returns 200", async () => {
     vi.mocked(prisma.monthlyPeriod.findUnique).mockResolvedValue(null as never);
+    vi.mocked(prisma.expense.findFirst).mockResolvedValue({ id: "e1" } as never);
     vi.mocked(prisma.expense.update).mockResolvedValue({ id: "e1" } as never);
     const res = await PUT(putRequest(validBody), params("e1"));
     expect(res.status).toBe(200);
+    expect(prisma.expense.findFirst).toHaveBeenCalledWith({ where: { id: "e1", userId: "u1" } });
     expect(prisma.expense.update).toHaveBeenCalledWith({
       where: { id: "e1" },
       data: {
@@ -68,11 +66,12 @@ describe("PUT /api/expenses/[id]", () => {
     expect(prisma.expense.update).not.toHaveBeenCalled();
   });
 
-  it("returns 404 when the expense does not exist", async () => {
+  it("returns 404 when the expense is not owned", async () => {
     vi.mocked(prisma.monthlyPeriod.findUnique).mockResolvedValue(null as never);
-    vi.mocked(prisma.expense.update).mockRejectedValue(notFound);
+    vi.mocked(prisma.expense.findFirst).mockResolvedValue(null as never);
     const res = await PUT(putRequest(validBody), params("nope"));
     expect(res.status).toBe(404);
+    expect(prisma.expense.update).not.toHaveBeenCalled();
   });
 });
 
@@ -80,7 +79,7 @@ describe("DELETE /api/expenses/[id]", () => {
   beforeEach(() => vi.clearAllMocks());
 
   it("deletes an expense and returns 200", async () => {
-    vi.mocked(prisma.expense.findUnique).mockResolvedValue({ month: "2026-06" } as never);
+    vi.mocked(prisma.expense.findFirst).mockResolvedValue({ month: "2026-06" } as never);
     vi.mocked(prisma.monthlyPeriod.findUnique).mockResolvedValue(null as never);
     vi.mocked(prisma.expense.delete).mockResolvedValue({ id: "e1" } as never);
     const res = await DELETE(
@@ -92,7 +91,7 @@ describe("DELETE /api/expenses/[id]", () => {
   });
 
   it("returns 409 when deleting in a closed month", async () => {
-    vi.mocked(prisma.expense.findUnique).mockResolvedValue({ month: "2026-01" } as never);
+    vi.mocked(prisma.expense.findFirst).mockResolvedValue({ month: "2026-01" } as never);
     vi.mocked(prisma.monthlyPeriod.findUnique).mockResolvedValue({ closedAt: new Date() } as never);
     const res = await DELETE(
       new Request("http://localhost/api/expenses/e1", { method: "DELETE" }),
@@ -102,12 +101,13 @@ describe("DELETE /api/expenses/[id]", () => {
     expect(prisma.expense.delete).not.toHaveBeenCalled();
   });
 
-  it("returns 404 when the expense does not exist", async () => {
-    vi.mocked(prisma.expense.findUnique).mockResolvedValue(null as never);
+  it("returns 404 when the expense is not owned", async () => {
+    vi.mocked(prisma.expense.findFirst).mockResolvedValue(null as never);
     const res = await DELETE(
       new Request("http://localhost/api/expenses/nope", { method: "DELETE" }),
       params("nope"),
     );
     expect(res.status).toBe(404);
+    expect(prisma.expense.delete).not.toHaveBeenCalled();
   });
 });

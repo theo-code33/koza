@@ -4,6 +4,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 vi.mock("@/lib/prisma", () => ({
   prisma: { budget: { create: vi.fn(), findMany: vi.fn() } },
 }));
+vi.mock("@/lib/current-user", () => ({ getCurrentUserId: vi.fn().mockResolvedValue("u1") }));
 
 import { GET, POST } from "@/app/api/budgets/route";
 import { prisma } from "@/lib/prisma";
@@ -37,7 +38,13 @@ describe("POST /api/budgets", () => {
     );
     expect(res.status).toBe(201);
     expect(prisma.budget.create).toHaveBeenCalledWith({
-      data: { name: "Vacances", targetAmount: "1200.00", category: "leisure", deadline: null },
+      data: {
+        name: "Vacances",
+        targetAmount: "1200.00",
+        category: "leisure",
+        userId: "u1",
+        deadline: null,
+      },
     });
   });
 

@@ -7,6 +7,7 @@ import { prisma } from "@/lib/prisma";
 import { isMonthOpen } from "@/lib/period-guard";
 import { formatEUR } from "@/lib/formatters";
 import { currentMonth } from "@/lib/month";
+import { getCurrentUserId } from "@/lib/current-user";
 import type { CategoryKey } from "@/lib/categories";
 
 export const dynamic = "force-dynamic";
@@ -14,11 +15,12 @@ export const dynamic = "force-dynamic";
 export default async function ExpensesPage() {
   const locale = (await getLocale()) as "fr" | "en";
   const t = await getTranslations("expenses");
+  const userId = await getCurrentUserId();
   const month = currentMonth();
   const [expenses, budgets, open] = await Promise.all([
-    listMonthExpenses(month),
-    prisma.budget.findMany({ select: { id: true, name: true, category: true } }),
-    isMonthOpen(month),
+    listMonthExpenses(userId, month),
+    prisma.budget.findMany({ where: { userId }, select: { id: true, name: true, category: true } }),
+    isMonthOpen(userId, month),
   ]);
   const total = expenses.reduce((sum, expense) => sum.plus(expense.amount), new Prisma.Decimal(0));
   const rows = expenses.map((expense) => ({

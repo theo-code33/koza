@@ -7,6 +7,7 @@ vi.mock("@/lib/prisma", () => ({
     monthlyPeriod: { findUnique: vi.fn() },
   },
 }));
+vi.mock("@/lib/current-user", () => ({ getCurrentUserId: vi.fn().mockResolvedValue("u1") }));
 
 import { POST, GET } from "@/app/api/incomes/route";
 import { prisma } from "@/lib/prisma";
@@ -32,6 +33,7 @@ describe("POST /api/incomes", () => {
         source: "Salaire",
         amount: "2500.00",
         month: "2026-06",
+        userId: "u1",
         date: new Date(2026, 5, 1),
       },
     });
@@ -59,7 +61,7 @@ describe("GET /api/incomes", () => {
     const res = await GET(new Request("http://localhost/api/incomes?month=2026-06"));
     expect(res.status).toBe(200);
     expect(prisma.income.findMany).toHaveBeenCalledWith({
-      where: { month: "2026-06" },
+      where: { userId: "u1", month: "2026-06" },
       orderBy: { createdAt: "asc" },
     });
     await expect(res.json()).resolves.toEqual([{ id: "1" }]);

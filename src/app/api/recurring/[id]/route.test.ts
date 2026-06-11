@@ -2,10 +2,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 vi.mock("@/lib/prisma", () => ({
-  prisma: { recurringExpense: { update: vi.fn(), delete: vi.fn() } },
+  prisma: { recurringExpense: { findFirst: vi.fn(), update: vi.fn(), delete: vi.fn() } },
 }));
+vi.mock("@/lib/current-user", () => ({ getCurrentUserId: vi.fn().mockResolvedValue("u1") }));
 
-import { Prisma } from "@/generated/prisma/client";
 import { PUT, DELETE } from "@/app/api/recurring/[id]/route";
 import { prisma } from "@/lib/prisma";
 
@@ -19,10 +19,6 @@ const valid = {
   anchorMonth: "2026-01",
 };
 const params = (id: string) => ({ params: Promise.resolve({ id }) });
-const notFound = new Prisma.PrismaClientKnownRequestError("missing", {
-  code: "P2025",
-  clientVersion: "7",
-});
 const putReq = (b: unknown) =>
   new Request("http://localhost/api/recurring/r1", {
     method: "PUT",
@@ -34,6 +30,7 @@ describe("PUT /api/recurring/[id]", () => {
   beforeEach(() => vi.clearAllMocks());
 
   it("updates and returns 200", async () => {
+    vi.mocked(prisma.recurringExpense.findFirst).mockResolvedValue({ id: "r1" } as never);
     vi.mocked(prisma.recurringExpense.update).mockResolvedValue({ id: "r1" } as never);
     expect((await PUT(putReq(valid), params("r1"))).status).toBe(200);
   });
@@ -42,9 +39,10 @@ describe("PUT /api/recurring/[id]", () => {
     expect((await PUT(putReq({ ...valid, amount: "0" }), params("r1"))).status).toBe(400);
   });
 
-  it("returns 404 on P2025", async () => {
-    vi.mocked(prisma.recurringExpense.update).mockRejectedValue(notFound);
+  it("returns 404 when not owned", async () => {
+    vi.mocked(prisma.recurringExpense.findFirst).mockResolvedValue(null as never);
     expect((await PUT(putReq(valid), params("x"))).status).toBe(404);
+    expect(prisma.recurringExpense.update).not.toHaveBeenCalled();
   });
 });
 
@@ -52,6 +50,7 @@ describe("DELETE /api/recurring/[id]", () => {
   beforeEach(() => vi.clearAllMocks());
 
   it("deletes and returns 200", async () => {
+    vi.mocked(prisma.recurringExpense.findFirst).mockResolvedValue({ id: "r1" } as never);
     vi.mocked(prisma.recurringExpense.delete).mockResolvedValue({ id: "r1" } as never);
     const res = await DELETE(
       new Request("http://localhost/api/recurring/r1", { method: "DELETE" }),
@@ -60,12 +59,13 @@ describe("DELETE /api/recurring/[id]", () => {
     expect(res.status).toBe(200);
   });
 
-  it("returns 404 on P2025", async () => {
-    vi.mocked(prisma.recurringExpense.delete).mockRejectedValue(notFound);
+  it("returns 404 when not owned", async () => {
+    vi.mocked(prisma.recurringExpense.findFirst).mockResolvedValue(null as never);
     const res = await DELETE(
       new Request("http://localhost/api/recurring/x", { method: "DELETE" }),
       params("x"),
     );
     expect(res.status).toBe(404);
+    expect(prisma.recurringExpense.delete).not.toHaveBeenCalled();
   });
 });

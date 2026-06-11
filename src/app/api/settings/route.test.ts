@@ -4,6 +4,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 vi.mock("@/lib/prisma", () => ({
   prisma: { userSettings: { upsert: vi.fn() } },
 }));
+vi.mock("@/lib/current-user", () => ({ getCurrentUserId: vi.fn().mockResolvedValue("u1") }));
 
 import { PATCH } from "@/app/api/settings/route";
 import { prisma } from "@/lib/prisma";
@@ -26,9 +27,9 @@ describe("PATCH /api/settings", () => {
     const res = await PATCH(request({ onboardingCompleted: true }));
     expect(res.status).toBe(200);
     expect(prisma.userSettings.upsert).toHaveBeenCalledWith({
-      where: { id: "default" },
+      where: { userId: "u1" },
       update: { onboardingCompleted: true },
-      create: { id: "default", onboardingCompleted: true },
+      create: { userId: "u1", onboardingCompleted: true },
     });
   });
 

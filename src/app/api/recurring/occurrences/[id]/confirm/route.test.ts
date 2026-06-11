@@ -7,6 +7,7 @@ vi.mock("@/lib/prisma", () => ({
     expense: { create: vi.fn() },
   },
 }));
+vi.mock("@/lib/current-user", () => ({ getCurrentUserId: vi.fn().mockResolvedValue("u1") }));
 
 import { Prisma } from "@/generated/prisma/client";
 import { POST } from "@/app/api/recurring/occurrences/[id]/confirm/route";
@@ -26,6 +27,7 @@ describe("confirm occurrence", () => {
   it("creates the expense and marks the occurrence CONFIRMED", async () => {
     vi.mocked(prisma.recurringOccurrence.findUnique).mockResolvedValue({
       id: "o1",
+      userId: "u1",
       month: "2026-06",
       status: "PENDING",
       expenseId: null,
@@ -67,6 +69,7 @@ describe("confirm occurrence", () => {
 
   it("returns 409 when already confirmed", async () => {
     vi.mocked(prisma.recurringOccurrence.findUnique).mockResolvedValue({
+      userId: "u1",
       status: "CONFIRMED",
     } as never);
     const res = await POST(req({ amount: "10" }), params("o1"));

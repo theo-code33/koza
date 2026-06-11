@@ -2,6 +2,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 vi.mock("@/lib/export", () => ({ buildExport: vi.fn() }));
+vi.mock("@/lib/current-user", () => ({ getCurrentUserId: vi.fn().mockResolvedValue("u1") }));
 
 import { GET } from "@/app/api/export/route";
 import { buildExport } from "@/lib/export";

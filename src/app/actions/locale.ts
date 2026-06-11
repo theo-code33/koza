@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { isLocale, LOCALE_COOKIE, type Locale } from "@/i18n/locale";
+import { getCurrentUserId } from "@/lib/current-user";
 
 const ONE_YEAR = 60 * 60 * 24 * 365;
 
@@ -10,10 +11,11 @@ const ONE_YEAR = 60 * 60 * 24 * 365;
 export async function setLocaleAction(locale: Locale): Promise<void> {
   if (!isLocale(locale)) return;
 
+  const userId = await getCurrentUserId();
   await prisma.userSettings.upsert({
-    where: { id: "default" },
+    where: { userId },
     update: { locale },
-    create: { id: "default", locale },
+    create: { userId, locale },
   });
 
   const cookieStore = await cookies();

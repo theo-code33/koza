@@ -272,11 +272,12 @@ async function main() {
     data: { recurringId: electricite.id, month: monthKey(0), status: "PENDING" },
   });
 
-  // Profil unique du MVP : onboarding marqué terminé pour la démo.
+  // Profil unique du MVP. DEMO_ONBOARDING=fresh → onboarding affiché ; sinon terminé.
+  const onboardingCompleted = process.env.DEMO_ONBOARDING !== "fresh";
   await prisma.userSettings.upsert({
     where: { id: "default" },
-    update: { onboardingCompleted: true },
-    create: { id: "default", theme: "light", locale: "fr", onboardingCompleted: true },
+    update: { onboardingCompleted },
+    create: { id: "default", theme: "light", locale: "fr", onboardingCompleted },
   });
 
   const [incomes, expenses, budgets, recurring] = await Promise.all([

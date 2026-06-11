@@ -6,10 +6,10 @@ import { listBudgetsWithSpent } from "@/lib/budgets";
 import { deriveNotifications } from "@/lib/notifications";
 import { prisma } from "@/lib/prisma";
 import { currentMonth } from "@/lib/month";
+import { reconcile } from "@/lib/period";
 import { getCurrentUserId } from "@/lib/current-user";
 import { SoftBanner } from "@/components/ui/soft-banner";
 import { NotificationList } from "@/components/notifications/notification-list";
-import { ReconcileOnMount } from "@/components/dashboard/reconcile-on-mount";
 import { DashboardMonthNav } from "@/components/dashboard/dashboard-month-nav";
 import { CarryLine } from "@/components/dashboard/carry-line";
 import { CategoryDonut } from "@/components/charts/category-donut";
@@ -30,6 +30,9 @@ export default async function DashboardPage({
   const { month: rawMonth } = await searchParams;
   const month = resolveMonth(rawMonth);
   const userId = await getCurrentUserId();
+  // Réconciliation serveur avant toute lecture : clôt les mois franchis et matérialise
+  // les récurrentes du mois courant, pour que le résumé les reflète dès le premier rendu.
+  await reconcile(userId, new Date());
   const t = await getTranslations("dashboard");
   const [summary, pending, budgets] = await Promise.all([
     getMonthlySummary(userId, month),
@@ -53,7 +56,6 @@ export default async function DashboardPage({
 
   return (
     <main className="mx-auto flex min-h-screen max-w-[720px] flex-col gap-8 px-6 py-12">
-      <ReconcileOnMount />
       <DashboardMonthNav month={month} />
 
       {summary.closed ? <p className="text-[13px] text-muted">{t("closedReadOnly")}</p> : null}

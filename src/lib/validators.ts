@@ -1,6 +1,12 @@
 import { z } from "zod";
 import { isValidSubcategory } from "@/lib/subcategories";
 
+// Identifiants de compte (login / signup).
+export const credentialsSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+});
+
 export const incomeCreateSchema = z.object({
   source: z.string().trim().min(1).max(80),
   amount: z

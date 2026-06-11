@@ -1,17 +1,9 @@
-import { prisma } from "@/lib/prisma";
+import { auth } from "@/auth";
 
-const DEMO_EMAIL = "demo@koza.app";
-
-// Stub temporaire (sous-projet #2) : renvoie l'utilisateur de démo, en l'amorçant
-// si la base est vierge (pas d'UI d'auth encore). Remplacé par auth() (Auth.js) au #3.
+// userId de l'utilisateur authentifié (via Auth.js). Lève si non connecté
+// (le middleware redirige déjà vers /login pour les routes protégées).
 export async function getCurrentUserId(): Promise<string> {
-  const existing = await prisma.user.findFirst({ orderBy: { createdAt: "asc" } });
-  if (existing) return existing.id;
-
-  const user = await prisma.user.upsert({
-    where: { email: DEMO_EMAIL },
-    update: {},
-    create: { email: DEMO_EMAIL, passwordHash: "" },
-  });
-  return user.id;
+  const session = await auth();
+  if (!session?.user?.id) throw new Error("unauthenticated");
+  return session.user.id;
 }

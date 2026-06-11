@@ -8,8 +8,8 @@ function firstOfMonth(month: string): Date {
 
 // Matérialise les échéances récurrentes du mois M : FIXED → Expense + occurrence APPLIED ;
 // VARIABLE → occurrence PENDING (à confirmer). Idempotent grâce à la garde @@unique.
-export async function materializeRecurring(month: string): Promise<void> {
-  const models = await prisma.recurringExpense.findMany({ where: { active: true } });
+export async function materializeRecurring(userId: string, month: string): Promise<void> {
+  const models = await prisma.recurringExpense.findMany({ where: { userId, active: true } });
 
   for (const model of models) {
     if (model.anchorMonth > month) continue;
@@ -24,6 +24,7 @@ export async function materializeRecurring(month: string): Promise<void> {
     if (model.type === "FIXED") {
       const expense = await prisma.expense.create({
         data: {
+          userId,
           amount: model.amount,
           description: model.label,
           date: firstOfMonth(month),
@@ -34,11 +35,11 @@ export async function materializeRecurring(month: string): Promise<void> {
         },
       });
       await prisma.recurringOccurrence.create({
-        data: { recurringId: model.id, month, status: "APPLIED", expenseId: expense.id },
+        data: { userId, recurringId: model.id, month, status: "APPLIED", expenseId: expense.id },
       });
     } else {
       await prisma.recurringOccurrence.create({
-        data: { recurringId: model.id, month, status: "PENDING" },
+        data: { userId, recurringId: model.id, month, status: "PENDING" },
       });
     }
   }

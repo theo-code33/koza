@@ -6,6 +6,7 @@ import { listBudgetsWithSpent } from "@/lib/budgets";
 import { deriveNotifications } from "@/lib/notifications";
 import { prisma } from "@/lib/prisma";
 import { currentMonth } from "@/lib/month";
+import { getCurrentUserId } from "@/lib/current-user";
 import { SoftBanner } from "@/components/ui/soft-banner";
 import { NotificationList } from "@/components/notifications/notification-list";
 import { ReconcileOnMount } from "@/components/dashboard/reconcile-on-mount";
@@ -28,14 +29,15 @@ export default async function DashboardPage({
 }) {
   const { month: rawMonth } = await searchParams;
   const month = resolveMonth(rawMonth);
+  const userId = await getCurrentUserId();
   const t = await getTranslations("dashboard");
   const [summary, pending, budgets] = await Promise.all([
-    getMonthlySummary(month),
+    getMonthlySummary(userId, month),
     prisma.recurringOccurrence.findMany({
-      where: { month, status: "PENDING" },
+      where: { userId, month, status: "PENDING" },
       include: { recurring: true },
     }),
-    listBudgetsWithSpent(),
+    listBudgetsWithSpent(userId),
   ]);
   const notifications = summary.closed ? [] : deriveNotifications(summary, budgets);
   const income = Number(summary.income);

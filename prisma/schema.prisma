@@ -25,8 +25,23 @@ enum OccurrenceStatus {
   DROPPED
 }
 
+model User {
+  id           String                @id @default(cuid())
+  email        String                @unique
+  passwordHash String
+  createdAt    DateTime              @default(now())
+  settings     UserSettings?
+  incomes      Income[]
+  expenses     Expense[]
+  budgets      Budget[]
+  periods      MonthlyPeriod[]
+  recurring    RecurringExpense[]
+  occurrences  RecurringOccurrence[]
+}
+
 model UserSettings {
-  id                  String  @id @default("default")
+  userId              String  @id
+  user                User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   theme               String  @default("light")
   locale              String  @default("fr")
   onboardingCompleted Boolean @default(false)
@@ -34,6 +49,8 @@ model UserSettings {
 
 model Income {
   id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   source    String
   amount    Decimal  @db.Decimal(12, 2)
   date      DateTime
@@ -41,11 +58,14 @@ model Income {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@index([userId])
   @@index([month])
 }
 
 model Expense {
   id          String            @id @default(cuid())
+  userId      String
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
   amount      Decimal           @db.Decimal(12, 2)
   description String
   date        DateTime
@@ -59,11 +79,14 @@ model Expense {
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
 
+  @@index([userId])
   @@index([month])
 }
 
 model Budget {
   id           String    @id @default(cuid())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   name         String
   targetAmount Decimal   @db.Decimal(12, 2)
   category     String // 'essential' | 'leisure' | 'savings'
@@ -71,20 +94,29 @@ model Budget {
   expenses     Expense[]
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
+
+  @@index([userId])
 }
 
 model MonthlyPeriod {
   id        String    @id @default(cuid())
-  month     String    @unique // "YYYY-MM"
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  month     String // "YYYY-MM"
   carryIn   Decimal   @default(0) @db.Decimal(12, 2)
   carryOut  Decimal?  @db.Decimal(12, 2)
   closedAt  DateTime?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+
+  @@unique([userId, month])
+  @@index([userId])
 }
 
 model RecurringExpense {
   id          String                @id @default(cuid())
+  userId      String
+  user        User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
   label       String
   type        RecurringType
   amount      Decimal               @db.Decimal(12, 2)
@@ -98,10 +130,14 @@ model RecurringExpense {
   expenses    Expense[]
   createdAt   DateTime              @default(now())
   updatedAt   DateTime              @updatedAt
+
+  @@index([userId])
 }
 
 model RecurringOccurrence {
   id          String           @id @default(cuid())
+  userId      String
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   recurringId String
   recurring   RecurringExpense @relation(fields: [recurringId], references: [id], onDelete: Cascade)
   month       String
@@ -111,4 +147,5 @@ model RecurringOccurrence {
   updatedAt   DateTime         @updatedAt
 
   @@unique([recurringId, month])
+  @@index([userId])
 }

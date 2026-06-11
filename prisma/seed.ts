@@ -1,4 +1,5 @@
 import "dotenv/config";
+import bcrypt from "bcryptjs";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
 
@@ -29,17 +30,24 @@ function lastDayOfMonth(offset: number): Date {
 }
 
 async function main() {
-  // Reset des tables démo (ordre FK-safe). Ne tourne que contre koza-dev.
-  await prisma.recurringOccurrence.deleteMany();
-  await prisma.expense.deleteMany();
-  await prisma.recurringExpense.deleteMany();
-  await prisma.budget.deleteMany();
-  await prisma.income.deleteMany();
-  await prisma.monthlyPeriod.deleteMany();
+  // Reset complet (cascade depuis User). Ne tourne que contre koza-dev.
+  await prisma.user.deleteMany();
+
+  // Utilisateur de démo, propriétaire de toute la data. DEMO_ONBOARDING=fresh → onboarding affiché.
+  const onboardingCompleted = process.env.DEMO_ONBOARDING !== "fresh";
+  const demo = await prisma.user.create({
+    data: {
+      email: "demo@koza.app",
+      passwordHash: await bcrypt.hash("demo1234", 10),
+      settings: { create: { theme: "light", locale: "fr", onboardingCompleted } },
+    },
+  });
+  const userId = demo.id;
 
   // Budgets (créés d'abord pour récupérer leurs ids et y rattacher des dépenses).
   const vacances = await prisma.budget.create({
     data: {
+      userId,
       name: "Vacances Grèce",
       targetAmount: "1200.00",
       category: "leisure",
@@ -48,6 +56,7 @@ async function main() {
   });
   const fondsUrgence = await prisma.budget.create({
     data: {
+      userId,
       name: "Fonds d'urgence",
       targetAmount: "3000.00",
       category: "savings",
@@ -62,7 +71,7 @@ async function main() {
       { source: "Salaire", amount: "2500.00", date: dayInMonth(-1, 1), month: monthKey(-1) },
       { source: "Salaire", amount: "2500.00", date: dayInMonth(0, 1), month: monthKey(0) },
       { source: "Freelance", amount: "400.00", date: dayInMonth(0, 1), month: monthKey(0) },
-    ],
+    ].map((d) => ({ ...d, userId })),
   });
 
   // 18 dépenses réalistes réparties sur 3 mois. Montants en strings (pas de float).
@@ -218,7 +227,7 @@ async function main() {
         subcategory: "emergency_fund",
         budgetId: fondsUrgence.id,
       },
-    ],
+    ].map((d) => ({ ...d, userId })),
   });
 
   // Périodes mensuelles : 2 mois clôturés avec report propagé, mois courant ouvert.
@@ -230,13 +239,14 @@ async function main() {
       { month: monthKey(-2), carryIn: "0.00", carryOut: "781.60", closedAt: lastDayOfMonth(-2) },
       { month: monthKey(-1), carryIn: "781.60", carryOut: "1661.60", closedAt: lastDayOfMonth(-1) },
       { month: monthKey(0), carryIn: "1661.60" },
-    ],
+    ].map((d) => ({ ...d, userId })),
   });
 
   // Modèles récurrents de démo. Loyer/Assurance pour l'écran de gestion ;
   // Électricité VARIABLE avec une occurrence à confirmer ce mois-ci.
   await prisma.recurringExpense.create({
     data: {
+      userId,
       label: "Loyer",
       type: "FIXED",
       amount: "850.00",
@@ -248,6 +258,7 @@ async function main() {
   });
   await prisma.recurringExpense.create({
     data: {
+      userId,
       label: "Assurance habitation",
       type: "FIXED",
       amount: "15.00",
@@ -259,6 +270,7 @@ async function main() {
   });
   const electricite = await prisma.recurringExpense.create({
     data: {
+      userId,
       label: "Électricité",
       type: "VARIABLE",
       amount: "75.00",
@@ -269,15 +281,7 @@ async function main() {
     },
   });
   await prisma.recurringOccurrence.create({
-    data: { recurringId: electricite.id, month: monthKey(0), status: "PENDING" },
-  });
-
-  // Profil unique du MVP. DEMO_ONBOARDING=fresh → onboarding affiché ; sinon terminé.
-  const onboardingCompleted = process.env.DEMO_ONBOARDING !== "fresh";
-  await prisma.userSettings.upsert({
-    where: { id: "default" },
-    update: { onboardingCompleted },
-    create: { id: "default", theme: "light", locale: "fr", onboardingCompleted },
+    data: { userId, recurringId: electricite.id, month: monthKey(0), status: "PENDING" },
   });
 
   const [incomes, expenses, budgets, recurring] = await Promise.all([

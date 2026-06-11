@@ -1,16 +1,13 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 import { expenseCreateSchema } from "@/lib/validators";
 import { isMonthOpen } from "@/lib/period-guard";
+import { getCurrentUserId } from "@/lib/current-user";
 
 type RouteContext = { params: Promise<{ id: string }> };
 
-function isNotFound(error: unknown): boolean {
-  return error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2025";
-}
-
 export async function PUT(request: NextRequest, { params }: RouteContext) {
+  const userId = await getCurrentUserId();
   const { id } = await params;
   const body = await request.json().catch(() => null);
   const parsed = expenseCreateSchema.safeParse(body);
@@ -19,30 +16,28 @@ export async function PUT(request: NextRequest, { params }: RouteContext) {
   }
   const { date, ...rest } = parsed.data;
   const month = date.slice(0, 7);
-  if (!(await isMonthOpen(month))) {
+  if (!(await isMonthOpen(userId, month))) {
     return NextResponse.json({ error: "month_closed" }, { status: 409 });
   }
-  try {
-    const expense = await prisma.expense.update({
-      where: { id },
-      data: { ...rest, date: new Date(date), month },
-    });
-    return NextResponse.json(expense, { status: 200 });
-  } catch (error) {
-    if (isNotFound(error)) {
-      return NextResponse.json({ error: "not_found" }, { status: 404 });
-    }
-    throw error;
+  const owned = await prisma.expense.findFirst({ where: { id, userId } });
+  if (!owned) {
+    return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
+  const expense = await prisma.expense.update({
+    where: { id },
+    data: { ...rest, date: new Date(date), month },
+  });
+  return NextResponse.json(expense, { status: 200 });
 }
 
 export async function DELETE(_request: NextRequest, { params }: RouteContext) {
+  const userId = await getCurrentUserId();
   const { id } = await params;
-  const existing = await prisma.expense.findUnique({ where: { id } });
+  const existing = await prisma.expense.findFirst({ where: { id, userId } });
   if (!existing) {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
-  if (!(await isMonthOpen(existing.month))) {
+  if (!(await isMonthOpen(userId, existing.month))) {
     return NextResponse.json({ error: "month_closed" }, { status: 409 });
   }
   await prisma.expense.delete({ where: { id } });

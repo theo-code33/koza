@@ -6,14 +6,16 @@ import { listMonthIncomes } from "@/lib/incomes";
 import { computeEnvelopes } from "@/lib/budget";
 import { formatEUR } from "@/lib/formatters";
 import { currentMonth } from "@/lib/month";
+import { getCurrentUserId } from "@/lib/current-user";
 
 export const dynamic = "force-dynamic";
 
 export default async function IncomesPage() {
   const locale = (await getLocale()) as "fr" | "en";
   const t = await getTranslations("incomes");
+  const userId = await getCurrentUserId();
   const month = currentMonth();
-  const incomes = await listMonthIncomes(month);
+  const incomes = await listMonthIncomes(userId, month);
   const total = incomes.reduce((sum, income) => sum.plus(income.amount), new Prisma.Decimal(0));
   const envelopes = computeEnvelopes(total);
   const rows = incomes.map((income) => ({

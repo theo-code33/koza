@@ -27,12 +27,12 @@ describe("reconcile", () => {
   it("creates the current period with carryIn 0 on first run", async () => {
     vi.mocked(prisma.monthlyPeriod.findFirst).mockResolvedValue(null as never);
 
-    await reconcile(new Date("2026-06-10"));
+    await reconcile("u1", new Date("2026-06-10"));
 
     expect(prisma.monthlyPeriod.create).toHaveBeenCalledWith(
       expect.objectContaining({ data: expect.objectContaining({ month: "2026-06" }) }),
     );
-    expect(materializeRecurring).toHaveBeenCalledWith("2026-06");
+    expect(materializeRecurring).toHaveBeenCalledWith("u1", "2026-06");
   });
 
   it("closes the previous month and carries the surplus forward", async () => {
@@ -45,7 +45,7 @@ describe("reconcile", () => {
     vi.mocked(prisma.income.findMany).mockResolvedValue([{ amount: "2800" }] as never);
     vi.mocked(prisma.expense.findMany).mockResolvedValue([{ amount: "2200" }] as never);
 
-    await reconcile(new Date("2026-06-10"));
+    await reconcile("u1", new Date("2026-06-10"));
 
     expect(prisma.monthlyPeriod.update).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -59,7 +59,7 @@ describe("reconcile", () => {
     expect((created?.[0] as { data: { carryIn: Prisma.Decimal } }).data.carryIn.toString()).toBe(
       "600",
     );
-    expect(materializeRecurring).toHaveBeenCalledWith("2026-06");
+    expect(materializeRecurring).toHaveBeenCalledWith("u1", "2026-06");
   });
 
   it("does nothing when the latest period is already the current month", async () => {
@@ -70,7 +70,7 @@ describe("reconcile", () => {
       closedAt: null,
     } as never);
 
-    await reconcile(new Date("2026-06-10"));
+    await reconcile("u1", new Date("2026-06-10"));
 
     expect(prisma.monthlyPeriod.update).not.toHaveBeenCalled();
     expect(prisma.monthlyPeriod.create).not.toHaveBeenCalled();

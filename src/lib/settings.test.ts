@@ -15,11 +15,11 @@ describe("getOnboardingCompleted", () => {
     vi.mocked(prisma.userSettings.findUnique).mockResolvedValue({
       onboardingCompleted: true,
     } as never);
-    expect(await getOnboardingCompleted()).toBe(true);
+    expect(await getOnboardingCompleted("u1")).toBe(true);
   });
 
   it("returns false when there is no settings row", async () => {
     vi.mocked(prisma.userSettings.findUnique).mockResolvedValue(null as never);
-    expect(await getOnboardingCompleted()).toBe(false);
+    expect(await getOnboardingCompleted("u1")).toBe(false);
   });
 });

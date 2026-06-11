@@ -1,13 +1,15 @@
 import { getTranslations } from "next-intl/server";
 import { BudgetsManager } from "@/components/budgets/budgets-manager";
 import { listBudgetsWithSpent } from "@/lib/budgets";
+import { getCurrentUserId } from "@/lib/current-user";
 import type { CategoryKey } from "@/lib/categories";
 
 export const dynamic = "force-dynamic";
 
 export default async function BudgetsPage() {
   const t = await getTranslations("budgets");
-  const budgets = await listBudgetsWithSpent();
+  const userId = await getCurrentUserId();
+  const budgets = await listBudgetsWithSpent(userId);
   const rows = budgets.map((budget) => ({
     id: budget.id,
     name: budget.name,

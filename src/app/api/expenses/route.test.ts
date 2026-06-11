@@ -7,6 +7,7 @@ vi.mock("@/lib/prisma", () => ({
     monthlyPeriod: { findUnique: vi.fn() },
   },
 }));
+vi.mock("@/lib/current-user", () => ({ getCurrentUserId: vi.fn().mockResolvedValue("u1") }));
 
 import { GET, POST } from "@/app/api/expenses/route";
 import { prisma } from "@/lib/prisma";
@@ -41,6 +42,7 @@ describe("POST /api/expenses", () => {
         description: "Courses",
         category: "essential",
         subcategory: "food",
+        userId: "u1",
         date: new Date("2026-06-10"),
         month: "2026-06",
       },

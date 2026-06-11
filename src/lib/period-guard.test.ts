@@ -13,16 +13,16 @@ describe("isMonthOpen", () => {
 
   it("is open when no period exists", async () => {
     vi.mocked(prisma.monthlyPeriod.findUnique).mockResolvedValue(null as never);
-    expect(await isMonthOpen("2026-06")).toBe(true);
+    expect(await isMonthOpen("u1", "2026-06")).toBe(true);
   });
 
   it("is open when the period has no closedAt", async () => {
     vi.mocked(prisma.monthlyPeriod.findUnique).mockResolvedValue({ closedAt: null } as never);
-    expect(await isMonthOpen("2026-06")).toBe(true);
+    expect(await isMonthOpen("u1", "2026-06")).toBe(true);
   });
 
   it("is closed when closedAt is set", async () => {
     vi.mocked(prisma.monthlyPeriod.findUnique).mockResolvedValue({ closedAt: new Date() } as never);
-    expect(await isMonthOpen("2026-05")).toBe(false);
+    expect(await isMonthOpen("u1", "2026-05")).toBe(false);
   });
 });

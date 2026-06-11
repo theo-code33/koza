@@ -13,9 +13,9 @@ describe("listMonthExpenses", () => {
 
   it("queries expenses by month ordered by date desc", async () => {
     vi.mocked(prisma.expense.findMany).mockResolvedValue([{ id: "1" }] as never);
-    const result = await listMonthExpenses("2026-06");
+    const result = await listMonthExpenses("u1", "2026-06");
     expect(prisma.expense.findMany).toHaveBeenCalledWith({
-      where: { month: "2026-06" },
+      where: { userId: "u1", month: "2026-06" },
       orderBy: { date: "desc" },
     });
     expect(result).toHaveLength(1);

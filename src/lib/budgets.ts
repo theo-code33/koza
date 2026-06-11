@@ -11,8 +11,9 @@ export interface BudgetWithSpent {
 }
 
 // Budgets avec le cumul de toutes leurs dépenses liées (tous mois confondus).
-export async function listBudgetsWithSpent(): Promise<BudgetWithSpent[]> {
+export async function listBudgetsWithSpent(userId: string): Promise<BudgetWithSpent[]> {
   const budgets = await prisma.budget.findMany({
+    where: { userId },
     include: { expenses: { select: { amount: true } } },
     orderBy: { createdAt: "asc" },
   });

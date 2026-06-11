@@ -6,6 +6,7 @@ vi.mock("next/headers", () => ({ cookies: () => Promise.resolve({ set }) }));
 vi.mock("@/lib/prisma", () => ({
   prisma: { userSettings: { upsert: vi.fn() } },
 }));
+vi.mock("@/lib/current-user", () => ({ getCurrentUserId: vi.fn().mockResolvedValue("u1") }));
 
 import { setLocaleAction } from "@/app/actions/locale";
 import { prisma } from "@/lib/prisma";
@@ -17,9 +18,9 @@ describe("setLocaleAction", () => {
     await setLocaleAction("en");
     expect(prisma.userSettings.upsert).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: { id: "default" },
+        where: { userId: "u1" },
         update: { locale: "en" },
-        create: { id: "default", locale: "en" },
+        create: { userId: "u1", locale: "en" },
       }),
     );
     expect(set).toHaveBeenCalledWith("NEXT_LOCALE", "en", expect.objectContaining({ path: "/" }));

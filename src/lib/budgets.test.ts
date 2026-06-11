@@ -22,8 +22,9 @@ describe("listBudgetsWithSpent", () => {
         expenses: [{ amount: "250" }, { amount: "100" }],
       },
     ] as never);
-    const result = await listBudgetsWithSpent();
+    const result = await listBudgetsWithSpent("u1");
     expect(prisma.budget.findMany).toHaveBeenCalledWith({
+      where: { userId: "u1" },
       include: { expenses: { select: { amount: true } } },
       orderBy: { createdAt: "asc" },
     });

@@ -7,13 +7,15 @@ import { prisma } from "@/lib/prisma";
 import { computeEnvelopes } from "@/lib/budget";
 import { formatEUR } from "@/lib/formatters";
 import { currentMonth } from "@/lib/month";
+import { getCurrentUserId } from "@/lib/current-user";
 
 export const dynamic = "force-dynamic";
 
 export default async function ConfirmPage() {
   const locale = (await getLocale()) as "fr" | "en";
   const t = await getTranslations("onboarding");
-  const incomes = await prisma.income.findMany({ where: { month: currentMonth() } });
+  const userId = await getCurrentUserId();
+  const incomes = await prisma.income.findMany({ where: { userId, month: currentMonth() } });
   const total = incomes.reduce((sum, income) => sum.plus(income.amount), new Prisma.Decimal(0));
   const envelopes = computeEnvelopes(total);
 

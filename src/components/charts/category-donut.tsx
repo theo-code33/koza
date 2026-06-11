@@ -13,11 +13,15 @@ interface DonutSlice {
 interface CategoryDonutProps {
   slices: DonutSlice[];
   balance: number;
+  centerValue?: number;
+  centerLabel?: string;
 }
 
-export function CategoryDonut({ slices, balance }: CategoryDonutProps) {
+export function CategoryDonut({ slices, balance, centerValue, centerLabel }: CategoryDonutProps) {
   const locale = useLocale() as "fr" | "en";
   const t = useTranslations("dashboard");
+  const value = centerValue ?? balance;
+  const label = centerLabel ?? t("remaining");
   const total = slices.reduce((acc, slice) => acc + slice.amount, 0);
   const data =
     total > 0
@@ -48,10 +52,10 @@ export function CategoryDonut({ slices, balance }: CategoryDonutProps) {
         </PieChart>
       </ResponsiveContainer>
       <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-        <span className={`num text-[28px] font-light ${balance < 0 ? "text-over" : "text-text"}`}>
-          {formatEUR(balance, locale)}
+        <span className={`num text-[28px] font-light ${value < 0 ? "text-over" : "text-text"}`}>
+          {formatEUR(value, locale)}
         </span>
-        <span className="text-[12px] text-text-secondary">{t("remaining")}</span>
+        <span className="text-[12px] text-text-secondary">{label}</span>
       </div>
     </div>
   );

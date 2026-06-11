@@ -18,4 +18,17 @@ describe("CategoryDonut", () => {
     expect(screen.getByText(/restant/)).toBeInTheDocument();
     expect(screen.getByText(/1\s?400,00/)).toBeInTheDocument();
   });
+
+  it("uses custom center value and label when provided", () => {
+    render(
+      <CategoryDonut
+        slices={[{ category: "essential", amount: 100 }]}
+        balance={0}
+        centerValue={1100}
+        centerLabel="dépensé"
+      />,
+    );
+    expect(screen.getByText(/1\s?100,00/)).toBeInTheDocument();
+    expect(screen.getByText("dépensé")).toBeInTheDocument();
+  });
 });

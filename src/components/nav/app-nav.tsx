@@ -34,7 +34,9 @@ function NavLink({ item, active }: { item: NavItem; active: boolean }) {
       className={`tap flex flex-col items-center gap-1 ${active ? "text-accent" : "text-text-secondary"}`}
     >
       <Icon size={22} strokeWidth={1.7} />
-      {active ? <span className="text-[11px] font-medium">{label}</span> : null}
+      {active ? (
+        <span className="max-w-16 text-center text-[11px] font-medium leading-tight">{label}</span>
+      ) : null}
     </Link>
   );
 }

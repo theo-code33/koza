@@ -20,7 +20,7 @@ describe("ConfirmActions", () => {
       .mockResolvedValue(new Response(null, { status: 200 }));
     render(<ConfirmActions />);
     await userEvent.click(screen.getByRole("button", { name: "Terminer" }));
-    await waitFor(() => expect(push).toHaveBeenCalledWith("/"));
+    await waitFor(() => expect(push).toHaveBeenCalledWith("/dashboard"));
     expect(fetchMock).toHaveBeenCalledWith(
       "/api/settings",
       expect.objectContaining({ method: "PATCH" }),

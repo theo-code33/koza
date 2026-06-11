@@ -22,7 +22,7 @@ export function ConfirmActions() {
         body: JSON.stringify({ onboardingCompleted: true }),
       });
       if (!res.ok) throw new Error("finish_failed");
-      router.push("/");
+      router.push("/dashboard");
     } catch {
       setError(tc("genericError"));
       setBusy(false);

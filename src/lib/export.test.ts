@@ -34,7 +34,7 @@ describe("buildExport", () => {
       onboardingCompleted: true,
     } as never);
 
-    const data = await buildExport();
+    const data = await buildExport("u1");
 
     expect(typeof data.exportedAt).toBe("string");
     expect((data.incomes[0] as { amount: string }).amount).toBe("2000");

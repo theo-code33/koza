@@ -28,11 +28,11 @@ function sum(rows: { amount: Prisma.Decimal | string }[]): Prisma.Decimal {
 
 // Synthèse mensuelle : base = entrées + report entrant, objectifs 50/30/20 dérivés de la base,
 // dépenses par catégorie, solde (report sortant live), état clôturé.
-export async function getMonthlySummary(month: string): Promise<MonthlySummary> {
+export async function getMonthlySummary(userId: string, month: string): Promise<MonthlySummary> {
   const [incomes, expenses, period] = await Promise.all([
-    listMonthIncomes(month),
-    listMonthExpenses(month),
-    prisma.monthlyPeriod.findUnique({ where: { month } }),
+    listMonthIncomes(userId, month),
+    listMonthExpenses(userId, month),
+    prisma.monthlyPeriod.findUnique({ where: { userId_month: { userId, month } } }),
   ]);
 
   const income = sum(incomes);

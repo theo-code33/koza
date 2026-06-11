@@ -9,12 +9,12 @@ export interface ExportData {
 }
 
 // Rassemble toutes les données de l'app en un objet sérialisable (montants Decimal → string).
-export async function buildExport(): Promise<ExportData> {
+export async function buildExport(userId: string): Promise<ExportData> {
   const [incomes, expenses, budgets, settings] = await Promise.all([
-    prisma.income.findMany({ orderBy: { createdAt: "asc" } }),
-    prisma.expense.findMany({ orderBy: { date: "asc" } }),
-    prisma.budget.findMany({ orderBy: { createdAt: "asc" } }),
-    prisma.userSettings.findUnique({ where: { id: "default" } }),
+    prisma.income.findMany({ where: { userId }, orderBy: { createdAt: "asc" } }),
+    prisma.expense.findMany({ where: { userId }, orderBy: { date: "asc" } }),
+    prisma.budget.findMany({ where: { userId }, orderBy: { createdAt: "asc" } }),
+    prisma.userSettings.findUnique({ where: { userId } }),
   ]);
 
   return {

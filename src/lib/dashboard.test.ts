@@ -22,7 +22,7 @@ describe("getMonthlySummary", () => {
     ] as never);
     vi.mocked(prisma.monthlyPeriod.findUnique).mockResolvedValue(null as never);
 
-    const summary = await getMonthlySummary("2026-06");
+    const summary = await getMonthlySummary("u1", "2026-06");
 
     expect(summary.income.toString()).toBe("2000");
     expect(summary.carryIn.toString()).toBe("0");
@@ -47,7 +47,7 @@ describe("getMonthlySummary", () => {
       closedAt: null,
     } as never);
 
-    const summary = await getMonthlySummary("2026-06");
+    const summary = await getMonthlySummary("u1", "2026-06");
 
     expect(summary.carryIn.toString()).toBe("600");
     expect(summary.base.toString()).toBe("3100");
@@ -62,7 +62,7 @@ describe("getMonthlySummary", () => {
     vi.mocked(listMonthExpenses).mockResolvedValue([] as never);
     vi.mocked(prisma.monthlyPeriod.findUnique).mockResolvedValue(null as never);
 
-    const summary = await getMonthlySummary("2026-06");
+    const summary = await getMonthlySummary("u1", "2026-06");
 
     expect(summary.income.toString()).toBe("0");
     expect(summary.categories[0]?.target.toString()).toBe("0");
@@ -76,7 +76,7 @@ describe("getMonthlySummary", () => {
       closedAt: new Date(),
     } as never);
 
-    const summary = await getMonthlySummary("2026-05");
+    const summary = await getMonthlySummary("u1", "2026-05");
     expect(summary.closed).toBe(true);
   });
 });

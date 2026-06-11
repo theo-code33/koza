@@ -13,9 +13,9 @@ describe("listMonthIncomes", () => {
 
   it("queries incomes for the month ordered by creation", async () => {
     vi.mocked(prisma.income.findMany).mockResolvedValue([{ id: "1" }] as never);
-    const result = await listMonthIncomes("2026-06");
+    const result = await listMonthIncomes("u1", "2026-06");
     expect(prisma.income.findMany).toHaveBeenCalledWith({
-      where: { month: "2026-06" },
+      where: { userId: "u1", month: "2026-06" },
       orderBy: { createdAt: "asc" },
     });
     expect(result).toHaveLength(1);

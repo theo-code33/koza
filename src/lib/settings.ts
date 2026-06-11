@@ -1,18 +1,16 @@
 import { prisma } from "@/lib/prisma";
 
-const DEFAULT_ID = "default";
-
-// Garantit l'existence de la ligne de réglages unique du MVP.
-export async function getOrCreateDefaultSettings() {
+// Garantit l'existence de la ligne de réglages de l'utilisateur.
+export async function getOrCreateDefaultSettings(userId: string) {
   return prisma.userSettings.upsert({
-    where: { id: DEFAULT_ID },
+    where: { userId },
     update: {},
-    create: { id: DEFAULT_ID },
+    create: { userId },
   });
 }
 
 // Vrai si l'onboarding a déjà été terminé (false si aucune ligne).
-export async function getOnboardingCompleted(): Promise<boolean> {
-  const settings = await prisma.userSettings.findUnique({ where: { id: DEFAULT_ID } });
+export async function getOnboardingCompleted(userId: string): Promise<boolean> {
+  const settings = await prisma.userSettings.findUnique({ where: { userId } });
   return settings?.onboardingCompleted ?? false;
 }

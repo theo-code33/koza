@@ -41,7 +41,7 @@ describe("materializeRecurring", () => {
     vi.mocked(prisma.recurringOccurrence.findUnique).mockResolvedValue(null as never);
     vi.mocked(prisma.expense.create).mockResolvedValue({ id: "e1" } as never);
 
-    await materializeRecurring("2026-03");
+    await materializeRecurring("u1", "2026-03");
 
     expect(prisma.expense.create).toHaveBeenCalledTimes(1);
     expect(prisma.recurringOccurrence.create).toHaveBeenCalledTimes(2);
@@ -56,7 +56,7 @@ describe("materializeRecurring", () => {
     vi.mocked(prisma.recurringExpense.findMany).mockResolvedValue([fixed] as never);
     vi.mocked(prisma.recurringOccurrence.findUnique).mockResolvedValue({ id: "o1" } as never);
 
-    await materializeRecurring("2026-03");
+    await materializeRecurring("u1", "2026-03");
 
     expect(prisma.expense.create).not.toHaveBeenCalled();
     expect(prisma.recurringOccurrence.create).not.toHaveBeenCalled();
@@ -68,7 +68,7 @@ describe("materializeRecurring", () => {
     ] as never);
     vi.mocked(prisma.recurringOccurrence.findUnique).mockResolvedValue(null as never);
 
-    await materializeRecurring("2026-03");
+    await materializeRecurring("u1", "2026-03");
 
     expect(prisma.recurringOccurrence.create).not.toHaveBeenCalled();
   });

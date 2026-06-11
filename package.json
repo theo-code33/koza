@@ -13,6 +13,8 @@
     "db:migrate:deploy": "prisma migrate deploy",
     "db:push": "prisma db push",
     "db:seed": "prisma db seed",
+    "db:reset": "prisma db seed",
+    "db:reset:fresh": "DEMO_ONBOARDING=fresh prisma db seed",
     "db:studio": "prisma studio",
     "test": "vitest run",
     "test:watch": "vitest",

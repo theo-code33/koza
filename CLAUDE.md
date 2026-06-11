@@ -804,6 +804,8 @@ Pour la présentation de vendredi, un script `prisma/seed.ts` doit générer :
 
 Le seed doit produire un dashboard visuellement riche et réaliste pour la démo. Commande : `npx prisma db seed`.
 
+**Reset démo :** `npm run db:reset` vide la base et la re-seede (le seed fait déjà le wipe). Onboarding marqué terminé → dashboard riche immédiat. `npm run db:reset:fresh` fait la même chose mais laisse `onboardingCompleted=false` (`DEMO_ONBOARDING=fresh`) pour démontrer le flow d'accueil.
+
 ---
 
 ## Comportement attendu de Claude Code

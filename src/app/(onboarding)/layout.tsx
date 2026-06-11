@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 export default async function OnboardingLayout({ children }: { children: ReactNode }) {
   const userId = await getCurrentUserId();
   if (await getOnboardingCompleted(userId)) {
-    redirect("/");
+    redirect("/dashboard");
   }
   return (
     <main className="mx-auto flex min-h-screen max-w-[720px] flex-col px-6 py-12">{children}</main>

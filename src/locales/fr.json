@@ -322,6 +322,24 @@
     "budgetOver": "Budget {name} dépassé — ça arrive, le surplus se reporte.",
     "categoryOver": "Tes dépenses {category} dépassent l'objectif du mois."
   },
+  "auth": {
+    "loginTitle": "Connexion",
+    "loginSubtitle": "Content de te revoir.",
+    "signupTitle": "Créer un compte",
+    "signupSubtitle": "Commence ton budget 50/30/20 en 3 minutes.",
+    "email": "Email",
+    "password": "Mot de passe",
+    "loginCta": "Se connecter",
+    "signupCta": "Créer mon compte",
+    "toSignup": "Pas encore de compte ? Créer un compte",
+    "toLogin": "Déjà un compte ? Se connecter",
+    "invalidCredentials": "Email ou mot de passe incorrect.",
+    "emailTaken": "Un compte existe déjà avec cet email.",
+    "emailInvalid": "Email invalide.",
+    "passwordTooShort": "8 caractères minimum.",
+    "account": "Compte",
+    "logout": "Se déconnecter"
+  },
   "legal": {
     "privacy": {
       "metaTitle": "Politique de confidentialité - kōza",

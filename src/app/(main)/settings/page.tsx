@@ -2,11 +2,13 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { ThemeToggle } from "@/components/settings/theme-toggle";
 import { LocaleToggle } from "@/components/settings/locale-toggle";
+import { LogoutButton } from "@/components/settings/logout-button";
 
 export const dynamic = "force-dynamic";
 
 export default async function SettingsPage() {
   const t = await getTranslations("settings");
+  const ta = await getTranslations("auth");
 
   return (
     <main className="mx-auto flex min-h-screen max-w-[720px] flex-col gap-10 px-6 py-12">
@@ -48,6 +50,13 @@ export default async function SettingsPage() {
         <a href="/api/export" download className="text-[14px] font-medium text-accent">
           {t("exportData")}
         </a>
+      </section>
+
+      <section className="flex flex-col gap-4">
+        <h2 className="text-[13px] font-medium uppercase tracking-wide text-text-secondary">
+          {ta("account")}
+        </h2>
+        <LogoutButton />
       </section>
     </main>
   );

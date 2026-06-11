@@ -322,6 +322,24 @@
     "budgetOver": "{name} budget exceeded — it happens, the surplus carries over.",
     "categoryOver": "Your {category} spending is over this month's target."
   },
+  "auth": {
+    "loginTitle": "Log in",
+    "loginSubtitle": "Good to see you again.",
+    "signupTitle": "Create an account",
+    "signupSubtitle": "Start your 50/30/20 budget in 3 minutes.",
+    "email": "Email",
+    "password": "Password",
+    "loginCta": "Log in",
+    "signupCta": "Create my account",
+    "toSignup": "No account yet? Create one",
+    "toLogin": "Already have an account? Log in",
+    "invalidCredentials": "Wrong email or password.",
+    "emailTaken": "An account already exists with this email.",
+    "emailInvalid": "Invalid email.",
+    "passwordTooShort": "At least 8 characters.",
+    "account": "Account",
+    "logout": "Log out"
+  },
   "legal": {
     "privacy": {
       "metaTitle": "Privacy policy - kōza",

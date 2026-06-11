@@ -11,6 +11,9 @@ on:
 # so tests never touch the hosted database.
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  # Secret de test pour Auth.js (build/tests/e2e). N'est jamais utilisé en prod
+  # (Vercel fournit son propre AUTH_SECRET en variable d'environnement Production).
+  AUTH_SECRET: "ci-test-secret-not-used-in-prod"
 
 jobs:
   lint:

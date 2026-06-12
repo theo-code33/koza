@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { IconButton } from "@/components/ui/icon-button";
 import { currentMonth } from "@/lib/month";
+import { amountSetValueAs } from "@/lib/validators";
 
 interface FormValues {
   incomes: { source: string; amount: string }[];
@@ -86,7 +87,7 @@ export function IncomeSetupForm() {
           <div className="w-32">
             <Field label={tc("amount")} hint={errors.incomes?.[index]?.amount?.message}>
               <input
-                {...register(`incomes.${index}.amount`)}
+                {...register(`incomes.${index}.amount`, { setValueAs: amountSetValueAs })}
                 inputMode="decimal"
                 placeholder="2500"
                 className="h-12 w-full rounded-input bg-surface-alt px-4 text-[15px] text-text outline-none"

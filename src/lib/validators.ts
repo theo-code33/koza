@@ -7,12 +7,26 @@ export const credentialsSchema = z.object({
   password: z.string().min(8),
 });
 
+// Normalise la virgule décimale (clavier FR mobile) en point. Utilisé par les formulaires
+// via `setValueAs` pour que la validation client accepte « 12,50 », et par les schémas Zod.
+export function normalizeAmount(value: string): string {
+  return value.replace(",", ".");
+}
+
+// À passer en `setValueAs` du `register("amount")` : normalise la saisie avant validation.
+export const amountSetValueAs = (value: unknown): unknown =>
+  typeof value === "string" ? normalizeAmount(value) : value;
+
+// Montant en string : normalise la virgule décimale en point, puis valide le format et la
+// positivité. Partagé par tous les schémas avec montant.
+const amountString = z
+  .string()
+  .transform((value) => normalizeAmount(value.trim()))
+  .refine((value) => /^\d+(\.\d{1,2})?$/.test(value) && Number(value) > 0);
+
 export const incomeCreateSchema = z.object({
   source: z.string().trim().min(1).max(80),
-  amount: z
-    .string()
-    .regex(/^\d+(\.\d{1,2})?$/)
-    .refine((value) => Number(value) > 0),
+  amount: amountString,
   month: z.string().regex(/^\d{4}-\d{2}$/),
 });
 
@@ -26,10 +40,7 @@ export const settingsUpdateSchema = z
 
 export const expenseCreateSchema = z
   .object({
-    amount: z
-      .string()
-      .regex(/^\d+(\.\d{1,2})?$/)
-      .refine((value) => Number(value) > 0),
+    amount: amountString,
     description: z.string().trim().min(1).max(120),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
     category: z.enum(["essential", "leisure", "savings"]),
@@ -40,10 +51,7 @@ export const expenseCreateSchema = z
 
 export const budgetCreateSchema = z.object({
   name: z.string().trim().min(1).max(80),
-  targetAmount: z
-    .string()
-    .regex(/^\d+(\.\d{1,2})?$/)
-    .refine((value) => Number(value) > 0),
+  targetAmount: amountString,
   category: z.enum(["essential", "leisure", "savings"]),
   deadline: z
     .string()
@@ -52,10 +60,6 @@ export const budgetCreateSchema = z.object({
     .optional(),
 });
 
-const amountString = z
-  .string()
-  .regex(/^\d+(\.\d{1,2})?$/)
-  .refine((value) => Number(value) > 0);
 const monthString = z.string().regex(/^\d{4}-\d{2}$/);
 
 export const recurringCreateSchema = z.object({

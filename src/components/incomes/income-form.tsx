@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
+import { amountSetValueAs } from "@/lib/validators";
 
 interface FormValues {
   source: string;
@@ -76,7 +77,7 @@ export function IncomeForm({ month, income, onSuccess, onCancel }: IncomeFormPro
       </Field>
       <Field label={tc("amount")} hint={errors.amount?.message}>
         <input
-          {...register("amount")}
+          {...register("amount", { setValueAs: amountSetValueAs })}
           inputMode="decimal"
           placeholder="2500"
           className="h-12 w-full rounded-input bg-surface-alt px-4 text-[15px] text-text outline-none"

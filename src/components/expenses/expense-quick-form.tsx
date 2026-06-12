@@ -10,6 +10,7 @@ import { Field } from "@/components/ui/field";
 import { CatSelect } from "@/components/ui/cat-select";
 import { SubcatChips } from "@/components/expenses/subcat-chips";
 import { defaultSubcategory } from "@/lib/subcategories";
+import { amountSetValueAs } from "@/lib/validators";
 
 interface FormValues {
   amount: string;
@@ -119,7 +120,7 @@ export function ExpenseQuickForm({
         {expense ? t("editTitle") : t("newTitle")}
       </h2>
       <input
-        {...register("amount")}
+        {...register("amount", { setValueAs: amountSetValueAs })}
         inputMode="decimal"
         autoFocus
         placeholder="0"

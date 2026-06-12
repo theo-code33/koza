@@ -22,6 +22,16 @@ describe("incomeCreateSchema", () => {
       incomeCreateSchema.safeParse({ source: "  ", amount: "10", month: "2026-06" }).success,
     ).toBe(false);
   });
+
+  it("accepts a French decimal comma and normalizes it to a dot", () => {
+    const result = incomeCreateSchema.safeParse({
+      source: "Salaire",
+      amount: "12,50",
+      month: "2026-06",
+    });
+    expect(result.success).toBe(true);
+    if (result.success) expect(result.data.amount).toBe("12.50");
+  });
 });
 
 describe("settingsUpdateSchema", () => {

@@ -8,6 +8,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { CatSelect } from "@/components/ui/cat-select";
+import { amountSetValueAs } from "@/lib/validators";
 
 interface FormValues {
   name: string;
@@ -100,7 +101,7 @@ export function BudgetForm({ budget, onSuccess, onCancel }: BudgetFormProps) {
       </Field>
       <Field label={t("targetLabel")} hint={errors.targetAmount?.message}>
         <input
-          {...register("targetAmount")}
+          {...register("targetAmount", { setValueAs: amountSetValueAs })}
           inputMode="decimal"
           placeholder="1200"
           className="h-12 w-full rounded-input bg-surface-alt px-4 text-[15px] text-text outline-none"

@@ -12,6 +12,7 @@ import { Toggle } from "@/components/ui/toggle";
 import { CatSelect } from "@/components/ui/cat-select";
 import { SubcatChips } from "@/components/expenses/subcat-chips";
 import { defaultSubcategory } from "@/lib/subcategories";
+import { amountSetValueAs } from "@/lib/validators";
 
 interface FormValues {
   label: string;
@@ -137,6 +138,7 @@ export function RecurringForm({ model, onSuccess, onCancel }: RecurringFormProps
         name="type"
         render={({ field }) => (
           <Segmented
+            className="self-start"
             options={[
               { value: "FIXED", label: t("typeFixed") },
               { value: "VARIABLE", label: t("typeVariable") },
@@ -148,7 +150,7 @@ export function RecurringForm({ model, onSuccess, onCancel }: RecurringFormProps
       />
       <Field label={tc("amount")} hint={errors.amount?.message}>
         <input
-          {...register("amount")}
+          {...register("amount", { setValueAs: amountSetValueAs })}
           inputMode="decimal"
           placeholder="800"
           className="h-12 w-full rounded-input bg-surface-alt px-4 text-[15px] text-text outline-none"
@@ -179,6 +181,7 @@ export function RecurringForm({ model, onSuccess, onCancel }: RecurringFormProps
         name="frequency"
         render={({ field }) => (
           <Segmented
+            className="self-start"
             options={[
               { value: "MONTHLY", label: t("freqMonthly") },
               { value: "QUARTERLY", label: t("freqQuarterly") },

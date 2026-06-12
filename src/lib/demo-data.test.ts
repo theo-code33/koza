@@ -84,6 +84,23 @@ describe("buildDemoDataset", () => {
     }
   });
 
+  it("includes a past month with a negative balance while the current month stays healthy", () => {
+    // Au moins un mois clôturé en dépassement (report sortant négatif) — pour démontrer
+    // l'UI de balance négative.
+    const closedNegative = data.periods.filter((p) => p.closed && Number(p.carryOut) < 0);
+    expect(closedNegative.length).toBeGreaterThanOrEqual(1);
+
+    // Le mois courant (ouvert) reste sain : revenus + report entrant − dépenses >= 0.
+    const current = data.periods[data.periods.length - 1]!;
+    const income = data.incomes
+      .filter((x) => x.month === current.month)
+      .reduce((acc, x) => acc + Number(x.amount), 0);
+    const spent = data.expenses
+      .filter((x) => x.month === current.month)
+      .reduce((acc, x) => acc + Number(x.amount), 0);
+    expect(Number(current.carryIn) + income - spent).toBeGreaterThanOrEqual(0);
+  });
+
   it("uses positive two-decimal amount strings everywhere", () => {
     const all = [
       ...data.incomes.map((x) => x.amount),

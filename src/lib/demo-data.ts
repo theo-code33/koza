@@ -151,7 +151,7 @@ export function buildDemoDataset(currentMonth: string): DemoDataset {
   months.forEach((month, i) => {
     const isCurrent = month === currentMonth;
 
-    incomes.push({ source: "Salaire", amount: "2500.00", month, day: 1 });
+    incomes.push({ source: "Salaire", amount: "2000.00", month, day: 1 });
     if (i === 2) incomes.push({ source: "Prime", amount: "600.00", month, day: 1 });
     if (i === 4) incomes.push({ source: "Freelance", amount: "400.00", month, day: 1 });
 
@@ -199,6 +199,8 @@ export function buildDemoDataset(currentMonth: string): DemoDataset {
     };
 
     add(pick(food, i), "Courses", "essential", "food", 10);
+    // Dépense ponctuelle en février : pousse ce mois en balance négative (démo dépassement).
+    if (i === 1) add("900.00", "Réparation voiture", "essential", "transport", 12);
     add(pick(transport, i), "Transport", "essential", "transport", 5);
     add(pick(health, i), "Pharmacie", "essential", "health", 14);
     add(pick(restaurant, i), "Restaurant", "leisure", "restaurants", 16);
